@@ -17,6 +17,7 @@ deploy:
   secret_access_key: "8/iQWCDQzQmg/8QjngdlZwoOAV+4mlAY4pjnhvuW"
   bucket: "451ordercloudtest"
   skip_cleanup: true
-  region: Oregon
+  region: us-west-2
   endpoint: s3-website-us-west-2.amazonaws.com
   local_dir: build
+  upload_dir: DevCenter
