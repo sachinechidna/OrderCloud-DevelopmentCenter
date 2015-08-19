@@ -17,12 +17,13 @@ function LoginConfig( $stateProvider ) {
 	});
 }
 
-function LoginController( $state, Credentials ) {
+function LoginController( $rootScope, $state, Credentials ) {
 	var vm = this;
 
 	vm.submit = function( ) {
 		Credentials.Get( vm.credentials ).then(
 			function() {
+				$rootScope.isAuthenticated = true;
 				$state.go( 'base.home' );
 			}).catch(function( ex ) {
 				console.dir( ex );

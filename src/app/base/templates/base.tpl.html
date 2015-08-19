@@ -8,16 +8,29 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" ui-sref="base.home">OrderCloud 3.0</a>
+			<a class="navbar-brand" ui-sref="base.home">Development Center</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="navbar-collapse" collapse="mainCollapsed" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li ui-sref-active="active"><a ui-sref="base.home"><i class="fa fa-home"></i> Home</a></li>
+				<li ui-sref-active="active"><a ui-sref="base.home">Home</a></li>
+				<li ui-sref-active="active"><a>Get Started</a></li>
+				<li ui-sref-active="active"><a ui-sref="base.docs">Docs</a></li>
+				<li ui-sref-active="active"><a ui-sref="base.console">Console</a></li>
+				<li ui-sref-active="active"><a>Guides</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="" ng-click="application.logout()"><i class="fa fa-power-off"></i> Logout</a></li>
+				<li class="dropdown" dropdown>
+					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Account<span class="caret"></span></a>
+					<ul class="dropdown-menu" dropdown-menu>
+						<li><a href>Manage Accounts</a></li>
+						<li><a href>Notifications</a></li>
+						<li><a href>Help</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="" ng-click="application.logout()"><i class="fa fa-power-off"></i> Logout</a></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</div>

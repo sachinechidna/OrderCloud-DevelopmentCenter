@@ -1,0 +1,26 @@
+.console-selector {
+  background-color:@gray-lighter;
+  display:flex;
+  flex-flow:row nowrap;
+  border-radius:@border-radius-base;
+  & > span {
+	padding:@padding-base-vertical*2 @padding-base-horizontal;
+  }
+  pre {
+    flex:1;
+    padding:0 @padding-base-horizontal;
+    margin:@padding-base-vertical*2 0;
+    border-radius:0;
+    background-color:transparent;
+    border:none;
+    border-left:1px solid darken(@gray-lighter, 15);
+  }
+  button {
+    font-weight:bold;
+    float:right;
+    border:none;
+    .border-left-radius(0);
+  }
+}
+
+.ace_editor { height: 300px; }

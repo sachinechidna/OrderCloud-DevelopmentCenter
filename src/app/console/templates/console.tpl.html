@@ -1,0 +1,111 @@
+<div class="row">
+	<aside class="col-md-3">
+		<div class="list-group">
+			<button type="button" class="list-group-item"
+					ng-class="{active:console.SelectedService == service}"
+					ng-repeat="service in console.Services" ng-click="console.SelectService(this)">{{service.name}} <span class="badge">{{service.methods.length}}</span></button>
+		</div>
+	</aside>
+	<article class="col-md-9" ng-show="console.SelectedService">
+		<h3 class="page-title">
+			{{console.SelectedService.name}}
+			<small ng-bind="console.SelectedEndpoint.Name"></small>
+		</h3>
+<!--		<p ng-bind-html="comment | markdown" ng-repeat="comment in console.SelectedService.Documentation.Comments"></p>
+		<p ng-bind-html="comment | markdown" ng-repeat="comment in console.SelectedEndpoint.Comments"></p>-->
+		<div class="console-selector">
+			<span dropdown>
+			  <a href dropdown-toggle>
+				  {{console.SelectedMethod.name || 'Method'}} <span class="caret"></span>
+			  </a>
+			  <ul class="dropdown-menu">
+				  <li ng-repeat="method in console.SelectedService.methods">
+					  <a href ng-click="console.SelectMethod(this)">{{method.name}}</a>
+				  </li>
+			  </ul>
+			</span>
+			<pre>{{console.SelectedEndpoint.UriTemplate}}</pre>
+			<span class="btn btn-link" ng-if="console.SelectedEndpoint && console.SelectedEndpoint.Parameters.length" ng-click="console.SelectedEndpoint.showParams = !console.SelectedEndpoint.showParams">
+				Params
+			</span>
+			<button class="btn btn-primary" ng-click="console.Execute()">Send <i class="fa fa-paper-plane"></i></button>
+		</div>
+		<div collapse="!console.SelectedEndpoint.showParams">
+			<table class="table">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Required</th>
+					<th>Value</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="param in console.SelectedEndpoint.Parameters">
+					<td>{{param.Name}}</td>
+					<td>{{param.Type}}</td>
+					<td>{{param.Required}}</td>
+					<td><input type="text" class="form-control" tooltip="{{param.Description}}" tooltip-trigger="focus" ng-model="console.SelectedMethod.resolvedParameters[$index].Value"/></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-show="console.SelectedEndpoint">
+<!--			<section id="Documentation">
+				<div ng-if="console.SelectedEndpoint.RequestBody.Fields.length">
+					<b>Model</b>
+					<table class="table">
+						<thead>
+						<th>Name</th>
+						<th>Type</th>
+						<th>Description</th>
+						<th>Required</th>
+						</thead>
+						<tbody>
+						<tr ng-repeat="field in console.SelectedEndpoint.RequestBody.Fields">
+							<td>{{field.Name}}</td>
+							<td>{{field.Type}}</td>
+							<td>{{field.Description}}</td>
+							<td>{{field.Required}}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>-->
+			<section id="Configuration" am-padding>
+				<form name="ApiConsole" novalidate>
+					<fieldset am-layout="stack" ng-show="console.SelectedMethod.resolvedParameters.length">
+						<div role="group">
+							<div ng-repeat="parameter in console.SelectedMethod.resolvedParameters | objectParams">
+								<label class="label label-primary text-capitalize">
+									{{parameter.Name + ' object'}}
+								</label>
+								<div ui-ace="{
+									mode: 'json'
+								}" ng-model="parameter.Value">
+								</div>
+
+<!--								<textarea name="{{parameter.Name}}"
+										  class="form-control"
+										  rows="10"
+										  ng-model="parameter.Value"
+										  ng-required="parameter.Required"
+										  parameter-object
+										  empty-to-null>
+								</textarea>-->
+							</div>
+<!--							<pre>{{console.SelectedService.name + '.' + console.SelectedMethod.name + '('}}<span ng-repeat="p in console.SelectedMethod.resolvedParameters">{{((p.Value != null && p.Value != '') ? (p.Type == 'text' ? ('\'' + p.Value + '\'') : p.Value) : p.Name) + (!$last ? ', ' : ')') }}</span></pre>-->
+						</div>
+
+					</fieldset>
+				</form>
+			</section>
+			<!--TODO: The #Response section should probably exist as a modal that handles errors and presents them in a developer friendly manner-->
+			<section id="Response">
+				<pre ng-show="console.Response">{{console.Response | json}}</pre>
+			</section>
+		</div>
+
+	</article>
+</div>
+

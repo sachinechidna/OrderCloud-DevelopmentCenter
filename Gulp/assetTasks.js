@@ -24,7 +24,7 @@ var cssFilter = filter('**!/!*.css');*/
 
 gulp.task('b_m:less', function() {
     return gulp.src(mainBowerFiles({filter: '**/*.less'})
-        .concat(config.import_less))
+        .concat(config.vendor_files.import_less).concat(config.app_files.import_less))
         .pipe(plumber())
         .pipe(lessImport('lessStyles.less'))
         .pipe(less())
@@ -94,7 +94,9 @@ gulp.task('b_c:assets', function() {
         '!' + config.build + '**/*.css',
         '!' + config.build + '**/*.less',
         '!' + config.build + '**/*.scss',
-        '!' + config.build + '**/*.sass'], {read:false})
+        '!' + config.build + '**/*.sass',
+        '!' + config.build + 'assets/fonts/**/*'], {read:false})
+        .pipe(plumber())
         .pipe(clean())
 });
 
@@ -124,6 +126,7 @@ gulp.task('c_m:assets', function() {
 gulp.task('c_c:assets', function() {
     return gulp
         .src([config.compile + 'assets/**/*', '!' + config.compile + 'assets/**/*.css'], {read:false})
+        .pipe(plumber())
         .pipe(clean());
 });
 

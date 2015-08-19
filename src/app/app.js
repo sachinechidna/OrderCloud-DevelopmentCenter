@@ -6,7 +6,9 @@ angular.module( 'orderCloud', [
 	'ngTouch',
 	'ui.router',
 	'ui.bootstrap',
-	'orderCloud.sdk'
+	'orderCloud.sdk',
+	'markdown',
+	'ui.ace'
 ])
 
 	.run( Security )
@@ -19,17 +21,17 @@ angular.module( 'orderCloud', [
 	.constant('appname', 'OrderCloud AngularJS Seed')
 
 	//Client ID for a Registered Distributor or Buyer Company
-	.constant('clientid', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+	.constant('clientid', '7a26bc3f-cff2-497d-8ead-83e569e9d849')
 
 	//Test Environment
 	.constant('authurl', 'https://testauth.ordercloud.io/oauth/token')
-	.constant('apiurl', 'https://testapi.ordercloud.io/v1')
+	.constant('apiurl', 'https://testapi.ordercloud.io')
 ;
 
 function Security( $rootScope, $state, Auth ) {
 	$rootScope.$on('$stateChangeStart', function(e, to) {
 		/*TODO: make the '$stateChangeStart event' accept a function so users can control the redirect from each state's declaration.*/
-		if (!to.data.limitAccess) return;
+		if (!to.data || !to.data.limitAccess) return;
 		Auth.IsAuthenticated()
 			.catch(sendToLogin);
 
