@@ -20,4 +20,3 @@ deploy:
   region: us-west-2
   endpoint: s3-website-us-west-2.amazonaws.com
   local_dir: build
-  upload_dir: DevCenter
