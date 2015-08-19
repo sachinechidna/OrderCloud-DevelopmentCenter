@@ -9,5 +9,5 @@ before_script:
   - npm install
   - bower install
 
-script: gulp
+script: gulp build
 
