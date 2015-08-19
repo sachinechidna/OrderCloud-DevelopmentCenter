@@ -16,15 +16,25 @@
 			<ul class="nav navbar-nav">
 				<li ui-sref-active="active"><a ui-sref="base.home">Home</a></li>
 				<li ui-sref-active="active"><a>Get Started</a></li>
-				<li ui-sref-active="active"><a ui-sref="base.docs">Docs</a></li>
-				<li ui-sref-active="active"><a ui-sref="base.console">Console</a></li>
-				<li ui-sref-active="active"><a>Guides</a></li>
+				<li class="dropdown" dropdown>
+					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Learn<span class="caret"></span></a>
+					<ul class="dropdown-menu" dropdown-menu>
+						<li ui-sref-active="active"><a ui-sref="base.docs">API Docs</a></li>
+						<li ui-sref-active="active"><a ui-sref="base.console">API Console</a></li>
+						<li ui-sref-active="active"><a>Tutorials</a></li>
+					</ul>
+				</li>
+				<li ui-sref-active="active"><a>My Apps</a></li>
+
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown" dropdown>
+				<li ng-if="!base.currentUser"><a ui-sref="login">Sign In</a></li>
+				<li class="dropdown" dropdown ng-if="base.currentUser">
 					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Account<span class="caret"></span></a>
 					<ul class="dropdown-menu" dropdown-menu>
-						<li><a href>Manage Accounts</a></li>
+						<li class="dropdown-header">{{base.currentUser.FirstName + ' ' + base.currentUser.LastName}}</li>
+
+						<li><a href>Settings</a></li>
 						<li><a href>Notifications</a></li>
 						<li><a href>Help</a></li>
 						<li role="separator" class="divider"></li>

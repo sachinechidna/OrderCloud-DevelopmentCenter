@@ -2,6 +2,7 @@ angular.module('orderCloud')
 
     .config( ApiConsoleConfig )
     .controller('ApiConsoleCtrl', ApiConsoleController)
+    .controller('ResponseModalCtrl', ResponseModalController)
 	.factory('ApiLoader', ApiLoaderService)
 	.factory('ApiConsoleService', ApiConsoleService)
 	.directive('parameterObject', ParameterObjectDirective)
@@ -38,7 +39,7 @@ function ApiConsoleConfig( $stateProvider, $urlMatcherFactoryProvider ) {
     });
 };
 
-function ApiConsoleController($scope, $resource, $injector, apiurl, OrderCloudServices, ApiConsoleService) {
+function ApiConsoleController($scope, $resource, $injector, $filter, $modal, apiurl, OrderCloudServices, ApiConsoleService) {
 	var vm = this;
 	vm.Services = OrderCloudServices;
 	vm.SelectedService = "";
@@ -49,12 +50,28 @@ function ApiConsoleController($scope, $resource, $injector, apiurl, OrderCloudSe
 	vm.Execute = function() {
 		ApiConsoleService.ExecuteApi(vm.SelectedService, vm.SelectedMethod)
 			.then( function(data) {
-				vm.Response = data;
+				if (!data) return;
+				OpenResponseModal(data);
 			})
 			.catch( function(ex) {
-				vm.Response = ex.data;
+				if (!ex) return;
+				OpenResponseModal(ex);
 			});
 	};
+
+	function OpenResponseModal(response) {
+		$modal.open({
+			templateUrl: 'console/templates/console.responseModal.tpl.html',
+			controller: 'ResponseModalCtrl',
+			controllerAs: 'ResponseModal',
+			bindToController: true,
+			resolve: {
+				Response: function() {
+					return response;
+				}
+			}
+		});
+	}
 
 	vm.SelectService = function(scope) {
 		vm.SelectedService = scope.service;
@@ -90,6 +107,12 @@ function ApiConsoleController($scope, $resource, $injector, apiurl, OrderCloudSe
 				});
 		}
 	});
+}
+
+function ResponseModalController($modalInstance, Response) {
+	var vm = this;
+	vm.response = Response;
+
 }
 
 function ApiConsoleService($injector, $resource, apiurl) {

@@ -96,16 +96,10 @@
 							</div>
 <!--							<pre>{{console.SelectedService.name + '.' + console.SelectedMethod.name + '('}}<span ng-repeat="p in console.SelectedMethod.resolvedParameters">{{((p.Value != null && p.Value != '') ? (p.Type == 'text' ? ('\'' + p.Value + '\'') : p.Value) : p.Name) + (!$last ? ', ' : ')') }}</span></pre>-->
 						</div>
-
 					</fieldset>
 				</form>
 			</section>
-			<!--TODO: The #Response section should probably exist as a modal that handles errors and presents them in a developer friendly manner-->
-			<section id="Response">
-				<pre ng-show="console.Response">{{console.Response | json}}</pre>
-			</section>
 		</div>
-
 	</article>
 </div>
 

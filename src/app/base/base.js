@@ -12,10 +12,27 @@ function BaseConfig( $stateProvider ) {
 			abstract: true,
 			templateUrl:'base/templates/base.tpl.html',
 			controller:'BaseCtrl',
-			controllerAs: 'base'
+			controllerAs: 'base',
+			resolve: {
+				CurrentUser: function($q, Auth, Me) {
+					var deferred = $q.defer();
+					Auth.IsAuthenticated()
+						.then(function() {
+							Me.Get()
+								.then(function(currentUser) {
+									deferred.resolve(currentUser);
+								})
+						})
+						.catch(function() {
+							deferred.resolve(null);
+						});
+					return deferred.promise;
+				}
+			}
 		})
 }
 
-function BaseController( Auth ) {
+function BaseController( CurrentUser ) {
 	var vm = this;
+	vm.currentUser = CurrentUser;
 }
