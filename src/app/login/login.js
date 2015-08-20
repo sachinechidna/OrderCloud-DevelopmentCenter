@@ -24,7 +24,7 @@ function LoginController( $rootScope, $state, Credentials ) {
 		Credentials.Get( vm.credentials ).then(
 			function() {
 				$rootScope.isAuthenticated = true;
-				$state.go( 'base.home' );
+				$state.go( 'base.dashboard' );
 			}).catch(function( ex ) {
 				console.dir( ex );
 			});

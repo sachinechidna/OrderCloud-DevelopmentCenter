@@ -10,6 +10,14 @@ body {
   outline:none !important;
 }
 
+//angularjs form validation
+.ng-dirty.ng-valid {
+  .form-control-validation-angular(@state-success-text; @state-success-text; @state-success-bg);
+}
+
+.ng-invalid {
+  .form-control-validation-angular(@state-danger-text; @state-danger-text; @state-danger-bg);
+}
 
 .table {
   // Cells

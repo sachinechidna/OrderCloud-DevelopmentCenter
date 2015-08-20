@@ -8,23 +8,29 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" ui-sref="base.home">Development Center</a>
+			<a class="navbar-brand" ui-sref="base.dashboard">Development Center</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="navbar-collapse" collapse="mainCollapsed" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li ui-sref-active="active"><a ui-sref="base.home">Home</a></li>
-				<li ui-sref-active="active"><a>Get Started</a></li>
+				<li ui-sref-active="active"><a ui-sref="base.dashboard">Dashboard</a></li>
 				<li class="dropdown" dropdown>
 					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Learn<span class="caret"></span></a>
 					<ul class="dropdown-menu" dropdown-menu>
+						<li ui-sref-active="active" ng-if="base.currentUser"><a>Get Started</a></li>
 						<li ui-sref-active="active"><a ui-sref="base.docs">API Docs</a></li>
-						<li ui-sref-active="active"><a ui-sref="base.console">API Console</a></li>
-						<li ui-sref-active="active"><a>Tutorials</a></li>
+						<li ui-sref-active="active" ng-if="base.currentUser"><a>Tutorials</a></li>
 					</ul>
 				</li>
-				<li ui-sref-active="active"><a>My Apps</a></li>
+				<li class="dropdown" dropdown ng-if="base.currentUser">
+					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Explore<span class="caret"></span></a>
+					<ul class="dropdown-menu" dropdown-menu>
+						<li ui-sref-active="active"><a ui-sref="base.console">API Console</a></li>
+						<li ui-sref-active="active"><a>Components</a></li>
+					</ul>
+				</li>
+				<li ui-sref-active="active"  ng-if="base.currentUser"><a>My Apps</a></li>
 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

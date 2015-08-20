@@ -43,7 +43,7 @@ function Security( $rootScope, $state, Auth ) {
 
 function Routing( $urlRouterProvider, $urlMatcherFactoryProvider ) {
 	$urlMatcherFactoryProvider.strictMode(false);
-	$urlRouterProvider.otherwise( '/home' );
+	$urlRouterProvider.otherwise( '/dashboard' );
 	//$locationProvider.html5Mode(true);
 	//TODO: For HTML5 mode to work we need to always return index.html as the entry point on the serverside
 }
@@ -74,6 +74,6 @@ function AppCtrl( $state, Credentials ) {
 	var vm = this;
 	vm.logout = function() {
 		Credentials.Delete();
-		$state.go('base.home',{}, {reload:true});
+		$state.go('base.dashboard',{}, {reload:true});
 	}
 }

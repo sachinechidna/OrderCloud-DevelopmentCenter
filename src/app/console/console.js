@@ -41,6 +41,10 @@ function ApiConsoleConfig( $stateProvider, $urlMatcherFactoryProvider ) {
 
 function ApiConsoleController($scope, $resource, $injector, $filter, $modal, apiurl, OrderCloudServices, ApiConsoleService) {
 	var vm = this;
+	vm.Resources = OrderCloudServices;
+	vm.SelectedResource = null;
+
+
 	vm.Services = OrderCloudServices;
 	vm.SelectedService = "";
 	vm.SelectedMethod = "";
@@ -50,7 +54,7 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 	vm.Execute = function() {
 		ApiConsoleService.ExecuteApi(vm.SelectedService, vm.SelectedMethod)
 			.then( function(data) {
-				if (!data) return;
+				if (!(data.ID || data.Meta)) return;
 				OpenResponseModal(data);
 			})
 			.catch( function(ex) {
@@ -75,6 +79,9 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 
 	vm.SelectService = function(scope) {
 		vm.SelectedService = scope.service;
+		vm.SelectedService.Documentation = $resource( apiurl + '/v1/docs/' + vm.SelectedService.name ).get();
+		vm.SelectedMethod = null;
+
 	};
 
 	vm.SelectMethod = function(scope) {
