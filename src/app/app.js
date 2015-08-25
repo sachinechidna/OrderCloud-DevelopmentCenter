@@ -18,7 +18,7 @@ angular.module( 'orderCloud', [
 
 	//Constants needed for the OrderCloud AngularJS SDK
 	.constant('ocscope', 'FullAccess')
-	.constant('appname', 'OrderCloud AngularJS Seed')
+	.constant('appname', 'DevCenter')
 
 	//Client ID for a Registered Distributor or Buyer Company
 	.constant('clientid', '7a26bc3f-cff2-497d-8ead-83e569e9d849')

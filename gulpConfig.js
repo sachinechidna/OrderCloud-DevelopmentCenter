@@ -61,14 +61,6 @@ module.exports = {
 		import_less: [ source + 'app/**/*.less' ]
 	},
 	vendor_files: {
-		js: [
-			'vendor/ace-builds/src-min-noconflict/ace.js',
-			'vendor/ace-builds/src-min-noconflict/ext-error_marker.js',
-			'vendor/ace-builds/src-min-noconflict/theme-twilight.js',
-			'vendor/ace-builds/src-min-noconflict/mode-json.js',
-			'vendor/ace-builds/src-min-noconflict/worker-json.js'
-		],
 		import_less: ['vendor/font-awesome/less/font-awesome.less']
 	}
-
 };
