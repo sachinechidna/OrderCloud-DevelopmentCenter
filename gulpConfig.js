@@ -61,6 +61,7 @@ module.exports = {
 		import_less: [ source + 'app/**/*.less' ]
 	},
 	vendor_files: {
-		import_less: ['vendor/font-awesome/less/font-awesome.less']
+		import_less: ['vendor/font-awesome/less/font-awesome.less'],
+		js: []
 	}
 };
