@@ -7,6 +7,7 @@ angular.module( 'orderCloud', [
 	'ui.router',
 	'ui.bootstrap',
 	'orderCloud.sdk',
+	'orderCloud.course',
 	'markdown',
 	'ui.ace'
 ])

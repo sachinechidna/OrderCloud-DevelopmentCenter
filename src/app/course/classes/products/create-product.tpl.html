@@ -1,0 +1,197 @@
+<div class="left-main">
+    <h1>{{course.class.name}}</h1>
+    <h2>Primer: Objects and Assignments</h2>
+    <p>
+        Before you run off and build a fully functional B2B environment, there are a couple important concepts you
+        need to understand. The structure of the OrderCloud 3.0 API was rebuilt to reflect a more modular approach.
+        What this means from the perspective of the architecture is that one object
+        (buyer, product, order, price schedule, category, etc.) is not directly tied with any other object. There are a
+        few specific exceptions to this rule, the biggest being that you will often be required to state which buyer
+        you are working with. Beyond these, an object will only ever be connected through what we call "Assignments",
+        which is separate from an object itself. You will learn more about assignments and why the API is built this
+        way in the following introductory course, "Intro to Assignments". But for now, if you find yourself confused
+        as to why you cannot directly give a product a price schedule or a category a product, it is because of this
+        separation of concerns.
+    </p>
+    <h2>Request</h2>
+    <p>
+        Creating a product is as easy as creating a Buyer, with a few more characteristics available for you to give
+        each product an exhaustive amount of detail. But first, here is the protocol information you will need to
+        make a 'Create Product' request to the OrderCloud 3.0 API,
+    </p>
+    <div style="height: 120px;" class="readonly-box api-setup" readonly
+         ui-ace="{
+      useWrapMode : false,
+      theme:'idle_fingers',
+      mode: '',
+      tabSize: '4',
+      useSoftTabs: true
+    }" ng-model="course.class.leftScripts[0]"></div>
+    <p>
+        Note that this is not an instance of a request where you have to explicitly state what buyer you are working under,
+        meaning products can easily be sold across an entire network of buyers, as long as they are under your
+        distributor. Now for the request object,
+    </p>
+    <div style="height: 280px;" class="readonly-box" readonly
+         ui-ace="{
+      useWrapMode : false,
+      theme:'idle_fingers',
+      mode: 'json',
+      tabSize: '4',
+      useSoftTabs: true
+    }" ng-model="course.class.leftScripts[1]"></div>
+    <p>
+        As stated above, the product object is quite verbose and has many characteristics for you to define inside of it.
+        Also, note again that there is no <code>PriceSchedule</code> object inside of the product object. That will be defined
+        outside of the product and connected with an Assignments request.
+    </p>
+    <p>
+        Let's go through the important key/values in the 'Create Product' request object, so you have a firm understanding
+        of what you need, what you might not need, and how you leverage different properties to make the most out of your
+        new product creation.
+    </p>
+    <code>ID</code><span class="need recommended">RECOMMENDED</span>
+    <ul>
+        <li>Must be unique from all other products</li>
+        <li>Will be auto-generated if not provided in the request object</li>
+    </ul>
+    <code>Description</code><span class="need recommended">RECOMMENDED</span>
+    <ul>
+        <li>Used to describe the product and used often in the UI</li>
+        <li>Will be left empty if not provided</li>
+    </ul>
+    <code>Name</code><span class="need required">REQUIRED</span>
+    <ul>
+        <li>A new product must always be provided with a name, or your request will fail</li>
+        <li>Must not be over 100 characters in length</li>
+    </ul>
+    <code>QuantityMultiplier</code><span class="need required">REQUIRED</span>
+    <ul>
+        <li>Must be set to 1 or more. Setting to 0 will result in failed request</li>
+        <li>Used to set the item quantity associated with 1 unit purchase (i.e. if set to 3, 1 unit = 3 items)</li>
+    </ul>
+    <code>ShipWeight</code><span class="need recommended">RECOMMENDED</span>
+    <ul>
+        <li>Measured in lbs or kilograms</li>
+        <li>It is recommended that you use either lbs or kilograms, as it's easier to convert during a transaction
+        than to track individually</li>
+        <li>This is only necessary if your product is tangible (i.e. not necessary for Software Products)</li>
+    </ul>
+    <code>Active</code><span class="need optional">OPTIONAL</span>
+    <ul>
+        <li>Default: false</li>
+        <li>Recommended to leave as false until you have completed assignments</li>
+        <li>Inactive products will never be visible to a buyer-user</li>
+        <li>Inactive products can also not be forced into an order, including admin-user order overrides</li>
+    </ul>
+    <code>Type</code><span class="need optional">OPTIONAL</span>
+    <ul>
+        <li>Options: Static, VariableText, Kit</li>
+        <li>Default: Static</li>
+        <li>Recommended to explicitly state if you are dealing with many types</li>
+    </ul>
+    <code>StdOrders</code><span class="need optional">OPTIONAL</span>
+    <ul>
+        <li>Default: false</li>
+        <!-- TODO: what is a StdOrder for?-->
+        <li>TODO</li>
+    </ul>
+    <code>ReplOrders</code><span class="need optional">OPTIONAL</span>
+    <ul>
+        <li>Default: false</li>
+        <li>Set to true if you want to allow replenishment orders from your buyer-users</li>
+    </ul>
+    <code>InventoryEnabled</code><span class="need optional">OPTIONAL</span>
+    <ul>
+        <li>Default: false</li>
+        <li>Set to true if you want Inventory to be tracked</li>
+    </ul>
+    <code>InventoryNotificationPoint</code><span class="need optional">OPTIONAL</span>
+    <ul>
+        <li>Default: null</li>
+        <li>Type: number</li>
+        <li>Set to a number greater than 0 if you want a notification to be sent if inventory reaches a certain level</li>
+        <li>Only relevant if you have <code>InventoryEnabled</code> set to true</li>
+    </ul>
+    <code>VariantLevelInventory</code><span class="need optional">OPTIONAL</span>
+    <ul>
+        <li>Default: false</li>
+        <li>Set to true if you want to track product variants inventory</li>
+        <li>Only relevant if you have <code>InventoryEnabled</code> set to true and <code>Type</code> set to 'VariantText'</li>
+    </ul>
+    <code>xp</code><span class="need optional">OPTIONAL</span>
+    <ul>
+        <li>Default: null</li>
+        <li>Type: object</li>
+        <li>Used to provide a product with additional details not in the standard product object</li>
+        <li>Uses a standard object with key/value pairs</li>
+    </ul>
+    <code>ExceedInventory</code><span class="need optional">OPTIONAL</span>
+    <ul>
+        <li>Default: false</li>
+        <li>Set to true if you want to allow orders to continue being made that exceed current inventory levels</li>
+        <li>Only relevant if <code>InventoryEnabled</code> is set to true</li>
+    </ul>
+    <code>DisplayInventory</code><span class="need optional">OPTIONAL</span>
+    <ul>
+        <li>Default: false</li>
+        <li>Set to true if you want buyer-users to have read-access to current inventory levels</li>
+        <li>Only relevant if <code>InventoryEnabled</code> is set to true</li>
+    </ul>
+    <p>
+        As you can tell, there are plenty of settings you can modify and characteristics you can choose from, many of
+        which are conditional of others. You will get more comfortable with these settings and their conditionals
+        as you move into more advanced courses, but for now we will just focus on creating your first set of products
+        with some of the standard characteristics.
+    </p>
+    <p>
+        One final note before reviewing the response object. A key concept in the "modular API architecture"
+        approach is that you only have to use what you actually need. In other words, it is not required of you to use
+        and understand every aspect of the API in order to accomplish your or your clients goals. This modular approach
+        also trickles down to individual API Requests, where you only have to provide the bare necessities (the
+        'REQUIRED' values), and everything else is up to you. At the end of this class, you will build a few products
+        to get a taste of this.
+    </p>
+    <h2>Response</h2>
+    <p>
+        The response object of a 'Create Product' request in OrderCloud will always be a full product object, meaning
+        every characteristic and setting will be returned to you, regardless of which you included or excluded in your
+        request. This is helpful because it explicitly states the current characteristics and settings of a
+        product so you always know what every value is set to once you create a product. This is pretty standard in
+        the OrderCloud API. Below is the response object layout,
+    </p>
+    <div style="height: 280px;" class="readonly-box" readonly
+         ui-ace="{
+      useWrapMode : false,
+      theme:'idle_fingers',
+      mode: 'json',
+      tabSize: '4',
+      useSoftTabs: true
+    }" ng-model="course.class.leftScripts[1]"></div>
+    <h2>Action</h2>
+    <p>
+        Now that you understand the makeup of a 'Create Product' Request in the OrderCloud API, it's your turn
+        to create a few of your own products. Before we continue, make sure your request is setup correctly
+        in the OrderCloud 3.0 Console. Head back up to the top of this class page to see the protocol requirements,
+        and make sure your 'Authorization' Header has your actual Bearer token in it (i.e. 'Bearer dghe34g3g4396...').
+        This will be your only reminder to make sure your environment is set up, so just make sure from now on
+        your environment is ready to go!
+    </p>
+    <p>
+        Okay, let's create your first product. We have provided you with a bare-bones object
+        in the OrderCloud 3.0 Console code-edit-block. Go ahead and fill out each value with whatever you want.
+        If you get stuck, go back up and review each key's description. If your request fails, take a good
+        look at the response console, because chances are the answer is in there.
+    </p>
+    <p>
+        Once you've successfully created your first product, go ahead and create 4 or 5 more. You will be using these
+        products in future courses, but don't worry about keeping track of them yourself. We will make sure you
+        have what you need in the future, so you can focus on learning how to use the OrderCloud API.
+    </p>
+    <p>
+        When you've finished creating your products, go on ahead to the next class. And great job creating your first product!
+    </p>
+
+    <button ui-sref="course({courseID: course.course.ID, classID: course.course.nextClass})" class="btn btn-success btn-block" ng-show="course.class.apiCallSuccess">Next Class</button>
+</div>
+<div class="left-bottom" ng-include="'course/templates/course-progress.tpl.html'"></div>

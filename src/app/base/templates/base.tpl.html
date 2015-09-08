@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top" ng-init="mainCollapsed = true">
-	<div class="container">
+	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" ng-click="mainCollapsed = !mainCollapsed" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -20,7 +20,7 @@
 					<ul class="dropdown-menu" dropdown-menu>
 						<li ui-sref-active="active" ng-if="base.currentUser"><a>Get Started</a></li>
 						<li ui-sref-active="active"><a ui-sref="base.docs">API Docs</a></li>
-						<li ui-sref-active="active" ng-if="base.currentUser"><a ui-sref="courses">Courses</a></li>
+						<li ui-sref-active="active" ng-if="base.currentUser"><a ui-sref="base.courses">Courses</a></li>
 					</ul>
 				</li>
 				<li class="dropdown" dropdown ng-if="base.currentUser">
@@ -39,7 +39,6 @@
 					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Account<span class="caret"></span></a>
 					<ul class="dropdown-menu" dropdown-menu>
 						<li class="dropdown-header">{{base.currentUser.FirstName + ' ' + base.currentUser.LastName}}</li>
-
 						<li><a href>Settings</a></li>
 						<li><a href>Notifications</a></li>
 						<li><a href>Help</a></li>
@@ -51,6 +50,6 @@
 		</div>
 	</div>
 </nav>
-<div class="container">
+<div class="container-fluid">
 	<main ui-view></main>
 </div>

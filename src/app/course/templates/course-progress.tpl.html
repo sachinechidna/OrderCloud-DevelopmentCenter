@@ -1,0 +1,13 @@
+<div class="course-title">
+    <h2>{{course.course.name}}</h2>
+</div>
+<div class="status-chip">
+    <span class="dropup" dropdown on-toggle="toggled(open)">
+        <a id="course-dropup" dropdown-toggle href>{{course.course.courseLevel}} of {{course.course.classCount}}<i class="fa fa-caret-up"></i></a>
+        <ul class="dropdown-menu" aria-labelledby="course-dropup">
+            <li ng-repeat="class in course.classes" ui-sref="course({courseID: course.course.ID, classID: class.ID})">
+                {{class.Name}}
+            </li>
+        </ul>
+    </span>
+</div>

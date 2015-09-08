@@ -1,0 +1,63 @@
+<div class="left-main">
+    <h1>{{course.class.name}}</h1>
+    <h2>Request</h2>
+    <p>
+        After getting your OrderCloud 3.0 distributor set up and making sure you have an authenticated environment,
+        the first step to any application (either admin or buyer) is to create a buyer. Creating a buyer
+        is a very simple task in the OrderCloud 3.0 REST API. Let's take a look at the Protocols you will need to
+        make this happen.
+    </p>
+    <div style="height: 120px;" class="readonly-box" readonly
+         ui-ace="{
+      useWrapMode : false,
+      theme:'idle_fingers',
+      mode: 'markdown',
+      tabSize: '4',
+      useSoftTabs: true
+    }" ng-model="course.class.leftScripts[0]"></div>
+    <p class="sub-note">
+        If you have any questions about API Protocols or REST API, please review our documentation <a href="">here</a>.
+    </p>
+    <p>
+        You also need to send an object with the request to let the API know what your new
+        buyer's name is, along with some other optional information if you choose.
+    </p>
+    <div style="height: 85px;" class="readonly-box" readonly
+         ui-ace="{
+      useWrapMode : false,
+      theme:'idle_fingers',
+      mode: 'json',
+      tabSize: '4',
+      useSoftTabs: true
+    }" ng-model="course.class.leftScripts[1]"></div>
+    <p>
+        You MUST send in buyer <code>Name</code> at a minimum. If you choose to only meet this minimum
+        requirement, a buyer <code>ID</code> will be randomly generated for you, and the <code>Active</code>
+        will by default be set to false.
+    </p>
+
+    <h2>Response</h2>
+    <p>
+        If you set everything up correctly and your API Call goes through, you will receive a response with the details
+        of your newly created buyer. Regardless of if you provided a buyer <code>ID</code> or <code>Active</code> key/value
+        pair in your <code>POST</code> object, the response will provide you with that information. Here is a look at what
+        a 'success' response will look like,
+    </p>
+    <div style="height: 85px;" class="readonly-box" readonly
+         ui-ace="{
+      useWrapMode : false,
+      theme:'idle_fingers',
+      mode: 'json',
+      tabSize: '4',
+      useSoftTabs: true
+    }" ng-model="course.class.leftScripts[1]"></div>
+    <h2>Action</h2>
+    <p>
+        Now that you understand how a 'Create Buyer' Request works, give it a try yourself. Feel free to grab the
+        response object above and drop it into your console. Make sure your Method, Location, and Header values
+        (Content-Type and Authorization) are set, or your request will fail and you will receive an error in your
+        response console. Good Luck on creating your first buyer!
+    </p>
+    <button ui-sref="course({courseID: course.course.ID, classID: course.course.nextClass})" class="btn btn-success btn-block" ng-show="course.class.apiCallSuccess">Next Class</button>
+</div>
+<div class="left-bottom" ng-include="'course/templates/course-progress.tpl.html'"></div>

@@ -1,0 +1,85 @@
+<div class="course-container">
+    <div class="learning-container">
+        <div class="course-main-left" ng-include="course.class.leftContent"></div>
+        <div class="course-main-center hidden-xs hidden-sm">
+            <div class="section left-section">
+                <div class="head">
+                    <h1>ORDERCLOUD 3.0 CONSOLE</h1>
+                </div>
+                <div class="form">
+                    <form>
+                        <div class="col-xs-4">
+                            <label>Method</label>
+                            <select class="form-control" ng-options="o for o in course.httpOptions" ng-model="course.class.apiCall.method"></select>
+                        </div>
+                        <div class="col-xs-8">
+                            <label>Location</label>
+                            <input class="form-control" type="text" ng-model="course.class.apiCall.url" />
+                        </div>
+                        <div class="col-xs-4" ng-show="course.class.showHeaders">
+                            <label>Header</label>
+                            <input class="form-control" type="text" value="Content-Type"  />
+                        </div>
+                        <div class="col-xs-8" ng-show="course.class.showHeaders">
+                            <label>Value</label>
+                            <input class="form-control" type="text" ng-model="course.class.apiCall.headers['Content-Type']" />
+                        </div>
+                        <div class="col-xs-4" ng-show="course.class.showHeaders">
+                            <input class="form-control" type="text" value="Authorization" />
+                        </div>
+                        <div class="col-xs-8" ng-show="course.class.showHeaders">
+                            <input class="form-control" type="text" ng-model="course.class.apiCall.headers.Authorization" />
+                        </div>
+                    </form>
+                </div>
+                <div class="editor">
+                    <div style="height: 100%;" class="code-box"
+                         ui-ace="{
+                      useWrapMode : true,
+                      theme:'idle_fingers',
+                      mode: 'json',
+                      tabSize: '4',
+                    }" ng-model="course.class.apiCall.object"></div>
+                    <div class="submission" >
+                        <button class="btn btn-primary" ng-disabled="course.submitDisable" ng-click="course.processApiRequest(course.class.apiCall.method, course.class.apiCall.url, course.class.apiCall.params, course.class.apiCall.headers, course.class.apiCall.object)">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="right-section-container">
+                <div class="section right-top-section">
+                    <div class="head">
+                        <h1>CONSOLE LOG</h1>
+                    </div>
+                    <div class="log-container">
+                        <div class="log-item" ng-repeat="log in course.callLog" ng-class="{success: log.success}">
+                            <div class="log-entry-left log-entry">
+                                <div>{{log.method}}</div>
+                            </div>
+                            <div class="log-entry-middle log-entry">
+                                <div>{{log.url}}</div>
+                            </div>
+                            <div class="log-entry-right log-entry">
+                                <div><a href><i class="fa fa-eye"></i></a><a href><i class="fa fa-thumb-tack"></i></a><a href><i class="fa fa-remove"></i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section right-bottom-section">
+                    <div class="head">
+                        <h1>RESPONSE CONSOLE</h1>
+                    </div>
+                    <div class="editor">
+                        <div style="height: 100%;" class="code-box" readonly
+                             ui-ace="{
+                          useWrapMode : true,
+                          theme:'idle_fingers',
+                          showGutter: false,
+                          mode: 'json',
+                          tabSize: '4'
+                        }" ng-model="course.class.apiCall.apiResponse"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

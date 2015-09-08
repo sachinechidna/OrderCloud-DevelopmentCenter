@@ -1,0 +1,63 @@
+<div class="left-main">
+    <h1>{{course.class.name}}</h1>
+    <h2>Starting To Make Sense</h2>
+    <p>
+        As you continue to create new objects in the OrderCloud API, you'll notice that it is pretty easy. This is
+        due to three reasons. One, it is very standardized, meaning the process to complete an object creation for
+        one type of object will be nearly identical (outside of the content) to any other object creation. Two, you are
+        only required to provide the details you WANT to provide (outside of required fields). And three, you
+        rarely have to worry about mapping relationships to other objects inside objects themselves (outside of Assignments,
+        which is where relationships are explicitly defined). You have already heard about all three of these in prior classes,
+        but they are important enough to repeat again and again. These rules also apply to other API Requests, as you
+        will learn in later courses.
+    </p>
+    <h2>Request</h2>
+    <p>
+        Remember back to the 'Create Product' request location url and you will notice a slight difference in the makeup
+        of the location url for 'Create Category' shown below. The 'Create Category' request url includes a
+        <code>buyerID</code> after '.../buyers/', which is telling the server that this category is to only be used
+        under the specified buyer.
+    </p>
+    <div style="height: 120px;" class="readonly-box api-setup" readonly
+         ui-ace="{
+      useWrapMode : false,
+      theme:'idle_fingers',
+      mode: '',
+      tabSize: '4',
+      useSoftTabs: true
+    }" ng-model="course.class.leftScripts[0]"></div>
+    <p>
+        What this means is that if you have multiple buyers who happen to buy the same products
+        under the same category structure, you will need to create two separate categories. The products only need
+        to be defined once, but the categories are buyer specific. The reason for this is due
+        to how a user gains access to a product. A user only has access to a product if they are assigned to the
+        product's assigned category. If a category were allowed to be defined across buyers, you could run into
+        issues with a category being wrongly assigned to a buyer, giving them access to a set of products they shouldn't.
+        In an world as complex as B2B Ecommerce, this is meant to help you from running into unforeseen mistakes.
+    </p>
+    <p>
+
+    </p>
+    <div style="height: 280px;" class="readonly-box" readonly
+         ui-ace="{
+      useWrapMode : false,
+      theme:'idle_fingers',
+      mode: 'json',
+      tabSize: '4',
+      useSoftTabs: true
+    }" ng-model="course.class.leftScripts[1]"></div>
+    <code>ID</code><span class="need recommended">RECOMMENDED</span>
+    <ul>
+        <li>Must be unique from all other products</li>
+        <li>Will be auto-generated if not provided in the request object</li>
+    </ul>
+    <code>Description</code><span class="need recommended">RECOMMENDED</span>
+    <ul>
+        <li>Used to describe the product and used often in the UI</li>
+        <li>Will be left empty if not provided</li>
+    </ul>
+
+
+    <button ui-sref="course({courseID: course.course.ID, classID: course.course.nextClass})" class="btn btn-success btn-block" ng-show="course.class.apiCallSuccess">Next Class</button>
+</div>
+<div class="left-bottom" ng-include="'course/templates/course-progress.tpl.html'"></div>

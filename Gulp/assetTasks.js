@@ -82,6 +82,12 @@ gulp.task('b_m:assets', function() {
         .pipe(gulp.dest(config.build + 'assets'))
 });
 
+gulp.task('b_m:json', function() {
+    return gulp.src(config.source + '**/*.json')
+        .pipe(flatten())
+        .pipe(gulp.dest(config.build + 'assets'))
+})
+
 gulp.task('b_m:fonts', function() {
     return gulp.src('vendor/**/fonts/*', '!vendor/**/dist')
         .pipe(flatten())
@@ -131,5 +137,5 @@ gulp.task('c_c:assets', function() {
 //Master Asset Tasks
 gulp.task('build:styles', gulp.series('b_c:styles', 'b_m:less', 'b_m:sass', 'b_m:css', 'b_m:appCss', 'b_m:styles'));
 gulp.task('compile:css', gulp.series('c_c:css', 'build:styles', 'c_m:css'));
-gulp.task('build:assets', gulp.series('b_c:assets', 'b_m:assets', 'b_m:fonts'));
+gulp.task('build:assets', gulp.series('b_c:assets', 'b_m:assets', 'b_m:fonts', 'b_m:json'));
 gulp.task('compile:assets', gulp.series('c_c:assets', 'build:assets', 'c_m:assets'));

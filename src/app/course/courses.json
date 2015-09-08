@@ -1,0 +1,27 @@
+[
+  {
+    "Name": "Getting Started",
+    "ID": "getting-started",
+    "Description": "Learn the basics of working with OrderCloud 3.0, such as learning about what makes a RESTful API, getting authenticated, and creating basic OrderCloud objects",
+    "Active": true,
+    "Level": "Beginner",
+    "Tags": [
+      "REST",
+      "Authentication",
+      "Beginner"
+    ],
+    "Classes": [
+      "api-intro",
+      "auth-intro",
+      "create-buyer",
+      "create-product",
+      "create-category",
+      "create-user",
+      "create-usergroup"
+    ],
+    "Scope": {}
+  },
+  {
+    "Name": null
+  }
+]
