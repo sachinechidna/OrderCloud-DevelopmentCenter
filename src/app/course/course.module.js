@@ -1,4 +1,4 @@
-angular.module('orderCloud.course', [])
+angular.module('orderCloud')
     .config(CourseConfig);
 
 
@@ -12,7 +12,12 @@ function CourseConfig($stateProvider) {
             url: '/course/:courseID/:classID',
             templateUrl: 'course/templates/course.tpl.html',
             controller: 'courseCtrl',
-            controllerAs: 'course'
+            controllerAs: 'course',
+            'resolve': {
+                OrderCloudServices: function (ApiLoader) {
+                    return ApiLoader.getServices('orderCloud.sdk');
+                }
+            },
         })
 
 

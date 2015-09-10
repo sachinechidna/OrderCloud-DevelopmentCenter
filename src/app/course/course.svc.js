@@ -1,9 +1,7 @@
-angular.module('orderCloud.course')
-    .factory('ApiConsole', ApiConsoleSvc)
-    .factory('CourseDefinition', CourseDefinitionSvc)
-    .factory('ClassDefinition', ClassDefinitionSvc);
+angular.module('orderCloud')
+    .factory('ApiConsole', ApiConsoleSvc);
 
-function ApiConsoleSvc($resource, $cookies, $localForage, $q) {
+function ApiConsoleSvc($resource, $cookies, $localForage, $q, apiurl) {
     function get(url, params, headers) {
         return $resource(url, params, {apiGet: {method: 'GET', headers: headers}}, {'stripTrailingSlashes': true}).apiGet().$promise;
     }
@@ -93,7 +91,8 @@ function ApiConsoleSvc($resource, $cookies, $localForage, $q) {
         })
     }
 
-    function _setConfig(newVals) {
+    function _updateConfig(configObj) {
+
         $localForage.getItem('courseConfig').then(function(vals) {
             if (!vals) {
                 $localForage.setItem('courseConfig', newVals)
@@ -114,12 +113,49 @@ function ApiConsoleSvc($resource, $cookies, $localForage, $q) {
             }
         })
     }
-    function _getConfig(cb) {
+    function _getConfig(config, prefill) {
         $localForage.getItem('courseConfig').then(function(data) {
-            cb(data);
+
         })
     }
 
+    function _selectService(services, selectedService) {
+        var dfd = $q.defer();
+        var returnObj = {};
+        services.forEach(function(service) {
+            if (selectedService == service.name) {
+                returnObj = service;
+                $resource( apiurl + '/v1/docs/' + returnObj.name ).get().$promise
+                    .then(function(data) {
+                        returnObj.Documentation = data.toJSON();
+                        dfd.resolve(returnObj);
+                    });
+            }
+        });
+        return dfd.promise;
+    }
+
+    function _selectMethod(currentService, selectedMethod) {
+        var returnObj = {};
+        if (currentService.methods) {
+            currentService.methods.forEach(function(method) {
+                if (method.name == selectedMethod) {
+                    returnObj = method;
+                }
+            })
+        }
+        return returnObj;
+    }
+
+    function _selectEndpoint(currentService, currentSDKMethodName) {
+        var returnObj = {};
+        currentService.Documentation.Endpoints.forEach(function(endpoint) {
+            if (endpoint.ID == currentSDKMethodName) {
+                returnObj = endpoint;
+            }
+        });
+        return returnObj;
+    }
 
     return {
         processRequest: _processRequest,
@@ -128,76 +164,13 @@ function ApiConsoleSvc($resource, $cookies, $localForage, $q) {
         delCallLogItem: _delCallLogItem,
         setEnvironment: _setEnvironment,
         getEnvironment: _getEnvironment,
-        setConfig: _setConfig,
-        getConfig: _getConfig
+        updateConfig: _updateConfig,
+        getConfig: _getConfig,
+        selectService: _selectService,
+        selectMethod: _selectMethod,
+        selectEndpoint: _selectEndpoint
     };
 }
 
 
 
-function ClassDefinitionSvc($http) {
-    function _getClasses() {
-        return $http.get('assets/classes.json');
-    }
-
-    function _setScope(classID, cb) {
-        var returnObject = {};
-        _getClasses()
-            .success(function(data) {
-                data.forEach(function(each) {
-                    if (each.ID == classID) {
-                        returnObject.name = each.Name;
-                        for (var key in each.Scope) {
-                            returnObject[key] = each.Scope[key];
-                        }
-                    }
-                });
-                cb(returnObject);
-            })
-    }
-
-    return {
-        getClasses: _getClasses,
-        setScope: _setScope
-    }
-}
-
-function CourseDefinitionSvc($http) {
-    function _getCourses() {
-        return $http.get('assets/courses.json');
-    }
-
-    function _setScope(courseID, classID, cb) {
-        var returnObject = {};
-        _getCourses()
-            .success(function(data){
-                data.forEach(function(each) {
-                    if (each.ID == courseID) {
-                        returnObject.name = each.Name;
-                        returnObject.ID = each.ID;
-                        returnObject.classCount = each.Classes.length;
-                        returnObject.classIDs = each.Classes;
-                        for (var i = 0; i < each.Classes.length; i++) {
-                            if (each.Classes[i] == classID) {
-                                returnObject.courseLevel = i + 1;
-                                if (i + 1 != each.Classes.length) {
-                                    returnObject.nextClass = each.Classes[i + 1]
-                                }
-                            }
-                        }
-                        for (var key in each.Scope) {
-                            returnObject[key] = each[key];
-                        }
-                    }
-                });
-                cb(returnObject)
-            });
-
-
-    }
-
-    return {
-        getCourses: _getCourses,
-        setScope: _setScope
-    }
-}

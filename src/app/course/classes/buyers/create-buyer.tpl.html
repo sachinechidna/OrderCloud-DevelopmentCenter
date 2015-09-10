@@ -1,5 +1,5 @@
 <div class="left-main">
-    <h1>{{course.class.name}}</h1>
+    <h1>{{course.class.Name}}</h1>
     <h2>Request</h2>
     <p>
         After getting your OrderCloud 3.0 distributor set up and making sure you have an authenticated environment,
@@ -14,7 +14,7 @@
       mode: 'markdown',
       tabSize: '4',
       useSoftTabs: true
-    }" ng-model="course.class.leftScripts[0]"></div>
+    }" ng-model="course.class.LeftScripts[0]"></div>
     <p class="sub-note">
         If you have any questions about API Protocols or REST API, please review our documentation <a href="">here</a>.
     </p>
@@ -29,7 +29,7 @@
       mode: 'json',
       tabSize: '4',
       useSoftTabs: true
-    }" ng-model="course.class.leftScripts[1]"></div>
+    }" ng-model="course.class.LeftScripts[1]"></div>
     <p>
         You MUST send in buyer <code>Name</code> at a minimum. If you choose to only meet this minimum
         requirement, a buyer <code>ID</code> will be randomly generated for you, and the <code>Active</code>
@@ -50,7 +50,7 @@
       mode: 'json',
       tabSize: '4',
       useSoftTabs: true
-    }" ng-model="course.class.leftScripts[1]"></div>
+    }" ng-model="course.class.LeftScripts[1]"></div>
     <h2>Action</h2>
     <p>
         Now that you understand how a 'Create Buyer' Request works, give it a try yourself. Feel free to grab the
@@ -58,6 +58,6 @@
         (Content-Type and Authorization) are set, or your request will fail and you will receive an error in your
         response console. Good Luck on creating your first buyer!
     </p>
-    <button ui-sref="course({courseID: course.course.ID, classID: course.course.nextClass})" class="btn btn-success btn-block" ng-show="course.class.apiCallSuccess">Next Class</button>
+    <button ui-sref="course({courseID: course.course.ID, classID: course.course.NextClass})" class="btn btn-success btn-block" ng-show="course.class.apiCallSuccess">Next Class</button>
 </div>
 <div class="left-bottom" ng-include="'course/templates/course-progress.tpl.html'"></div>

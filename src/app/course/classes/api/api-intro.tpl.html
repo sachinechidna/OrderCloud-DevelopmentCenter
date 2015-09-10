@@ -1,5 +1,5 @@
 <div class="left-main">
-    <h1>{{course.class.name}}</h1>
+    <h1>{{course.class.Name}}</h1>
     <h2>What is a RESTful API?</h2>
     <p>
         A RESTful (Representational State Transfer) API is an increasingly popular software architecture that
@@ -141,7 +141,7 @@
       mode: 'json',
       tabSize: '4',
       useSoftTabs: true
-    }" ng-model="course.class.leftScripts[0]"></div>
+    }" ng-model="course.class.LeftScripts[0]"></div>
     <p>
         which is where the content of the object you are creating will be located.
     </p>
@@ -194,7 +194,7 @@
     <h3>
         Goodluck on your adventure with OrderCloud 3.0!!!
     </h3>
-    <button ui-sref="course({courseID: course.course.ID, classID: course.course.nextClass})" class="btn btn-success btn-block" ng-show="course.class.apiCallSuccess">Next Class</button>
+    <button ui-sref="course({courseID: course.course.ID, classID: course.course.NextClass})" class="btn btn-success btn-block" ng-show="course.class.apiCallSuccess">Next Class</button>
 
 
 

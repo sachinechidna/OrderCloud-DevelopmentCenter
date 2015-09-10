@@ -50,7 +50,7 @@ gulp.task('watch:js', function() {
 gulp.task('watch:assets', function() {
     console.log("running 'watch:assets' task");
     gulp.watch(config.app_files.assets, gulp.series('build:assets', 'build:inject', function() {browserSync.reload()}));
-    gulp.watch(config.supportedStyles, gulp.series('build:styles'));
+    gulp.watch(config.supportedStyles, gulp.series('build:styles', 'build:inject'));
 });
 
 gulp.task('watch:other', function() {

@@ -68,6 +68,7 @@
 .course-container {
   position: absolute;
   top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   display: flex;
@@ -99,6 +100,7 @@
 }
 
 .learning-container {
+  margin-top: 50px;
   flex: 1;
   display: flex;
   flex-wrap: nowrap;
@@ -283,31 +285,76 @@
   .head.responseError {
     background-color: #ff917f;
   }
-  .form {
-    overflow: auto;
+  .protocol {
+    display: flex;
+    flex-direction: column;
     margin: 20px;
-    background-color: #F2F6F9;
-    border: 1px solid #d7d7d7;
-    flex: 1;
-    padding: 15px 5px;
+    margin-bottom: 0;
+    background-color: #ffffff;
     label {
       padding: 5px;
       margin: 0;
       font-weight: 500;
     }
-    input, select {
-      font-size: .9em;
-      margin: 2px;
-      border-radius: 0;
-      height: 30px;
-      padding: 0 5px;
+
+    .headers {
+      padding-top: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dddddd;
     }
-    margin-bottom: 0;
+    .params {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .input-group {
+      margin: 5px 10px;
+      .param-name {
+        width: 125px;
+      }
+      .param-name.danger {
+        background-color: #F2DEDE;
+      }
+    }
+    .http-verb {
+      color: #adadad;
+    }
+    .protocol-content {
+      margin-top: 10px;
+      display: flex;
+      height: auto;
+      flex-direction: column;
+      align-items: stretch;
+      align-content: stretch;
+      .box-headers {
+        display: flex;
+        align-items: stretch;
+        .header {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 1;
+          height: 40px;
+          background-color: #EEEEEE;
+        }
+        .header:hover {
+          cursor: pointer;
+        }
+        .header.active {
+          background-color: #d7d7d7;
+        }
+      }
+      .box-content {
+        max-height: 350px;
+        overflow: auto;
+        height: 100%;
+        background-color: #d7d7d7;
+      }
+    }
   }
   .editor {
     position: relative;
     padding: 15px 20px;
-    flex: 2;
+    flex: 1;
     text-align: center;
     .submission {
       button {
@@ -376,7 +423,19 @@
 
 }
 .left-section {
+  position: relative;
   flex-basis: 700px;
+  .btn.btn-info {
+    background-color: #838383;
+    position: absolute;
+    border: none;
+    bottom: 25px;
+    right: 30px;
+    width: 100px;
+  }
+  .btn.btn-info.sdk {
+    background-color: #51a17a;
+  }
 }
 
 .right-section-container {
@@ -397,7 +456,7 @@
   flex: 1;
   background-image: url("fuzzy_back.jpg");
   background-size: cover;
-  background-color: #48A9B0;
+  background-color: #bedcf9;
   padding: 20px;
   display: flex;
   align-items: stretch;

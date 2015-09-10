@@ -1,49 +1,73 @@
 <div class="course-container">
     <div class="learning-container">
-        <div class="course-main-left" ng-include="course.class.leftContent"></div>
+        <div class="course-main-left" ng-include="course.class.LeftContent"></div>
         <div class="course-main-center hidden-xs hidden-sm">
-            <div class="section left-section">
+            <div class="section left-section" ng-class="{sdk: course.config.sdkMode}">
                 <div class="head">
                     <h1>ORDERCLOUD 3.0 CONSOLE</h1>
                 </div>
-                <div class="form">
-                    <form>
-                        <div class="col-xs-4">
-                            <label>Method</label>
-                            <select class="form-control" ng-options="o for o in course.httpOptions" ng-model="course.class.apiCall.method"></select>
+                <div class="protocol">
+                    <section class="console-selector">
+                        <span dropdown>
+                          <a href dropdown-toggle>
+                              {{course.request.selectedMethod.name || 'Method'}} <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                              <li ng-repeat="method in course.request.selectedService.methods">
+                                  <a href ng-click="course.updateMethodDependencies(method.name)">{{method.name}}</a>
+                              </li>
+                          </ul>
+                        </span>
+                        <span class="http-verb">
+                            {{course.request.httpVerb}}
+                        </span>
+                        <pre>{{course.request.selectedEndpoint.UriTemplate}}</pre>
+                        <span class="btn btn-link" ng-click="course.config.hideParams = !course.config.hideParams"> <!--ng-if="course.api.SelectedEndpoint && course.api.SelectedEndpoint.Parameters.length"-->
+                            Params
+                        </span>
+                    </section>
+                    <section collapse="course.config.hideParams">
+                        <span><a href type="button" ng-init="headersCollapsed = true" ng-click="headersCollapsed = !headersCollapsed">Show Headers</a></span>
+                        <div collapse="headersCollapsed" class="headers">
+                            <div class="input-group">
+                                <span class="input-group-addon param-name">Content-Type</span>
+                                <input type="text" class="form-control" ng-model="course.request.call.Headers['Content-Type']">
+                                <span class="input-group-addon param-type">string</span>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon param-name">Authentication</span>
+                                <input type="text" class="form-control" ng-model="course.request.call.Headers.Authentication">
+                                <span class="input-group-addon param-type">string</span>
+                            </div>
                         </div>
-                        <div class="col-xs-8">
-                            <label>Location</label>
-                            <input class="form-control" type="text" ng-model="course.class.apiCall.url" />
+                        <div class="params">
+                            <div class="input-group" ng-repeat="param in course.request.selectedEndpoint.Parameters">
+                                <span class="input-group-addon param-name" ng-class="{danger: param.Required}">{{param.Name}}</span>
+                                <input type="text" title="{{param.Description}}" ng-required="true" class="form-control">
+                                <span class="input-group-addon param-type">{{param.Type}}</span>
+                            </div>
                         </div>
-                        <div class="col-xs-4" ng-show="course.class.showHeaders">
-                            <label>Header</label>
-                            <input class="form-control" type="text" value="Content-Type"  />
-                        </div>
-                        <div class="col-xs-8" ng-show="course.class.showHeaders">
-                            <label>Value</label>
-                            <input class="form-control" type="text" ng-model="course.class.apiCall.headers['Content-Type']" />
-                        </div>
-                        <div class="col-xs-4" ng-show="course.class.showHeaders">
-                            <input class="form-control" type="text" value="Authorization" />
-                        </div>
-                        <div class="col-xs-8" ng-show="course.class.showHeaders">
-                            <input class="form-control" type="text" ng-model="course.class.apiCall.headers.Authorization" />
-                        </div>
-                    </form>
+
+                    </section>
+
+
                 </div>
+
                 <div class="editor">
-                    <div style="height: 100%;" class="code-box"
+                    <div ng-hide="false" style="height: 100%;" class="code-box"
                          ui-ace="{
                       useWrapMode : true,
                       theme:'idle_fingers',
                       mode: 'json',
                       tabSize: '4',
-                    }" ng-model="course.class.apiCall.object"></div>
-                    <div class="submission" >
-                        <button class="btn btn-primary" ng-disabled="course.submitDisable" ng-click="course.processApiRequest(course.class.apiCall.method, course.class.apiCall.url, course.class.apiCall.params, course.class.apiCall.headers, course.class.apiCall.object)">Submit</button>
+                      showPrintMargin: false
+                    }" ng-model="course.request.selectedEndpoint.RequestBody.Sample"></div>
+                    <div style="height:100%" ng-show="false"></div> <!--Keeps submit button in same location when editor is hidden-->
+                    <div class="submission">
+                        <button class="btn btn-primary" ng-disabled="course.config.submitDisable" ng-click="course.processApiRequest(course.class.ApiCall.Method, course.class.ApiCall.Url, course.class.ApiCall.Params, course.class.ApiCall.Headers, course.class.ApiCall.Object)">Submit</button>
                     </div>
                 </div>
+                <button class="btn btn-info" ng-class="{sdk: course.config.sdkMode}" ng-click="course.toggleConsoleMode()">{{course.request.mode}}</button>
             </div>
             <div class="right-section-container">
                 <div class="section right-top-section">
@@ -75,8 +99,9 @@
                           theme:'idle_fingers',
                           showGutter: false,
                           mode: 'json',
-                          tabSize: '4'
-                        }" ng-model="course.class.apiCall.apiResponse"></div>
+                          tabSize: '4',
+                          showPrintMargin: false
+                        }" ng-model="course.request.response"></div>
                     </div>
                 </div>
             </div>

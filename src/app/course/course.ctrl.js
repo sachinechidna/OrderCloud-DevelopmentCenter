@@ -1,108 +1,134 @@
-angular.module('orderCloud.course')
+angular.module('orderCloud')
     .controller('courseCtrl', CourseController);
 
-function CourseController($stateParams, ApiConsole, CourseDefinition, ClassDefinition, $filter) {
+function CourseController($q, $stateParams, ApiConsole, ApiConsoleService, $filter, OrderCloudServices, CoursesService, ClassesService) {
     var vm = this;
     vm.class = {};
     vm.course = {};
     vm.config = {};
-    vm.setCourseScope = setCourseScope;
-    vm.setClassScope = setClassScope;
-    vm.getConfig = getConfig;
+    vm.request = {};
+    vm.services = {};
+
     vm.getCallLog = getCallLog;
     vm.processApiRequest = processApiRequest;
-    vm.setClassLinks = setClassLinks;
-    vm.stringifyAceModels = stringifyAceModels;
+    vm.toggleConsoleMode = toggleConsoleMode;
+    vm.setService = setService;
+    vm.setMethod = setMethod;
+    vm.setEndpoint = setEndpoint;
+    vm.updateMethodDependencies = updateMethodDependencies;
 
-    //init
-    vm.setCourseScope();
-    vm.setClassScope();
+    //init config
+    vm.request.selectedService = "";
+    vm.request.selectedMethod = "";
+    vm.request.selectedEndpoint = null;
+    vm.request.response = null;
+    vm.request.mode = "";
+    vm.request.call = {};
+    vm.request.call.Headers = {};
+    vm.request.call.Params = {};
+    vm.request.call.object = {};
+    vm.request.call.Headers['Content-Type'] = 'application/json';
+    vm.request.call.Headers.Authentication = 'Bearer {token}';
+
+    vm.config.submitDisable = false;
+    vm.config.consoleType = 'API';
+    vm.config.prefill = false;
+    vm.config.sdkSet = false;
+    vm.config.hideParams = true;
+
+    vm.services = OrderCloudServices;
+    setCourseScope();
+    setClassScope();
+    setRequestScope();
     vm.getCallLog();
-    vm.submitDisable = false;
+
 
     if ($stateParams.classID == 'api-intro') {
-        vm.submitDisable = true;
+        vm.config.submitDisable = true;
     }
-    function setClassLinks(classIDs) {
-        var output = [];
-        var tempObj = {};
-        ClassDefinition.getClasses().then(function(data) {
-            classIDs.forEach(function(ID) {
-                data.data.forEach(function(eachClass) {
-                    if (ID == eachClass.ID) {
-                        tempObj.ID = ID;
-                        tempObj.Name = eachClass.Name;
-                        output.push(tempObj);
-                        tempObj = {};
 
-                    }
-                })
-            });
-            vm.classes = output;
-        });
-    }
-    function stringifyAceModels() {
-        for (var i = 0; i < vm.class.leftScripts.length; i++) {
-            if ( typeof vm.class.leftScripts[i] != 'string') {
-                vm.class.leftScripts[i] = $filter('json')(vm.class.leftScripts[i]);
-            }
-        }
-    }
-    function getConfig() {
-        ApiConsole.getConfig(function(data) {
-            vm.config.prefill = true;
-            if (vm.config.prefill == true && data) {
-                if (data.token && vm.class.apiCall.headers.Authorization) {
-                    vm.class.apiCall.headers.Authorization = vm.class.apiCall.headers.Authorization.replace('{token}', data.token);
-                }
-                if (data.apiEnv) {
-                    vm.class.apiCall.url = vm.class.apiCall.url.replace('{apiEnv}', data.apiEnv);
-                } else {
-                    vm.class.apiCall.url = vm.class.apiCall.url.replace('{apiEnv}', "test");
-                }
-                if (data.buyerID) {
-                    vm.class.apiCall.url = vm.class.apiCall.url.replace('{buyerID}', data.buyerID);
-                }
-
-            } else {
-                vm.class.apiCall.url = vm.class.apiCall.url.replace('{apiEnv}', "test");
-            }
-        })
-    }
     function setCourseScope() {
-        CourseDefinition.setScope($stateParams.courseID, $stateParams.classID, function(data) {
-            vm.course = data;
-            vm.setClassLinks(data.classIDs);
-        })
+        vm.course = CoursesService.setScope($stateParams.courseID, $stateParams.classID);
+        vm.courseList = ClassesService.getClassList(vm.course.Classes, ['ID', 'Name']);
     }
     function setClassScope() {
-        ClassDefinition.setScope($stateParams.classID, function(data) {
-            vm.class = data;
-            if (vm.class.apiCall.object) {
-                vm.class.apiCall.object = $filter('json')(vm.class.apiCall.object);
-            }
-            vm.class.apiCallError = false;
-            vm.class.apiCallSuccess = false;
-            vm.stringifyAceModels();
-            if (vm.class.xp.setResponse) {
-                vm.class.apiCall.apiResponse = $filter('json')(vm.class.xp.setResponse);
-            }
-            getConfig();
-        });
+        vm.class = ClassesService.setScope($stateParams.classID);
+        vm.class.apiCallError = false;
+        vm.class.apiCallSuccess = false;
+        vm.config.sdkSet = false;
+
+
     }
+    function setRequestScope() {
+        vm.setService(vm.services, vm.class.SelectedService)
+            .then(function() {
+                vm.setMethod(vm.class.SelectedMethod);
+                vm.setEndpoint();
+            });
+        if (vm.class && vm.class.Mode) {
+            vm.request.mode = vm.class.Mode;
+            if (vm.request.mode = 'API') {
+                vm.config.sdkMode = false;
+            } else {
+                vm.config.sdkMode = true;
+            }
+        } else {
+            vm.request.mode = 'API';
+            vm.config.sdkMode = false;
+        }
+    }
+
     function getCallLog() {
         ApiConsole.getCallLog(function(data) {
             vm.callLog = data;
         });
     }
+
+    function toggleConsoleMode() {
+        if (vm.request.mode == 'API') {
+            vm.request.mode = 'SDK';
+            vm.config.sdkMode = true;
+        } else {
+            vm.request.mode = 'API';
+            vm.config.sdkMode = false;
+        }
+    }
+
+    function setService(services, newService) {
+        var dfd = $q.defer();
+       ApiConsole.selectService(services, newService)
+           .then(function(data) {
+               vm.request.selectedService = data;
+               dfd.resolve();
+           });
+        vm.request.selectedMethod = null;
+        vm.request.selectedEndpoint = null;
+        return dfd.promise;
+    }
+
+    function setMethod(newMethodName) {
+        vm.request.selectedMethod = ApiConsole.selectMethod(vm.request.selectedService, newMethodName);
+    }
+
+    function setEndpoint() {
+        vm.request.selectedEndpoint = ApiConsole.selectEndpoint(vm.request.selectedService, vm.request.selectedMethod.name);
+        vm.request.httpVerb = vm.request.selectedEndpoint.HttpVerb;
+    }
+
+    function updateMethodDependencies(newMethodName) {
+        setMethod(newMethodName);
+        setEndpoint();
+    }
+
+
     function processApiRequest (method, url, params, headers, object) {
 
         ApiConsole.processRequest(method, url, params, headers, object)
             .then(function(data) {
-                vm.class.apiCall.apiResponse = $filter('json')(data);
+                vm.request.response = $filter('json')(data);
                 data = JSON.parse(vm.class.apiCall.apiResponse);
-                vm.class.apiCallError = false;
-                vm.class.apiCallSuccess = true;
+                vm.request.error = false;
+                vm.request.success = true;
                 if ($stateParams.classID == 'auth-intro') {
                     ApiConsole.setConfig({token: data.access_token});
                 }
@@ -125,10 +151,10 @@ function CourseController($stateParams, ApiConsole, CourseDefinition, ClassDefin
 
 
             }, function(reason) {
-                vm.class.apiCall.apiResponse = $filter('json')(reason);
-                reason = JSON.parse(vm.class.apiCall.apiResponse);
-                vm.class.apiCallError = true;
-                vm.class.apiCallSuccess = false;
+                vm.request.response = $filter('json')(reason);
+                reason = JSON.parse(vm.class.request.response);
+                vm.request.error = true;
+                vm.request.success = false;
                 var callLogData = {
                     'method': method,
                     'url': url,
@@ -169,11 +195,4 @@ function CourseController($stateParams, ApiConsole, CourseDefinition, ClassDefin
         /*TODO: Allows user to toggle between multiple working tabs*/
     }
 
-    vm.httpOptions = [
-        'GET',
-        'POST',
-        'PUT',
-        'PATCH',
-        'DELETE'
-    ];
 }

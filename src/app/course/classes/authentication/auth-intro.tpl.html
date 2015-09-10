@@ -1,5 +1,5 @@
 <div class="left-main">
-    <h1>{{course.class.name}}</h1>
+    <h1>{{course.class.Name}}</h1>
     <h2>Getting Started</h2>
     <p>
         Getting Authenticated is the first step in working with the OrderCloud 3.0 API. Before getting authenticated,
@@ -44,7 +44,7 @@
       theme:'idle_fingers',
       tabSize: '4',
       useSoftTabs: true
-    }" ng-model="course.class.leftScripts[0]"></div>
+    }" ng-model="course.class.LeftScripts[0]"></div>
     <p class="tabless">
         It is made up of five separate chunks. The first is your ClientID (formatted, 'client_id'),
         which you should already have with you. The second is the grant_type, which you will set to 'password' and
@@ -60,7 +60,7 @@
         your OrderCloud 3.0 Console settings (look in the upper right hand corner of the OrderCloud 3.0 Console for
         the dropdown)
     </p>
-    <button ui-sref="course({courseID: course.course.ID, classID: course.course.nextClass})" class="btn btn-success btn-block" ng-show="course.class.apiCallSuccess">Next Class</button>
+    <button ui-sref="course({courseID: course.course.ID, classID: course.course.NextClass})" class="btn btn-success btn-block" ng-show="course.class.apiCallSuccess">Next Class</button>
 
 </div>
 <div class="left-bottom" ng-include="'course/templates/course-progress.tpl.html'"></div>
