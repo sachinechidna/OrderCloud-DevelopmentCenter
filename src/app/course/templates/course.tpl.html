@@ -7,6 +7,9 @@
                     <h1>ORDERCLOUD 3.0 CONSOLE</h1>
                 </div>
                 <div class="protocol">
+                    <label class="label label-primary text-capitalize">
+                        {{course.request.selectedService.name + ' service'}}
+                    </label>
                     <section class="console-selector">
                         <span dropdown>
                           <a href dropdown-toggle>
@@ -19,7 +22,7 @@
                           </ul>
                         </span>
                         <span class="http-verb">
-                            {{course.request.httpVerb}}
+                            {{course.request.call.Method}}
                         </span>
                         <pre>{{course.request.selectedEndpoint.UriTemplate}}</pre>
                         <span class="btn btn-link" ng-click="course.config.hideParams = !course.config.hideParams"> <!--ng-if="course.api.SelectedEndpoint && course.api.SelectedEndpoint.Parameters.length"-->
@@ -29,22 +32,22 @@
                     <section collapse="course.config.hideParams">
                         <span><a href type="button" ng-init="headersCollapsed = true" ng-click="headersCollapsed = !headersCollapsed">Show Headers</a></span>
                         <div collapse="headersCollapsed" class="headers">
-                            <div class="input-group">
-                                <span class="input-group-addon param-name">Content-Type</span>
-                                <input type="text" class="form-control" ng-model="course.request.call.Headers['Content-Type']">
-                                <span class="input-group-addon param-type">string</span>
+                            <div class="param-group row">
+                                <span class="param-name col-xs-3">Content-Type</span>
+                                <input class="param-input col-xs-7" type="text" class="form-control" ng-model="course.request.call.Headers['Content-Type']">
+                                <span class="param-type col-xs-2">string</span>
                             </div>
-                            <div class="input-group">
-                                <span class="input-group-addon param-name">Authentication</span>
-                                <input type="text" class="form-control" ng-model="course.request.call.Headers.Authentication">
-                                <span class="input-group-addon param-type">string</span>
+                            <div class="param-group row">
+                                <span class="param-name col-xs-3">Authentication</span>
+                                <input class="param-input col-xs-7" type="text" class="form-control" ng-model="course.request.call.Headers.Authentication">
+                                <span class="param-type col-xs-2">string</span>
                             </div>
                         </div>
                         <div class="params">
-                            <div class="input-group" ng-repeat="param in course.request.selectedEndpoint.Parameters">
-                                <span class="input-group-addon param-name" ng-class="{danger: param.Required}">{{param.Name}}</span>
-                                <input type="text" title="{{param.Description}}" ng-required="true" class="form-control">
-                                <span class="input-group-addon param-type">{{param.Type}}</span>
+                            <div class="param-group row" ng-repeat="param in course.request.selectedEndpoint.Parameters">
+                                <span class="param-name col-xs-3" ng-class="{danger: param.Required && !course.request.call.Params[param.Name]}">{{param.Name}}</span>
+                                <input class="param-input col-xs-7" type="text" title="{{param.Description}}" ng-required="param.Required" class="form-control" ng-model="course.request.call.Params[param.Name]">
+                                <span class="param-type col-xs-2">{{param.Type}}</span>
                             </div>
                         </div>
 
@@ -61,10 +64,10 @@
                       mode: 'json',
                       tabSize: '4',
                       showPrintMargin: false
-                    }" ng-model="course.request.selectedEndpoint.RequestBody.Sample"></div>
+                    }" ng-model="course.request.call.Object"></div>
                     <div style="height:100%" ng-show="false"></div> <!--Keeps submit button in same location when editor is hidden-->
                     <div class="submission">
-                        <button class="btn btn-primary" ng-disabled="course.config.submitDisable" ng-click="course.processApiRequest(course.class.ApiCall.Method, course.class.ApiCall.Url, course.class.ApiCall.Params, course.class.ApiCall.Headers, course.class.ApiCall.Object)">Submit</button>
+                        <button class="btn btn-primary" ng-disabled="course.config.submitDisable" ng-click="course.processRequest()">Submit</button>
                     </div>
                 </div>
                 <button class="btn btn-info" ng-class="{sdk: course.config.sdkMode}" ng-click="course.toggleConsoleMode()">{{course.request.mode}}</button>

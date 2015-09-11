@@ -288,13 +288,11 @@
   .protocol {
     display: flex;
     flex-direction: column;
-    margin: 20px;
-    margin-bottom: 0;
+    margin: 5px 20px 0 20px;
     background-color: #ffffff;
-    label {
-      padding: 5px;
+    label.label-primary {
       margin: 0;
-      font-weight: 500;
+      align-self: flex-start;
     }
 
     .headers {
@@ -306,14 +304,38 @@
       padding-top: 10px;
       padding-bottom: 10px;
     }
-    .input-group {
+    .param-group {
       margin: 5px 10px;
+      height: auto;
       .param-name {
-        width: 125px;
+        border-bottom-left-radius: 3px;
+        border-top-left-radius: 3px;
+        border: 1px solid #dddddd;
+        padding: 7px;
+        text-align: center;
+        background-color: #eeeeee;
       }
       .param-name.danger {
         background-color: #F2DEDE;
       }
+      .param-input {
+        z-index: 1;
+        border: transparent;
+        border-top: 1px solid #dddddd;
+        border-bottom: 1px solid #dddddd;
+        padding: 7px;
+      }
+      .param-type {
+        z-index: 0;
+        text-align: center;
+        border-bottom-right-radius: 3px;
+        border-top-right-radius: 3px;
+        border: 1px solid #dddddd;
+        padding: 7px;
+        background-color: #eeeeee;
+      }
+
+
     }
     .http-verb {
       color: #adadad;

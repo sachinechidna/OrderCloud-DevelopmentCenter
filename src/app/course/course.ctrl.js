@@ -1,7 +1,7 @@
 angular.module('orderCloud')
     .controller('courseCtrl', CourseController);
 
-function CourseController($q, $stateParams, ApiConsole, ApiConsoleService, $filter, OrderCloudServices, CoursesService, ClassesService) {
+function CourseController($q, $stateParams, ApiConsole, apiurl, $filter, OrderCloudServices, CoursesService, ClassesService) {
     var vm = this;
     vm.class = {};
     vm.course = {};
@@ -10,31 +10,33 @@ function CourseController($q, $stateParams, ApiConsole, ApiConsoleService, $filt
     vm.services = {};
 
     vm.getCallLog = getCallLog;
-    vm.processApiRequest = processApiRequest;
+    vm.processRequest = processRequest;
     vm.toggleConsoleMode = toggleConsoleMode;
     vm.setService = setService;
     vm.setMethod = setMethod;
     vm.setEndpoint = setEndpoint;
+    vm.setUrl = setUrl;
     vm.updateMethodDependencies = updateMethodDependencies;
 
     //init config
     vm.request.selectedService = "";
     vm.request.selectedMethod = "";
     vm.request.selectedEndpoint = null;
-    vm.request.response = null;
     vm.request.mode = "";
-    vm.request.call = {};
-    vm.request.call.Headers = {};
-    vm.request.call.Params = {};
-    vm.request.call.object = {};
-    vm.request.call.Headers['Content-Type'] = 'application/json';
-    vm.request.call.Headers.Authentication = 'Bearer {token}';
+    vm.request.call = {
+        Params: {},
+        Object: null,
+        Url: null,
+        Headers: {
+            Authentication: 'Bearer {token}',
+            'Content-Type': 'application/json'
+        }
+    };
 
     vm.config.submitDisable = false;
-    vm.config.consoleType = 'API';
     vm.config.prefill = false;
-    vm.config.sdkSet = false;
     vm.config.hideParams = true;
+
 
     vm.services = OrderCloudServices;
     setCourseScope();
@@ -49,13 +51,10 @@ function CourseController($q, $stateParams, ApiConsole, ApiConsoleService, $filt
 
     function setCourseScope() {
         vm.course = CoursesService.setScope($stateParams.courseID, $stateParams.classID);
-        vm.courseList = ClassesService.getClassList(vm.course.Classes, ['ID', 'Name']);
+        vm.course.CourseList = ClassesService.getClassList(vm.course.Classes, ['ID', 'Name']);
     }
     function setClassScope() {
         vm.class = ClassesService.setScope($stateParams.classID);
-        vm.class.apiCallError = false;
-        vm.class.apiCallSuccess = false;
-        vm.config.sdkSet = false;
 
 
     }
@@ -64,6 +63,8 @@ function CourseController($q, $stateParams, ApiConsole, ApiConsoleService, $filt
             .then(function() {
                 vm.setMethod(vm.class.SelectedMethod);
                 vm.setEndpoint();
+                vm.setUrl();
+                vm.request.call.Object = vm.request.selectedEndpoint.RequestBody.Sample;
             });
         if (vm.class && vm.class.Mode) {
             vm.request.mode = vm.class.Mode;
@@ -76,6 +77,7 @@ function CourseController($q, $stateParams, ApiConsole, ApiConsoleService, $filt
             vm.request.mode = 'API';
             vm.config.sdkMode = false;
         }
+
     }
 
     function getCallLog() {
@@ -112,67 +114,80 @@ function CourseController($q, $stateParams, ApiConsole, ApiConsoleService, $filt
 
     function setEndpoint() {
         vm.request.selectedEndpoint = ApiConsole.selectEndpoint(vm.request.selectedService, vm.request.selectedMethod.name);
-        vm.request.httpVerb = vm.request.selectedEndpoint.HttpVerb;
+        vm.request.call.Method = vm.request.selectedEndpoint.HttpVerb;
+        vm.request.call.Object = vm.request.selectedEndpoint.RequestBody ? vm.request.selectedEndpoint.RequestBody.Sample : "";
+    }
+
+    function setUrl() {
+        vm.request.call.BaseUrl = vm.config.environment ? 'https://" + vm.config.environment' + 'api.ordercloud.io' : apiurl;
+        vm.request.call.Url = vm.request.call.BaseUrl + '/' + vm.request.selectedEndpoint.UriTemplate;
+
     }
 
     function updateMethodDependencies(newMethodName) {
         setMethod(newMethodName);
         setEndpoint();
+        setUrl();
+
     }
 
 
-    function processApiRequest (method, url, params, headers, object) {
-
-        ApiConsole.processRequest(method, url, params, headers, object)
-            .then(function(data) {
-                vm.request.response = $filter('json')(data);
-                data = JSON.parse(vm.class.apiCall.apiResponse);
-                vm.request.error = false;
-                vm.request.success = true;
-                if ($stateParams.classID == 'auth-intro') {
-                    ApiConsole.setConfig({token: data.access_token});
-                }
-
-                var callLogData = {
-                    'method': method,
-                    'url': url,
-                    'params': params,
-                    'headers': headers,
-                    'object': object,
-                    'response': data,
-                    'success': true,
-                    'time': Date.now()
-                };
-                ApiConsole.addCallLogItem(callLogData)
-                    .then(function() {
-                        getCallLog();
-                        vm.getConfig();
-                    });
-
-
-            }, function(reason) {
-                vm.request.response = $filter('json')(reason);
-                reason = JSON.parse(vm.class.request.response);
-                vm.request.error = true;
-                vm.request.success = false;
-                var callLogData = {
-                    'method': method,
-                    'url': url,
-                    'params': params,
-                    'headers': headers,
-                    'object': object,
-                    'response': reason,
-                    'success': false,
-                    'time': Date.now()
-                };
-                ApiConsole.addCallLogItem(callLogData)
-                    .then(function() {
-                        getCallLog();
-                        vm.getConfig();
-
-                    });
-            })
+    function processRequest () {
+        if (vm.request.mode == 'API') {
+            ApiConsole.processRawRequest(vm.request.call)
+                .then(function(data) {
+                    callSuccess(data)
+                }, function(reason) {
+                    callFailure(reason)
+                })
+        }
+        if (vm.request.mode = 'SDK') {
+            ApiConsole.processSdkRequest(vm.request.call, vm.request.selectedEndpoint.Parameters, vm.request.selectedMethod.params, vm.request.selectedService.name, vm.request.selectedMethod.name)
+                .then(function(data) {
+                    callSuccess(data)
+                }, function(reason) {
+                    callFailure(reason)
+                })
+        }
     }
+
+
+    function callSuccess(data) {
+        vm.request.call.Response = $filter('json')(data);
+        data = JSON.parse(vm.request.call.Response);
+        vm.request.call.error = false;
+        vm.request.call.success = true;
+        /* TODO: add config services and include in controller
+        if ($stateParams.classID == 'auth-intro') {
+            ApiConsole.setConfig({token: data.access_token});
+        }*/
+        addToCallLog(data, true);
+    }
+    function callFailure(reason) {
+        vm.request.call.Response = $filter('json')(reason);
+        reason = JSON.parse(vm.request.call.Response);
+        vm.request.error = true;
+        vm.request.success = false;
+        addToCallLog(reason, false);
+    }
+    function addToCallLog(data, passed) {
+        var callLogData = {
+            'method': vm.request.call.Method,
+            'url': vm.request.call.Url,
+            'params': vm.request.call.Params,
+            'headers': vm.request.call.Headers,
+            'object': vm.request.call.Object,
+            'response': data,
+            'success': passed,
+            'time': Date.now()
+        };
+        ApiConsole.addCallLogItem(callLogData)
+            .then(function() {
+                getCallLog();
+            });
+
+    }
+
     function addParam(){
         /*TODO: adds line for new param in console*/
     }

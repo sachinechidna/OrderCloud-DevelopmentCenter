@@ -1,7 +1,7 @@
 angular.module('orderCloud')
     .factory('ApiConsole', ApiConsoleSvc);
 
-function ApiConsoleSvc($resource, $cookies, $localForage, $q, apiurl) {
+function ApiConsoleSvc($resource, $localForage, $q, apiurl, Underscore, $injector, $cookies) {
     function get(url, params, headers) {
         return $resource(url, params, {apiGet: {method: 'GET', headers: headers}}, {'stripTrailingSlashes': true}).apiGet().$promise;
     }
@@ -18,23 +18,53 @@ function ApiConsoleSvc($resource, $cookies, $localForage, $q, apiurl) {
         return $resource(url, {}, {apiDelete: {method: 'DELETE', headers: headers, params: params}}, {'stripTrailingSlashes': true}).apiDelete(object).$promise;
     }
 
-    function _processRequest(method, url, params, headers, object) {
-        if (method == 'POST') {
-            return post(url, params, headers, object)
+    function _processRawRequest(callObject) {
+        callObject.Headers.Authentication = callObject.Headers.Authentication.replace('Bearer ', '');
+        callObject.Headers.Authentication = callObject.Headers.Authentication.replace('{token}', '');
+        callObject.Headers.Authentication =  callObject.Headers.Authentication != '' ? callObject.Headers.Authentication : eval($cookies.get('DevCenter.token'));
+        callObject.Headers.Authentication = 'Bearer ' + callObject.Headers.Authentication;
+        if (callObject.Method == 'POST') {
+            return post(callObject.Url, callObject.Params, callObject.Headers, callObject.Object)
         }
-        if (method == 'PUT') {
-            return put(url, params, headers, object)
+        if (callObject.Method == 'PUT') {
+            return put(callObject.Url, callObject.Params, callObject.Headers, callObject.Object)
         }
-        if (method == 'PATCH') {
-            return patch(url, params, headers, object)
+        if (callObject.Method == 'PATCH') {
+            return patch(callObject.Url, callObject.Params, callObject.Headers, callObject.Object)
         }
-        if (method == 'GET') {
-            return get(url, params, headers)
+        if (callObject.Method == 'GET') {
+            return get(callObject.Url, callObject.Params, callObject.Headers)
         }
-        if (method == 'DELETE') {
-            return del(url, params, headers, object)
+        if (callObject.Method == 'DELETE') {
+            return del(callObject.Url, callObject.Params, callObject.Headers, callObject.Object)
         }
     }
+
+    function _processSdkRequest(callObject, fnParams, sdkParams, serviceName, methodName) {
+        //Adds Main Params if any
+        var callParams = [];
+        fnParams = Underscore.pluck(fnParams, 'Name');
+        sdkParams.forEach(function(paramName) {
+            (fnParams.indexOf(paramName) > -1) ? callParams.push(callObject.Params[paramName] || null) : null;
+        });
+        //Adds Object if any
+        var nonFnParams = Underscore.difference(sdkParams, fnParams);
+        var object = Underscore.difference(nonFnParams, ['authToken', 'overrideUrl']);
+        (object.length > 0) ? callParams.push(JSON.parse(callObject.Object)) : null;
+
+        //Adds Auth if specified
+        callObject.Headers.Authentication = callObject.Headers.Authentication.replace('Bearer ', '');
+        callObject.Headers.Authentication = callObject.Headers.Authentication.replace('{token}', '');
+        callObject.Headers.Authentication != '' ? callParams.push(callObject.Headers.Authentication) : callParams.push(eval($cookies.get('DevCenter.token')));
+       /* callParams.push(callObject.Headers.Authentication);*/
+
+        callObject.BaseUrl ? callParams.push(callObject.BaseUrl) : null;
+        console.log(callParams);
+
+        return $injector.get(serviceName)[methodName].apply(this, callParams);
+
+    }
+
     function _addCallLogItem(data) {
         var dfd = $q.defer();
         $localForage.getItem('callLog').then(function(callList) {
@@ -158,7 +188,8 @@ function ApiConsoleSvc($resource, $cookies, $localForage, $q, apiurl) {
     }
 
     return {
-        processRequest: _processRequest,
+        processRawRequest: _processRawRequest,
+        processSdkRequest: _processSdkRequest,
         addCallLogItem: _addCallLogItem,
         getCallLog: _getCallLog,
         delCallLogItem: _delCallLogItem,

@@ -5,7 +5,7 @@
     <span class="dropup" dropdown on-toggle="toggled(open)">
         <a id="course-dropup" dropdown-toggle href>{{course.course.CourseLevel}} of {{course.course.ClassCount}}<i class="fa fa-caret-up"></i></a>
         <ul class="dropdown-menu" aria-labelledby="course-dropup">
-            <li ng-repeat="class in course.courseList" ui-sref="base.course({courseID: course.course.ID, classID: class.ID})">
+            <li ng-repeat="class in course.course.CourseList" ui-sref="base.course({courseID: course.course.ID, classID: class.ID})">
                 {{class.Name}}
             </li>
         </ul>
