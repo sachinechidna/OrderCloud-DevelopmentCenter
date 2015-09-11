@@ -1,0 +1,30 @@
+<div id="Class" ng-class="{'interactive':class.current.Interactive}">
+	<nav class="navbar navbar-inverse navbar-fixed-bottom">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">{{course.current.Name + ' / ' + class.current.Name}}</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="" ng-click="class.nextClass()">Next Class</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<article id="ClassContainer" ng-class="{'container':!class.current.Interactive}">
+		<div id="CourseContent" ng-include="class.current.TemplateUrl"></div>
+		<div id="InteractiveUI" ng-if="class.current.Interactive">
+			<div id="ScriptInput" ui-ace="{
+				useWrapMode : true,
+				theme:'twilight',
+				mode: 'javascript',
+				tabSize: '4',
+				useSoftTabs: true,
+				showPrintMargin: false
+			}" ng-model="test"></div>
+			<div id="Response">
+				<div class="response-content"></div>
+			</div>
+		</div>
+	</article>
+</div>

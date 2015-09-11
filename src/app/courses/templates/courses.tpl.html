@@ -1,0 +1,9 @@
+<article class="container">
+	<div class="list-group">
+		<a class="list-group-item" ng-repeat="course in courses.list" ui-sref="^.course({courseid:course.ID})">
+			<span class="badge">{{course.Difficulty}}</span>
+			<h4 class="list-group-item-heading">{{course.Name}}</h4>
+			<p class="list-group-item-text">{{course.Description}}</p>
+		</a>
+	</div>
+</article>

@@ -1,0 +1,60 @@
+#Class {
+  &:not(.interactive) {
+	max-height:~'calc(100vh - 102px)';
+	overflow-y:auto;
+  }
+  &.interactive {
+	#ClassContainer {
+	  display:flex;
+	  flex-flow:row nowrap;
+	}
+	#CourseContent,
+	#InteractiveUI {
+	  height:~'calc(100vh - 102px)';
+	}
+	#CourseContent {
+	  padding:0 @padding-base-horizontal;
+	  max-width:400px;
+	  overflow-y:auto;
+	}
+	#InteractiveUI {
+	  position:relative;
+	  width:100%;
+	  display:flex;
+	  flex-flow:row nowrap;
+	  & > div {
+		flex:1;
+	  }
+	}
+	#ScriptInput {
+	  height:100%;
+	  border-radius:0;
+	}
+	#Response {
+	  background-color:#141414;
+	  padding:@padding-base-horizontal;
+	  & > div {
+		background-color:@gray-dark;
+		height:500px;
+	  }
+	}
+  }
+
+/*  #CourseContent,
+  #InteractiveUI {
+	max-height:~'calc(100vh - 102px)';
+  }
+  & > article {
+	&.container {
+	  overflow-y:auto;
+	}
+	&:not(.container) {
+	  display:flex;
+	  flex-flow:row nowrap;
+	  #CourseContent {
+		max-width:400px;
+		overflow-y:auto;
+	  }
+	}
+  }*/
+}

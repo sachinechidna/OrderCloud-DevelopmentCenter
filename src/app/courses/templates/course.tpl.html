@@ -1,0 +1,10 @@
+<article class="container" ng-if="application.$state.is('base.course')">
+	<h3>{{course.current.Name}}</h3>
+	<div class="list-group">
+		<a class="list-group-item" ng-repeat="class in course.classes" ui-sref=".class({classid:class.ID})">
+			<h4 class="list-group-item-heading">{{class.Name}}</h4>
+			<p class="list-group-item-text">{{class.Description}}</p>
+		</a>
+	</div>
+</article>
+<ui-view></ui-view>

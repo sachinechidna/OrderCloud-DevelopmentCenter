@@ -77,4 +77,5 @@ function AppCtrl( $state, Credentials ) {
 		Credentials.Delete();
 		$state.go('base.dashboard',{}, {reload:true});
 	}
+	vm.$state = $state;
 }
