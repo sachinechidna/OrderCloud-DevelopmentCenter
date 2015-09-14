@@ -1,4 +1,45 @@
-<ul>
-	<li>API Docs</li>
-	<li>AngularJS SDK Docs</li>
-</ul>
+<article class="container">
+	<h1 class="page-header">API Documentation</h1>
+	<section ng-repeat="section in docs.content.Sections">
+		<h2 ng-bind="section"></h2>
+		<article  ng-repeat="resource in docs.content.Resources | filter:{Section:section}">
+			<h3 ng-bind="resource.Name"></h3>
+			<div ng-repeat="endpoint in resource.Endpoints" class="panel panel-primary" ng-init="endpoint.Open = false">
+				<div class="panel-heading" ng-click="endpoint.Open = !endpoint.Open">
+					<h4 ng-bind="endpoint.Name" class="panel-title"></h4>
+				</div>
+				<div class="panel-body" collapse="!endpoint.Open">
+					<div class="row">
+						<div class="col-sm-6">
+							<pre><b ng-bind="endpoint.HttpVerb"></b> {{endpoint.UriTemplate}}</pre>
+							<div ng-if="endpoint.RequestBody.Sample && endpoint.RequestBody.Sample != 'null'">
+								<h5>Request Body Sample:</h5>
+								<div  readonly ui-ace="{
+									onLoad: docs.setMaxLines,
+									useWrapMode : true,
+									theme:'twilight',
+									mode: 'json',
+									tabSize: '4',
+									useSoftTabs: true,
+									showPrintMargin: false
+								}" ng-model="endpoint.RequestBody.Sample"></div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<h5><b>Response Status: <span class="text-danger">{{endpoint.ResponseStatus}}</span></b></h5>
+							<div ng-if="endpoint.ResponseBody.Sample && endpoint.ResponseBody.Sample != 'null'" readonly ui-ace="{
+							onLoad: docs.setMaxLines,
+							useWrapMode : true,
+							theme:'twilight',
+							mode: 'json',
+							tabSize: '4',
+							useSoftTabs: true,
+							showPrintMargin: false
+						}" ng-model="endpoint.ResponseBody.Sample"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</section>
+</article>
