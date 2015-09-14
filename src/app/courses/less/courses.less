@@ -19,6 +19,7 @@
 	#ClassContainer {
 	  display:flex;
 	  flex-flow:row nowrap;
+	  background-color:#141414;
 	}
 	#CourseContent,
 	#InteractiveUI {
@@ -36,17 +37,65 @@
 	  & > div {
 		flex:1;
 	  }
+	  & > button {
+		position:absolute;
+	  }
+	}
+	#ScriptInputContainer {
+	  display:flex;
+	  flex-flow:column nowrap;
+	  & > .script-nav {
+		flex:0 1 auto;
+		display:flex;
+		flex-flow:row nowrap;
+		justify-content:space-between;
+	  }
+	  & > #ScriptInput {
+		flex:1 0 auto;
+	  }
 	}
 	#ScriptInput {
-	  height:100%;
 	  border-radius:0;
 	}
 	#Response {
-	  background-color:#141414;
 	  padding:@padding-base-horizontal;
 	  & > div {
 		background-color:@gray-dark;
 		height:500px;
+	  }
+	}
+  }
+}
+
+@interactive-ui-bg: #141414;
+@script-nav-tabs-hover-border-color: lighten(@interactive-ui-bg, 5);
+@script-nav-tabs-active-link-color: #e2e2e2;
+@script-nav-tabs-active-link-bg:#232323;
+@script-nav-tabs-active-link-border-color: lighten(@interactive-ui-bg, 10);
+.script-nav {
+  padding-top:@padding-base-horizontal;
+  .nav-tabs {
+	border-bottom:none;
+	> li {
+	  margin-bottom: 0;
+	  > a {
+		&:focus,
+		&:hover {
+		  border-color: @script-nav-tabs-hover-border-color;
+		  background-color: darken(@script-nav-tabs-active-link-bg, 3);
+		}
+	  }
+	  // Active state, and its :hover to override normal :hover
+	  &.active > a {
+		&,
+		&:hover,
+		&:focus {
+		  color: @script-nav-tabs-active-link-color;
+		  background-color: @script-nav-tabs-active-link-bg;
+		  border: 1px solid @script-nav-tabs-active-link-border-color;
+		  border-bottom-color: transparent;
+		  cursor: default;
+		}
 	  }
 	}
   }

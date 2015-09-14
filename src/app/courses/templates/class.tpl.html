@@ -14,7 +14,17 @@
 	<article id="ClassContainer" ng-class="{'container':!class.current.Interactive}">
 		<div id="CourseContent" ng-include="class.current.TemplateUrl"></div>
 		<div id="InteractiveUI" ng-if="class.current.Interactive">
-			<div id="ScriptInput" ui-ace="{
+			<div id="ScriptInputContainer">
+				<div class="script-nav">
+					<span>
+						<ul class="nav nav-tabs">
+							<li role="presentation" class="active"><a href="#"><i class="fa fa-file-code-o"></i> script.js</a></li>
+							<li role="presentation"><a href="#"><i class="fa fa-file-code-o"></i> template.html</a></li>
+						</ul>
+					</span>
+					<button type="button" class="btn btn-primary" ng-click="class.Execute()">Run <i class="fa fa-play-circle-o"></i></button>
+				</div>
+				<div id="ScriptInput" ui-ace="{
 				useWrapMode : true,
 				theme:'twilight',
 				mode: 'javascript',
@@ -22,6 +32,7 @@
 				useSoftTabs: true,
 				showPrintMargin: false
 			}" ng-model="class.current.ScriptModel"></div>
+			</div>
 			<div id="Response">
 				<div class="response-content"></div>
 			</div>

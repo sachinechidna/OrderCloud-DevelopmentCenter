@@ -89,5 +89,9 @@ function ClassController( $state, Underscore, Courses, SelectedCourse, SelectedC
 		} else {
 			$state.go('base.courses');
 		}
+	};
+
+	vm.Execute = function() {
+
 	}
 }
