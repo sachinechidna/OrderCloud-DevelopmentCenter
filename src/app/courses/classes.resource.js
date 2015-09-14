@@ -75,7 +75,8 @@ function ClassesService($q, Underscore) {
 			Description: 'Use the Credentials service to store your auth token',
 			TemplateUrl: 'courses/classTemplates/intro.api.tpl.html',
 			Interactive: true,
-			ScriptModel: "angular.module('OrderCloud')\n\t.controller('AuthExampleCtrl', authExampleController)\n;\n\nfunction authExampleController(Credentials) {\n\tvar vm = this;\n\tvar creds = {\n\t\tusername: 'admin',\n\t\tpassword: 'password'\n\t};\n\tvm.Submit = function() {\n\t\tCredentials.Get(creds);\n\t};\n}"
+			ScriptModel: "var creds = {\n\tusername: 'admin',\n\tpassword: 'password'\n};\n\nCredentials.Get(creds);",
+			Dependencies: ["Credentials","Me"]
 		}
 	];
 
