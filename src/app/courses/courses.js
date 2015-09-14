@@ -7,7 +7,20 @@ angular.module( 'orderCloud' )
 
 ;
 
-function CoursesConfig( $stateProvider ) {
+function CoursesConfig( $stateProvider, $httpProvider ) {
+	$httpProvider.interceptors.push(function($rootScope) {
+		return {
+			'request': function(config) {
+				$rootScope.$broadcast('event:requestSuccess', config);
+				return config;
+			},
+			'response': function(config) {
+				$rootScope.$broadcast('event:responseSuccess', config);
+				return config;
+			}
+		};
+	});
+
 	$stateProvider
 		.state( 'base.courses', {
 			url: '/courses',
@@ -61,9 +74,11 @@ function CourseController( SelectedCourse, ClassesList ) {
 	vm.classes = ClassesList;
 }
 
-function ClassController( $state, Underscore, Courses, SelectedCourse, SelectedClass ) {
+function ClassController( $scope, $state, $injector, Underscore, Courses, SelectedCourse, SelectedClass ) {
 	var vm = this;
 	vm.current = SelectedClass;
+	vm.requests = [];
+	vm.responses = [];
 	vm.classIndex = SelectedCourse.Classes.indexOf(vm.current.ID);
 	vm.totalClasses = SelectedCourse.Classes.length;
 	var nextClassID = (vm.classIndex + 1 < vm.totalClasses) ? SelectedCourse.Classes[vm.classIndex + 1] : null;
@@ -91,7 +106,33 @@ function ClassController( $state, Underscore, Courses, SelectedCourse, SelectedC
 		}
 	};
 
-	vm.Execute = function() {
+	if (SelectedClass.Interactive) {
+		$scope.$on('event:requestSuccess', function(event, c) {
+			if (vm.turnOnLog) {
+				vm.requests.push(c);
+			}
+		});
 
+		$scope.$on('event:responseSuccess', function(event, c) {
+			if (vm.turnOnLog) {
+				vm.responses.push(c);
+				vm.success = true;
+			}
+		});
 	}
+
+
+	vm.Execute = function() {
+		vm.turnOnLog = true;
+
+		var injectString = "";
+		angular.forEach(vm.current.Dependencies, function(d) {
+			injectString += 'var ' + d + ' = $injector.get("' + d + '");'
+		});
+
+		eval(injectString + vm.current.ScriptModel);
+
+
+	};
+
 }

@@ -75,7 +75,7 @@ function ClassesService($q, Underscore) {
 			Description: 'Use the Credentials service to store your auth token',
 			TemplateUrl: 'courses/classTemplates/intro.api.tpl.html',
 			Interactive: true,
-			ScriptModel: "var creds = {\n\tusername: 'admin',\n\tpassword: 'password'\n};\n\nCredentials.Get(creds);",
+			ScriptModel: "var creds = {\n\tUsername: 'mlund',\n\tPassword: 'fails345'\n};\n\nCredentials.Get(creds);",
 			Dependencies: ["Credentials","Me"]
 		}
 	];
