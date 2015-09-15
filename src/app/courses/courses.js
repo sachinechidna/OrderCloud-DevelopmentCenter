@@ -14,9 +14,17 @@ function CoursesConfig( $stateProvider, $httpProvider ) {
 				$rootScope.$broadcast('event:requestSuccess', config);
 				return config;
 			},
-			'response': function(config) {
-				$rootScope.$broadcast('event:responseSuccess', config);
-				return config;
+			'requestError': function(rejection) {
+				$rootScope.$broadcast('event:requestError', rejection);
+				return rejection;
+			},
+			'response': function(response) {
+				$rootScope.$broadcast('event:responseSuccess', response);
+				return response;
+			},
+			'responseError': function(rejection) {
+				$rootScope.$broadcast('event:responseError', rejection);
+				return rejection;
 			}
 		};
 	});
@@ -79,6 +87,8 @@ function ClassController( $scope, $state, $injector, Underscore, Courses, Select
 	vm.current = SelectedClass;
 	vm.requests = [];
 	vm.responses = [];
+	vm.responseErrors = [];
+	vm.requestErrors = [];
 	vm.classIndex = SelectedCourse.Classes.indexOf(vm.current.ID);
 	vm.totalClasses = SelectedCourse.Classes.length;
 	var nextClassID = (vm.classIndex + 1 < vm.totalClasses) ? SelectedCourse.Classes[vm.classIndex + 1] : null;
@@ -117,6 +127,19 @@ function ClassController( $scope, $state, $injector, Underscore, Courses, Select
 			if (vm.turnOnLog) {
 				vm.responses.push(c);
 				vm.success = true;
+			}
+		});
+
+		$scope.$on('event:requestError', function(event, c) {
+			if (vm.turnOnLog) {
+				vm.requestErrors.push(c);
+			}
+		});
+
+		$scope.$on('event:responseError', function(event, c) {
+			if (vm.turnOnLog) {
+				vm.responseErrors.push(c);
+				vm.success = false;
 			}
 		});
 	}

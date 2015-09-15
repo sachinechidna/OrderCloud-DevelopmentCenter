@@ -70,13 +70,49 @@ function ClassesService($q, Underscore) {
 			Interactive: false
 		},
 		{
-			ID: 'authentication',
+			ID: 'basics-authentication',
 			Name: 'Authentication',
 			Description: 'Use the Credentials service to store your auth token',
-			TemplateUrl: 'courses/classTemplates/intro.api.tpl.html',
+			TemplateUrl: 'courses/classTemplates/basics.auth.tpl.html',
 			Interactive: true,
 			ScriptModel: "var creds = {\n\tUsername: 'mlund',\n\tPassword: 'fails345'\n};\n\nCredentials.Get(creds);",
 			Dependencies: ["Credentials","Me"]
+		},
+		{
+			ID: 'basics-create-buyer',
+			Name: 'Create a Buyer',
+			Description: 'Create a buyer to use in your application',
+			TemplateUrl: 'courses/classTemplates/basics.create-buyer.tpl.html',
+			Interactive: true,
+			ScriptModel: "var buyer = {\n\tName: '...',\n\tActive: true\n};\n\nBuyers.Create(buyer);",
+			Dependencies: ["Buyers"]
+		},
+		{
+			ID: 'basics-create-buyer-user',
+			Name: 'Create a User',
+			Description: 'Create your first user under your new buyer company',
+			TemplateUrl: 'courses/classTemplates/basics.create-user.tpl.html',
+			Interactive: true,
+			ScriptModel: "var buyerID = {buyerID};\n\nvar user = {\n\tID: '...',\n\tUsername: '...',\n\tPassword: '...',\n\tFirstName: '...',\n\tLastName: '...',\n\tEmail: '...',\n\tPhone: '...',\n\tActive: true,\n\txp: null\n};\n\nUsers.Create(buyerID, user);",
+			Dependencies: ["Users"]
+		},
+		{
+			ID: 'api-access',
+			Name: 'API Access Claim',
+			Description: 'Create an access claim to receive your buyers clientID',
+			TemplateUrl: 'courses/classTemplates/basics.access-claim.tpl.html',
+			Interactive: true,
+			ScriptModel: "var claim = {\n\tClientSecret: '...',\n\tAccessTokenDuration: 0,\n\tActive: true,\n\tAppName: '...',\n\tClaims: [\n\t\t'FullAccess'\n\t],\n\tID: '...',\n\tRefreshTokenDuration: 0,\n\tDefaultUserContextID: '...'\n};\n\nBuyerApiAccess.Create(claim);",
+			Dependencies: ["BuyerApiAccess"]
+		},
+		{
+			ID: 'basics-get-me',
+			Name: 'Get Authenticated User',
+			Description: "Use the 'Me' service to gain access to the current authenticated user information",
+			TemplateUrl: 'courses/classTemplates/basics.get-me.tpl.html',
+			Interactive: true,
+			ScriptModel: "Me.Get();",
+			Dependencies: ["Me"]
 		}
 	];
 
