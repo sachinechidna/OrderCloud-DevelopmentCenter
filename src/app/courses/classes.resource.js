@@ -84,7 +84,7 @@ function ClassesService($q, Underscore) {
 			Description: 'Create a buyer to use in your application',
 			TemplateUrl: 'courses/classTemplates/basics.create-buyer.tpl.html',
 			Interactive: true,
-			ScriptModel: "var buyer = {\n\tID: '...',\n\tName: '...',\n\tActive: true\n};\n\nBuyers.Create(buyer);",
+			ScriptModel: "var buyer = {\n\tName: '...',\n\tActive: true\n};\n\nBuyers.Create(buyer);",
 			Dependencies: ["Buyers"]
 		},
 		{
