@@ -3,6 +3,12 @@
   &:not(.interactive) {
 	max-height:~'calc(100vh - 102px)';
 	overflow-y:auto;
+	#CourseContent {
+	  & > div,
+	  header {
+		padding:1em 4em;
+	  }
+	}
   }
   #CourseContent {
 	background-color:white;
