@@ -73,6 +73,26 @@
   }
 }
 
+.apiRequestDisplay {
+  display:flex;
+  flex-flow:row nowrap;
+  pre {
+	&:first-child {
+	  border: 1px solid @brand-primary;
+	  background-color:@brand-primary;
+	  color:white;
+	  font-weight:bold;
+	  flex:0 1 auto;
+	  .border-right-radius(0);
+	}
+	&:last-child {
+	  flex:1 0 auto;
+	  border-left:none;
+	  .border-left-radius(0);
+	}
+  }
+}
+
 @interactive-ui-bg: #141414;
 @script-nav-tabs-hover-border-color: lighten(@interactive-ui-bg, 5);
 @script-nav-tabs-active-link-color: #e2e2e2;
