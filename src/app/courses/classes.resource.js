@@ -74,7 +74,7 @@ function ClassesService($q, Underscore) {
 			Interactive: false
 		},
 		{
-			ID: 'basics-authentication',
+			ID: 'authentication',
 			Name: 'Authentication',
 			Description: 'Use the Credentials service to store your auth token',
 			TemplateUrl: 'courses/classTemplates/basics.auth.tpl.html',
@@ -83,7 +83,7 @@ function ClassesService($q, Underscore) {
 			Dependencies: ["Credentials","Me"]
 		},
 		{
-			ID: 'basics-create-buyer',
+			ID: 'create-buyer',
 			Name: 'Create a Buyer',
 			Description: 'Create a buyer to use in your application',
 			TemplateUrl: 'courses/classTemplates/basics.create-buyer.tpl.html',
@@ -92,7 +92,7 @@ function ClassesService($q, Underscore) {
 			Dependencies: ["Buyers"]
 		},
 		{
-			ID: 'basics-create-buyer-user',
+			ID: 'create-buyer-user',
 			Name: 'Create a User',
 			Description: 'Create your first user under your new buyer company',
 			TemplateUrl: 'courses/classTemplates/basics.create-user.tpl.html',
@@ -110,7 +110,7 @@ function ClassesService($q, Underscore) {
 			Dependencies: ["BuyerApiAccess"]
 		},
 		{
-			ID: 'basics-get-me',
+			ID: 'get-me',
 			Name: 'Get Authenticated User',
 			Description: "Use the 'Me' service to gain access to the current authenticated user information",
 			TemplateUrl: 'courses/classTemplates/basics.get-me.tpl.html',

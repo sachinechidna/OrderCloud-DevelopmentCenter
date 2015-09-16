@@ -34,7 +34,7 @@ function CoursesService($q, Underscore) {
 			Name: 'The Basics',
 			Description: 'A real-world, interactive example of Authentication and using the API for the first time.',
 			Difficulty: 'Beginner',
-			Classes: ['basics-authentication', 'basics-create-buyer', 'basics-create-buyer-user', 'api-access', 'basics-get-me']
+			Classes: ['authentication', 'create-buyer', 'create-buyer-user', 'api-access', 'get-me']
 		},
 		{
 			ID: 'products',
