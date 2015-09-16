@@ -1,0 +1,48 @@
+<header>
+    <h2>{{class.current.Name}}</h2>
+</header>
+<div>
+    <h3 class="page-title">What You Need To Know</h3>
+    <p>
+        API Access Claims are an important administrative service in OrderCloud.
+        This service is where you will explicitly create each application instance and
+        where you will define the scope of each application's access rights. Without this you would
+        not be able to authenticate as a buyer user, which would prove troubling within your buyer
+        applications.
+    </p>
+    <p>
+        When processing a successful API Access Claim, an ID will be returned to you (of which
+        you can optionally define in the request yourself) that will act as your applications
+        <code>clientID</code>. This is what you will store in the base of your application as an app constant
+        named <code>clientid</code>. This clientID is what the client application will use to tell OrderCloud
+        what buyer environment it should be looking under when a user attempts to authenticate on the site.
+    </p>
+    <p></p>
+    <h3 class="page-title">Creating a New User</h3>
+    <p>
+        A full API Access Request Object is shown below. We will only be using part of this object, as the
+        <code>ClientSecret</code> is irrelevant for this call (we'll be using the administrative token stored
+        in your browsers cookies for your current admin user), and <code>DefaultUserContextID</code> is an
+        advanced topic we won't be touching on right now.
+    </p>
+    <div style="height: 200px;" readonly
+         ui-ace="{
+      useWrapMode : false,
+      theme:'twilight',
+      mode: 'json',
+      tabSize: '4',
+      useSoftTabs: true
+    }" ng-model="class.docs.BuyerApiAccesses.Create.RequestBody.Sample"></div>
+    <p>
+        You can read more about the code in the documentation, but for now just set your the <code>AppName</code>
+        of your choosing and leave everything else the same. Note that the <code>AccessTokenDuration</code> and
+        <code>RefreshTokenDuration</code> are in milliseconds, and you are currently making an application
+        that has 'FullAccess' claims, which means that a buyer-user has the same level of access to the system
+        as an admin user (they can create products, categories, users, etc., just like your admin user). Don't
+        worry about access levels right now, as we are just focused on building a basic environment right now.
+    </p>
+    <p>
+        When you are ready, go ahead and fill in the <code>AppName</code> value in the <code>claim</code>
+        object and press submit.
+    </p>
+</div>
