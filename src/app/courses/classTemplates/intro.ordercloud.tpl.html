@@ -57,45 +57,53 @@
 
 	<h3 class="page-header">Error Handling</h3>
 	<p>For all unsuccessful requests, we attempt to return the <a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error">most appropriate HTTP status in the 400 range</a>. Only when something goes terribly wrong on our end will you get a 500 response. And so long as our platform is responding (i.e. returing anything in the 4xx range or 500), you can count on the response body taking a standard shape:</p>
-	<pre>[{
-  "ErrorCode": "FirstNameRequired",
-  "Message": "First Name is required."
-},
-{
-  "ErrorCode": "LastNameRequired",
-  "Message": "Last Name is required."
-}]</pre>
+	<div  readonly ui-ace="{
+		onLoad: class.setMaxLines,
+		useWrapMode : true,
+		theme:'twilight',
+		mode: 'json',
+		tabSize: '4',
+		useSoftTabs: true,
+		showPrintMargin: false
+	}" ng-model="class.current.ScriptModel[1]"></div>
 
 	<h3 class="page-header">Date Format</h3>
 	<p>Dates/times returned in the API are in UTC time and conform to <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>. Example:</p>
 	<pre>2015-04-23T00:00:00.000Z</pre>
-<!--
-		<h1 id="other-conventions">Other Conventions</h1>
 
-		<h2 id="creating-things">Creating Things</h2>
+	<h3 class="page-header">Other Conventions</h3>
 
-		<p>Resource creation is generally done via <code>POST</code> and, when successful, retuns a 201 (created) status, a Location header containing the URI of the created resource, and for convenience the full JSON representation (equivalent to <code>GET</code> on the new resource) in the body. For things that do not contain identity, such as relationships, <code>PUT</code> is used for creation. The rationale is that you don't need to care whether you're creating or updating in these cases; <code>PUT</code> is <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html">idempotent </a> by definition, meaning it can be called multiple times without different outcomes.</p>
+	<h4>Creating Things</h4>
+	<p>Resource creation is generally done via <code>POST</code> and, when successful, retuns a 201 (created) status, a Location header containing the URI of the created resource, and for convenience the full JSON representation (equivalent to <code>GET</code> on the new resource) in the body. For things that do not contain identity, such as relationships, <code>PUT</code> is used for creation. The rationale is that you don't need to care whether you're creating or updating in these cases; <code>PUT</code> is <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html">idempotent </a> by definition, meaning it can be called multiple times without different outcomes.</p>
+	<br/>
 
-		<h2 id="updating-things">Updating Things</h2>
+	<h4>Updating Things</h4>
+	<p>Some areas of the API (most notably Orders) support partial updates via <code>PATCH</code>. Other areas only support full updates via <code>PUT</code>, but shape of the response bodies generally match the shape of the request bodies in these cases, allowing for an easy <code>GET</code>/modify/<code>PUT</code> pattern. <code>PUT</code> and <code>PATCH</code> both return 200 (OK) when successful, along with the full JSON representation in the body.</p>
+	<br/>
 
-		<p>Some areas of the API (most notably Orders) support partial updates via <code>PATCH</code>. Other areas only support full updates via <code>PUT</code>, but shape of the response bodies generally match the shape of the request bodies in these cases, allowing for an easy <code>GET</code>/modify/<code>PUT</code> pattern. <code>PUT</code> and <code>PATCH</code> both return 200 (OK) when successful, along with the full JSON representation in the body.</p>
+	<h4>Deleting Things</h4>
+	<p>Resource deletion is generally done via <code>DELETE</code> and, when successful, returns a 204 (no content) response and an empty body.</p>
+	<br/>
 
-		<h2 id="deleting-things">Deleting Things</h2>
+	<h4>Lists and Pagination</h4>
+	<p>Endpoints that return lists of things are generally capped at 20 items by default. At that point paging kicks in. You can use the <code>page</code> and <code>pagesize</code> parameters to specify the page (starting at 1) and items per page (maximum of 100), respectively.</p>
 
-		<p>Resource deletion is generally done via <code>DELETE</code> and, when successful, returns a 204 (no content) response and an empty body.</p>
+	<div class="apiRequestDisplay">
+		<pre>GET</pre>
+		<pre>https://api.ordercloud.io/v1/addresses?page=1&amp;pagesize=20</pre>
+	</div>
 
-		<h2 id="lists-and-pagination">Lists and Pagination</h2>
-
-		<p>Endpoints that return lists of things are generally capped at 20 items by default. At that point paging kicks in. You can use the <code>page</code> and <code>pagesize</code> parameters to specify the page (starting at 1) and items per page (maximum of 100), respectively.</p>
-
-  <pre><code>GET /addresses?page=2&amp;pagesize=50
-  </code></pre>
-
-		<p>Of course it's helpful to know how many total items there are. You can inspect the <code>Content-Range</code> response header for this information.</p>
-
-  <pre><code>Content-Range: 0-19/200
-  </code></pre>
-
-		<p>This indicates that the first 20 items out of 200 are being returned. Note that unlike the <code>page</code> parameter, range values are zero-based.</p>
-	</div>-->
+	<p>Of course it's helpful to know how many total items there are. You can inspect <code>Meta</code> in the response body for this information.</p>
+	<div  readonly ui-ace="{
+		onLoad: class.setMaxLines,
+		useWrapMode : true,
+		theme:'twilight',
+		mode: 'json',
+		tabSize: '4',
+		useSoftTabs: true,
+		showPrintMargin: false
+	}" ng-model="class.current.ScriptModel[0]"></div>
+	<br/>
+	<p>This indicates that the first 20 items out of 200 are being returned. Note that unlike the <code>page</code> parameter, range values are zero-based.</p>
+	<p class="lead">Next, you will be introduced to AngularJS and how it's used by the OrderCloud Angular SDK.</p>
 </div>

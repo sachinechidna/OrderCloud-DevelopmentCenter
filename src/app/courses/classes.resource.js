@@ -53,6 +53,10 @@ function ClassesService($q, Underscore) {
 			Name: 'OrderCloud API',
 			Description: 'How does OrderCloud work?',
 			TemplateUrl: 'courses/classTemplates/intro.ordercloud.tpl.html',
+			ScriptModel: [
+				"{\n\t\"Meta\": {\n\t\t\"Page\": 1,\n\t\t\"PageSize\": 20,\n\t\t\"TotalCount\": 25,\n\t\t\"TotalPages\": 2,\n\t\t\"ItemRange\": [1,20]\n\t}\n}",
+				"[{\n\t\"ErrorCode\": \"FirstNameRequired\",\n\t\"Message\": \"First Name is required.\"\n},\n{\n\t\"ErrorCode\": \"LastNameRequired\",\n\t\"Message\": \"Last Name is required.\"\n}]"
+			],
 			Interactive: false
 		},
 		{
