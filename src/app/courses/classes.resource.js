@@ -63,14 +63,14 @@ function ClassesService($q, Underscore) {
 			ID: 'tools',
 			Name: 'AngularJS & the SDK',
 			Description: 'What are the tools available?',
-			TemplateUrl: '',
+			TemplateUrl: 'courses/classTemplates/intro.tools.tpl.html',
 			Interactive: false
 		},
 		{
 			ID: 'sdk',
 			Name: 'OrderCloud AngularJS SDK',
 			Description: 'An in depth look at the AngularJS SDK for OrderCloud',
-			TemplateUrl: '',
+			TemplateUrl: 'courses/classTemplates/intro.sdk.tpl.html',
 			Interactive: false
 		},
 		{
