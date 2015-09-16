@@ -90,7 +90,7 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 	vm.responses = [];
 	vm.responseErrors = [];
 	vm.requestErrors = [];
-    vm.methodDocs = [];
+    vm.docs = {};
 	vm.classIndex = SelectedCourse.Classes.indexOf(vm.current.ID);
 	vm.totalClasses = SelectedCourse.Classes.length;
 	var nextClassID = (vm.classIndex + 1 < vm.totalClasses) ? SelectedCourse.Classes[vm.classIndex + 1] : null;
@@ -166,8 +166,13 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 
 	};
     angular.forEach(vm.current.ClassMethods, function(method) {
-        ClassSvc.getDocs(method, function(doc) {
-            vm.methodDocs.push(doc);
+        ClassSvc.getDocs(method, function(svc, mtd, doc) {
+            if (!vm.docs[svc]) {
+                vm.docs[svc] = {};
+                vm.docs[svc][mtd] = doc;
+            } else {
+                vm.docs[svc][mtd] = doc;
+            }
         });
     });
 
@@ -185,8 +190,7 @@ function ClassService($resource, apiurl) {
             .then(function(data) {
                 angular.forEach(data.Endpoints, function(ep) {
                     if (ep.ID == methodName) {
-                        console.log(ep);
-                        cb(ep);
+                        cb(serviceName, methodName, ep);
                     }
                 });
             })
