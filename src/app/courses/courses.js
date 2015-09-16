@@ -4,6 +4,7 @@ angular.module( 'orderCloud' )
 	.controller( 'CoursesCtrl', CoursesController )
 	.controller( 'CourseCtrl', CourseController )
 	.controller( 'ClassCtrl', ClassController )
+    .factory( 'ClassSvc', ClassService )
 
 ;
 
@@ -82,13 +83,14 @@ function CourseController( SelectedCourse, ClassesList ) {
 	vm.classes = ClassesList;
 }
 
-function ClassController( $scope, $state, $injector, Underscore, Courses, SelectedCourse, SelectedClass ) {
+function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Courses, SelectedCourse, SelectedClass ) {
 	var vm = this;
 	vm.current = SelectedClass;
 	vm.requests = [];
 	vm.responses = [];
 	vm.responseErrors = [];
 	vm.requestErrors = [];
+    vm.methodDocs = [];
 	vm.classIndex = SelectedCourse.Classes.indexOf(vm.current.ID);
 	vm.totalClasses = SelectedCourse.Classes.length;
 	var nextClassID = (vm.classIndex + 1 < vm.totalClasses) ? SelectedCourse.Classes[vm.classIndex + 1] : null;
@@ -163,5 +165,34 @@ function ClassController( $scope, $state, $injector, Underscore, Courses, Select
 
 
 	};
+    angular.forEach(vm.current.ClassMethods, function(method) {
+        ClassSvc.getDocs(method, function(doc) {
+            vm.methodDocs.push(doc);
+        });
+    });
 
+}
+
+function ClassService($resource, apiurl) {
+    var service = {
+        getDocs: _getDocs
+    };
+    function _getDocs(target, cb) {
+        var targetSplit = target.split('.');
+        var serviceName = targetSplit[0];
+        var methodName = targetSplit[1];
+        $resource( apiurl + '/v1/docs/' + serviceName ).get().$promise
+            .then(function(data) {
+                angular.forEach(data.Endpoints, function(ep) {
+                    if (ep.ID == methodName) {
+                        console.log(ep);
+                        cb(ep);
+                    }
+                });
+            })
+    }
+
+
+
+    return service;
 }

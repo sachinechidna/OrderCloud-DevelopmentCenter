@@ -98,7 +98,8 @@ function ClassesService($q, Underscore) {
 			TemplateUrl: 'courses/classTemplates/basics.create-user.tpl.html',
 			Interactive: true,
 			ScriptModel: "var buyerID = {buyerID};\n\nvar user = {\n\tID: '...',\n\tUsername: '...',\n\tPassword: '...',\n\tFirstName: '...',\n\tLastName: '...',\n\tEmail: '...',\n\tPhone: '...',\n\tActive: true,\n\txp: null\n};\n\nUsers.Create(buyerID, user);",
-			Dependencies: ["Users"]
+			Dependencies: ["Users"],
+			ClassMethods: ['Users.Create']
 		},
 		{
 			ID: 'api-access',
