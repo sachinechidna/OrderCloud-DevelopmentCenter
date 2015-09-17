@@ -42,7 +42,7 @@ gulp.task('b_m:sass', function() {
 
 gulp.task('b_m:css', function() {
     return gulp
-        .src(mainBowerFiles({filter: '**/*.css'}).concat('!**/font-awesome.css'))
+        .src(mainBowerFiles({filter: ['**/*.css']}).concat(config.vendor_files.css).concat('!**/font-awesome.css'))
         .pipe(plumber())
         .pipe(autoprefixer({browsers: ['last 2 versions']}))
         .pipe(concat('bowerStyles.css'))

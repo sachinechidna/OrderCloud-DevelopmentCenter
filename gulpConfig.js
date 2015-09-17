@@ -62,6 +62,7 @@ module.exports = {
 	},
 	vendor_files: {
 		import_less: ['vendor/font-awesome/less/font-awesome.less'],
+		css: [],
 		js: [
 			'vendor/ace-builds/src-min-noconflict/ace.js',
 			'vendor/ace-builds/src-min-noconflict/mode-javascript.js',
