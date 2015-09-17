@@ -122,6 +122,16 @@ function ClassesService($q, Underscore) {
 			ScriptModel: "\n\nMe.Get();",
 			Dependencies: ["Me"],
 			ClassMethods: ['Me.Get']
+		},
+		{
+			ID: 'prod-crud',
+			Name: 'Product CRUD',
+			Description: "Create or access a product to be used in later classes",
+			TemplateUrl: 'courses/classTemplates/user-prod-access.prod-crud.tpl.html',
+			Interactive: true,
+			ScriptModel: '\n\nvar prod = {\n\tDescription: "...",\n\tName: "...",\n\tQuantityMultiplier: 1,\n\tActive: true,\n};\n\n\nProducts.Create(prod);',
+			Dependencies: ["Products"],
+			ClassMethods: ['Products.Create']
 		}
 	];
 

@@ -37,11 +37,11 @@ function CoursesService($q, Underscore) {
 			Classes: ['authentication', 'create-buyer', 'create-buyer-user', 'api-access', 'get-me']
 		},
 		{
-			ID: 'products',
-			Name: 'Products',
-			Description: 'Some basic classes on creating different product configurations.',
+			ID: 'user-prod-access',
+			Name: 'View Products as a Buyer User',
+			Description: 'Learn what you need to know about making products accessible to a Buyer User.',
 			Difficulty: 'Novice',
-			Classes: []
+			Classes: ['prod-crud']
 		}
 	];
 

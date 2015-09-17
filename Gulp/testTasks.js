@@ -37,3 +37,20 @@ gulp.task('testServe', function() {
         tunnel: 'ordercloudapp' + (appName || '')
     })
 });
+
+gulp.task('testCompile', gulp.series('compile', function() {
+    browserSync.init({
+        server: {
+            baseDir: config.compile,
+            index: 'index.html',
+            routes: ''
+        },
+        port: 9000,
+        ghostMode: {
+            clicks: false,
+            forms: false,
+            scroll: false
+        },
+        logPrefix: 'OrderCloud 3.0'
+    })
+}));
