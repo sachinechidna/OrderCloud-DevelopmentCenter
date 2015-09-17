@@ -122,7 +122,9 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 		editor.setOptions({
 			maxLines:100
 		});
-	}
+	};
+
+
 
 	if (SelectedClass.Interactive) {
 		$scope.$on('event:requestSuccess', function(event, c) {

@@ -65,12 +65,14 @@ module.exports = {
 		js: [
 			'vendor/ace-builds/src-min-noconflict/ace.js',
 			'vendor/ace-builds/src-min-noconflict/mode-javascript.js',
-			'vendor/ace-builds/src-min-noconflict/worker-javascript.js',
 			'vendor/ace-builds/src-min-noconflict/mode-markdown.js',
 			'vendor/ace-builds/src-min-noconflict/mode-json.js',
-			'vendor/ace-builds/src-min-noconflict/worker-json.js',
 			'vendor/ace-builds/src-min-noconflict/theme-twilight.js',
-			'vendor/ace-builds/src-min-noconflict/theme-idle_fingers.js'
+			'vendor/ace-builds/src-min-noconflict/theme-idle_fingers.js',
+			'vendor/ordercloud-angular-sdk/dist/ordercloud-angular-sdk.js'
+		],
+		exclude_js: [
+			'!vendor/ordercloud-angular-sdk/dist/ordercloud-angular-sdk.min.js'
 		]
 	}
 };
