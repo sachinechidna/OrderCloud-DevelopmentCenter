@@ -70,7 +70,9 @@ module.exports = {
 			'vendor/ace-builds/src-min-noconflict/mode-json.js',
 			'vendor/ace-builds/src-min-noconflict/theme-twilight.js',
 			'vendor/ace-builds/src-min-noconflict/theme-idle_fingers.js',
-			'vendor/ordercloud-angular-sdk/dist/ordercloud-angular-sdk.js'
+			'vendor/ordercloud-angular-sdk/dist/ordercloud-angular-sdk.js',
+			'vendor/ace-builds/src-min-noconflict/worker-json.js',
+			'vendor/ace-builds/src-min-noconflict/worker-javascript.js'
 		],
 		exclude_js: [
 			'!vendor/ordercloud-angular-sdk/dist/ordercloud-angular-sdk.min.js'

@@ -70,6 +70,12 @@
 		height:500px;
 	  }
 	}
+	.code-block {
+	  display: none;
+	}
+	.code-block.ActiveCodeBlock {
+	  display: inherit;
+	}
   }
 }
 
@@ -96,19 +102,25 @@
 @interactive-ui-bg: #141414;
 @script-nav-tabs-hover-border-color: lighten(@interactive-ui-bg, 5);
 @script-nav-tabs-active-link-color: #e2e2e2;
-@script-nav-tabs-active-link-bg:#232323;
+@script-nav-tabs-active-link-bg:#424242;
+@script-nav-tabs-inactive-link-bg: darken(@script-nav-tabs-active-link-bg, 12);
+@script-nav-tabs-inactive-link-color: darken(@script-nav-tabs-active-link-color, 30);
 @script-nav-tabs-active-link-border-color: lighten(@interactive-ui-bg, 10);
 .script-nav {
   padding-top:@padding-base-horizontal;
+  border-bottom: 1px solid @script-nav-tabs-inactive-link-bg;
   .nav-tabs {
 	border-bottom:none;
 	> li {
 	  margin-bottom: 0;
 	  > a {
+		background-color: @script-nav-tabs-inactive-link-bg;
+		color: @script-nav-tabs-inactive-link-color;
+		cursor: pointer;
 		&:focus,
 		&:hover {
 		  border-color: @script-nav-tabs-hover-border-color;
-		  background-color: darken(@script-nav-tabs-active-link-bg, 3);
+		  background-color: darken(@script-nav-tabs-active-link-bg, 5);
 		}
 	  }
 	  // Active state, and its :hover to override normal :hover

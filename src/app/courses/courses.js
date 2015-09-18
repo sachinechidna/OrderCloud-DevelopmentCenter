@@ -106,6 +106,23 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 		})
 	}
 
+	vm.activeScriptFn = function(scriptTitle) {
+		vm.current.ActiveScript = Underscore.where(vm.current.ScriptModels.Scripts, {Title: scriptTitle})[0].Title;
+	};
+
+	function setActiveScript() {
+		var activeScriptTitle = '';
+		if (vm.current.Interactive) {
+			if (vm.current.ScriptModels.Scripts.length > 1) {
+				activeScriptTitle = Underscore.where(vm.current.ScriptModels.Scripts, {ListOrder: 1})[0].Title;
+			} else {
+				activeScriptTitle = vm.current.ScriptModels.Scripts[0].Title;
+			}
+			vm.activeScriptFn(activeScriptTitle);
+		}
+
+	};
+	setActiveScript();
 	vm.nextClass = function() {
 		if (nextClassID) {
 			console.log(nextClassID);
@@ -156,14 +173,39 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 
 
 	vm.Execute = function() {
+
 		vm.turnOnLog = true;
+		var fullScript = '';
+		if (vm.current.ScriptModels.Meta.ExecuteAll) {
+			fullScript = '';
+			var orderedScripts = Underscore.chain(vm.current.ScriptModels.Scripts)
+				.filter(function(script){return !script.Disable;})
+				.sortBy(function(script){return script.ExecuteOrder;})
+				.value();
+			angular.forEach(orderedScripts, function(script) {
+				fullScript += script.Model;
+			})
+		} else {
+			var currentScript = Underscore.where(vm.current.ScriptModels.Scripts, {Title: vm.current.ActiveScript})[0];
+			if (!currentScript.Disable) {
+				fullScript = currentScript.Model;
+			} else {
+				fullScript = null;
+			}
+		}
 
-		var injectString = "";
-		angular.forEach(vm.current.Dependencies, function(d) {
-			injectString += 'var ' + d + ' = $injector.get("' + d + '");'
-		});
 
-		eval(injectString + vm.current.ScriptModel);
+		if (fullScript) {
+			var injectString = "";
+			angular.forEach(vm.current.Dependencies, function(d) {
+				injectString += 'var ' + d + ' = injector.get("' + d + '");'
+			});
+
+		 var ex = new Function("injector", injectString + fullScript);
+		 ex($injector);
+		} else {
+			vm.consoleMessage = 'script is not executable';
+		}
 
 
 	};
