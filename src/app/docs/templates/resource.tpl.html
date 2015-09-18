@@ -9,6 +9,7 @@
 				<tr>
 					<th>Name</th>
 					<th>Type</th>
+					<th>Required</th>
 					<th>Description</th>
 				</tr>
 				</thead>
@@ -20,6 +21,7 @@
 									'label-warning': param.Type == 'boolean',
 									'label-info': param.Type == 'integer'
 								}">{{param.Type}}</div></td>
+					<td>{{param.Required}}</td>
 					<td>{{param.Description}}</td>
 				</tr>
 				</tbody>
