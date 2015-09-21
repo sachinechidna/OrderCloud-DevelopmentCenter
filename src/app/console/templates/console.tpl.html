@@ -26,7 +26,7 @@
 				  {{console.SelectedMethod.name || 'Method'}} <span class="caret"></span>
 			  </a>
 			  <ul class="dropdown-menu">
-				  <li ng-repeat="method in console.SelectedService.methods | filter:{name:'!As'}">
+				  <li ng-repeat="method in console.SelectedService.methods">
 					  <a href ng-click="console.SelectMethod(this)">{{method.name}}</a>
 				  </li>
 			  </ul>
