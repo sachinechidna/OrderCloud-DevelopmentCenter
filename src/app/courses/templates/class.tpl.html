@@ -35,7 +35,29 @@
 			}" ng-model="script.Model"></div>
 			</div>
 			<div id="Response">
-				<div class="response-content"></div>
+				<div class="response-content">
+					<accordion class="howto-log">
+						<accordion-group is-open="status.open" class="log-entry" ng-repeat="response in class.allResponses">
+							<accordion-heading class="row">
+								<span class="log-entry-header">{{response.config.method}}</span>
+								<span class="log-entry-header">{{response.config.url}}</span>
+								<span class="log-entry-header">{{response.status}} {{response.statusText}}</span>
+								<div class="pull-right"><a href><i class="fa" ng-class="{'fa-chevron-down': !status.open, 'fa-chevron-up': status.open}"></i></a></div>
+							</accordion-heading>
+							<tabset class=log-entry-content justified="true">
+								<tab heading="Headers">
+									<pre class="response-block"><code>{{response.config.headers | json}}</code></pre>
+								</tab>
+								<tab heading="Raw Response">
+									<pre class="raw-response"><code>{{response.data}}</code></pre>
+								</tab>
+								<tab heading="JSON" active="true">
+									<pre class="response-block"><code class="json-response">{{response.data | json}}</code></pre>
+								</tab>
+							</tabset>
+						</accordion-group>
+					</accordion>
+				</div>
 			</div>
 		</div>
 	</article>
