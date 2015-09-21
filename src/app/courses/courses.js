@@ -4,7 +4,7 @@ angular.module( 'orderCloud' )
 	.controller( 'CoursesCtrl', CoursesController )
 	.controller( 'CourseCtrl', CourseController )
 	.controller( 'ClassCtrl', ClassController )
-    .factory( 'ClassSvc', ClassService )
+	.factory( 'ClassSvc', ClassService )
 
 ;
 
@@ -88,9 +88,10 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 	vm.current = SelectedClass;
 	vm.requests = [];
 	vm.responses = [];
+	vm.allResponses = [];
 	vm.responseErrors = [];
 	vm.requestErrors = [];
-    vm.docs = {};
+	vm.docs = {};
 	vm.classIndex = SelectedCourse.Classes.indexOf(vm.current.ID);
 	vm.totalClasses = SelectedCourse.Classes.length;
 	var nextClassID = (vm.classIndex + 1 < vm.totalClasses) ? SelectedCourse.Classes[vm.classIndex + 1] : null;
@@ -144,35 +145,30 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 
 
 	if (SelectedClass.Interactive) {
-		$scope.$on('event:requestSuccess', function(event, c) {
-			if (vm.turnOnLog) {
-				vm.requests.push(c);
-			}
-		});
-
 		$scope.$on('event:responseSuccess', function(event, c) {
 			if (vm.turnOnLog) {
-				vm.responses.push(c);
-				vm.success = true;
+				if (c.config.url.indexOf('docs/') == -1) {
+					vm.responses.push(c);
+					vm.allResponses.push(c);
+					vm.success = true;
+				}
 			}
 		});
-
-		$scope.$on('event:requestError', function(event, c) {
-			if (vm.turnOnLog) {
-				vm.requestErrors.push(c);
-			}
-		});
-
 		$scope.$on('event:responseError', function(event, c) {
 			if (vm.turnOnLog) {
-				vm.responseErrors.push(c);
-				vm.success = false;
+				if (c.config.url.indexOf('docs/') == -1) {
+					vm.responseErrors.push(c);
+					vm.allResponses.push(c);
+					vm.success = false;
+				}
 			}
 		});
 	}
 
 
 	vm.Execute = function() {
+
+		vm.allResponses = [];
 
 		vm.turnOnLog = true;
 		var fullScript = '';
@@ -201,46 +197,45 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 				injectString += 'var ' + d + ' = injector.get("' + d + '");'
 			});
 
-		 var ex = new Function("injector", injectString + fullScript);
-		 ex($injector);
+			var ex = new Function("injector", injectString + fullScript);
+			ex($injector);
 		} else {
 			vm.consoleMessage = 'script is not executable';
 		}
 
-
 	};
-    angular.forEach(vm.current.ClassMethods, function(method) {
-        ClassSvc.getDocs(method, function(svc, mtd, doc) {
-            if (!vm.docs[svc]) {
-                vm.docs[svc] = {};
-                vm.docs[svc][mtd] = doc;
-            } else {
-                vm.docs[svc][mtd] = doc;
-            }
-        });
-    });
+	angular.forEach(vm.current.ClassMethods, function(method) {
+		ClassSvc.getDocs(method, function(svc, mtd, doc) {
+			if (!vm.docs[svc]) {
+				vm.docs[svc] = {};
+				vm.docs[svc][mtd] = doc;
+			} else {
+				vm.docs[svc][mtd] = doc;
+			}
+		});
+	});
 
 }
 
 function ClassService($resource, apiurl) {
-    var service = {
-        getDocs: _getDocs
-    };
-    function _getDocs(target, cb) {
-        var targetSplit = target.split('.');
-        var serviceName = targetSplit[0];
-        var methodName = targetSplit[1];
-        $resource( apiurl + '/v1/docs/' + serviceName ).get().$promise
-            .then(function(data) {
-                angular.forEach(data.Endpoints, function(ep) {
-                    if (ep.ID == methodName) {
-                        cb(serviceName, methodName, ep);
-                    }
-                });
-            })
-    }
+	var service = {
+		getDocs: _getDocs
+	};
+	function _getDocs(target, cb) {
+		var targetSplit = target.split('.');
+		var serviceName = targetSplit[0];
+		var methodName = targetSplit[1];
+		$resource( apiurl + '/v1/docs/' + serviceName ).get().$promise
+			.then(function(data) {
+				angular.forEach(data.Endpoints, function(ep) {
+					if (ep.ID == methodName) {
+						cb(serviceName, methodName, ep);
+					}
+				});
+			})
+	}
 
 
 
-    return service;
+	return service;
 }

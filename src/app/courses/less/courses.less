@@ -33,6 +33,7 @@
 	}
 	#CourseContent {
 	  max-width:400px;
+	  min-width: 350px;
 	  overflow-y:auto;
 	}
 	#InteractiveUI {
@@ -50,6 +51,7 @@
 	#ScriptInputContainer {
 	  display:flex;
 	  flex-flow:column nowrap;
+	  min-width: 400px;
 	  & > .script-nav {
 		flex:0 1 auto;
 		display:flex;
@@ -64,10 +66,39 @@
 	  border-radius:0;
 	}
 	#Response {
+	  max-width: 650px;
+	  min-width: 450px;
 	  padding:@padding-base-horizontal;
 	  & > div {
 		background-color:@gray-dark;
-		height:500px;
+		height:550px;
+	  }
+	  .response-content {
+		overflow-y: auto;
+		padding: @padding-base-horizontal;
+		.log-entry-header {
+		  padding-right: 20px;
+		}
+		@media(max-width: 1400px) {
+		  .log-entry-header {
+			font-size: .8em;
+		  }
+		}
+		.log-entry-content {
+		  margin-top: -50px;
+		}
+		.raw-response {
+		  word-wrap: break-word;
+		}
+		.json-response {
+		  overflow-x: auto;
+		}
+		.panel-body {
+		  padding-bottom: 0;
+		}
+		.tab-content {
+		  margin-top: 10px;
+		}
 	  }
 	}
 	.code-block {
@@ -88,13 +119,11 @@
 	  background-color:@brand-primary;
 	  color:white;
 	  font-weight:bold;
-	  flex:1;
-	  max-width:75px;
-	  text-align:center;
+	  flex:0 1 auto;
 	  .border-right-radius(0);
 	}
 	&:last-child {
-	  flex:1;
+	  flex:1 0 auto;
 	  border-left:none;
 	  .border-left-radius(0);
 	}
