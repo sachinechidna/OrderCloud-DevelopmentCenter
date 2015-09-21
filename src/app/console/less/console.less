@@ -1,3 +1,70 @@
+#ConsoleContainer {
+  display:flex;
+  flex-flow:row nowrap;
+  overflow:hidden;
+}
+#ConsoleMenu,
+#Console {
+  max-height:~'calc(100vh - 51px)';
+  overflow-y:auto;
+}
+#ConsoleMenu {
+  flex: 0 1 auto;
+  min-width:300px;
+  .list-group {
+    margin:0;
+  }
+  .list-group-item {
+    border-radius:0;
+    border-right:none;
+    border-left:none;
+    &:first-child {
+      border-top:none;
+    }
+    &:last-child {
+      border-bottom:none;
+    }
+  }
+}
+#Console {
+  flex:1 0 auto;
+  display:flex;
+  flex-flow:row nowrap;
+}
+
+#Request,
+#Response {
+  flex:1;
+}
+
+#Request {
+  padding:@padding-base-vertical @padding-base-horizontal;
+  .ace_editor {
+    border-radius: 0 @border-radius-base @border-radius-base;
+  }
+}
+
+#Response {
+  max-width:700px;
+  display:flex;
+  flex-flow:column nowrap;
+}
+
+#ResponseList {
+  flex:0 1 auto;
+  max-height:200px;
+  overflow-y:auto;
+  .apiRequestDisplay {
+    cursor: pointer;
+    pre {
+      //margin:0;
+    }
+  }
+}
+#ResponseBody {
+  flex:1 0 auto;
+}
+
 .console-selector {
   background-color:@gray-lighter;
   display:flex;
@@ -23,7 +90,3 @@
   }
 }
 
-.ace_editor {
-  border-radius:@border-radius-base;
-  height: 300px;
-}

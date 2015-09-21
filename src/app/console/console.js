@@ -44,22 +44,30 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 	vm.Resources = OrderCloudServices;
 	vm.SelectedResource = null;
 
-
 	vm.Services = OrderCloudServices;
 	vm.SelectedService = "";
 	vm.SelectedMethod = "";
 	vm.SelectedEndpoint = null;
 	vm.Response = null;
+	vm.Responses = [];
+	vm.SelectedResponseBody = null;
+
+	vm.setMaxLines = function(editor) {
+		editor.setOptions({
+			maxLines:100
+		});
+	};
 
 	vm.Execute = function() {
 		ApiConsoleService.ExecuteApi(vm.SelectedService, vm.SelectedMethod)
 			.then( function(data) {
+				console.log(data);
 				if (!(data.ID || data.Meta)) return;
-				OpenResponseModal(data);
+				vm.Response = $filter('json')(data);//OpenResponseModal(data);
 			})
 			.catch( function(ex) {
 				if (!ex) return;
-				OpenResponseModal(ex);
+				vm.Response = $filter('json')(ex);//OpenResponseModal(ex);
 			});
 	};
 
@@ -81,7 +89,6 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 		vm.SelectedService = scope.service;
 		vm.SelectedService.Documentation = $resource( apiurl + '/v1/docs/' + vm.SelectedService.name ).get();
 		vm.SelectedMethod = null;
-
 	};
 
 	vm.SelectMethod = function(scope) {
@@ -92,7 +99,6 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 		return vm.SelectedService;
 	}, function (n, o) {
 		if (!n || n === o) return;
-		vm.SelectedService.Documentation = $resource( apiurl + '/v1/docs/' + vm.SelectedService.name ).get();
 		vm.Response = null;
 		vm.SelectedEndpoint = null;
 		vm.SelectedMethod = '';
@@ -114,6 +120,21 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 				});
 		}
 	});
+
+	$scope.$on('event:responseSuccess', function(event, c) {
+		if (c.config.url.indexOf('.html') > -1 || c.config.url.indexOf('docs/') > -1) return;
+		vm.Responses.push(c);
+		vm.SelectResponse(c);
+	});
+
+	$scope.$on('event:responseError', function(event, c) {
+		if (c.config.url.indexOf('.html') > -1 || c.config.url.indexOf('docs/') > -1) return;
+		vm.Responses.push(c);
+	});
+
+	vm.SelectResponse = function(response) {
+		vm.SelectedResponseBody = $filter('json')(response.data);
+	}
 }
 
 function ResponseModalController($modalInstance, Response) {
@@ -210,7 +231,8 @@ function ApiLoaderService($q, $injector) {
 			'Underscore',
 			'Tests',
 			'Registration',
-			'Credentials'
+			'Credentials',
+			'AdminApiClients'
 		];
 		var services = [];
 

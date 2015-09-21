@@ -1,72 +1,103 @@
-<div class="row">
-	<aside class="col-md-3">
+<div id="ConsoleContainer">
+	<aside id="ConsoleMenu">
 		<div class="list-group">
 			<button type="button" class="list-group-item"
 					ng-class="{active:console.SelectedService == service}"
 					ng-repeat="service in console.Services" ng-click="console.SelectService(this)">{{service.name}} <span class="badge">{{service.methods.length}}</span></button>
 		</div>
 	</aside>
-	<article class="col-md-9" ng-hide="console.SelectedService">
+	<article class="container-fluid" ng-hide="console.SelectedService">
 		<h3 class="page-header"><i class="fa fa-tools"></i>API Console</h3>
 		<p>Welcome to the OrderCloud API Console!  The purpose of this tool is to give developers an idea of how the OrderCloud RESTful API is structured through an interactive UI.</p>
 		<p>Begin by choosing a resource from the left and then specify an endpoint in the drop-down.  If the selected endpoint has parameters available, fill these out by clicking "params" to the right of the endpoint.  When creating and updating you will often need to provide a request body as well.  These request bodies will always be in <code>JSON</code> format and is editable below the endpoint selector.</p>
 		<p class="alert alert-danger">Keep in mind that <b>this <em>will</em> alter your database</b>, and changes will be immediately reflected in any application using your distributor companies' client id.</p>
 	</article>
-	<article class="col-md-9" ng-show="console.SelectedService">
-		<h3 class="page-title">
-			{{console.SelectedService.name}}
-			<small ng-bind="console.SelectedEndpoint.Name"></small>
-		</h3>
-<!--		<p ng-bind-html="comment | markdown" ng-repeat="comment in console.SelectedService.Documentation.Comments"></p>
-		<p ng-bind-html="comment | markdown" ng-repeat="comment in console.SelectedEndpoint.Comments"></p>-->
-		<section class="console-selector">
+	<div id="Console" ng-show="console.SelectedService">
+		<article id="Request">
+			<h3 class="page-title">
+				{{console.SelectedService.name}}
+				<small ng-bind="console.SelectedEndpoint.Name"></small>
+			</h3>
+			<!--		<p ng-bind-html="comment | markdown" ng-repeat="comment in console.SelectedService.Documentation.Comments"></p>
+					<p ng-bind-html="comment | markdown" ng-repeat="comment in console.SelectedEndpoint.Comments"></p>-->
+			<section class="console-selector">
 			<span dropdown>
 			  <a href dropdown-toggle>
 				  {{console.SelectedMethod.name || 'Method'}} <span class="caret"></span>
 			  </a>
 			  <ul class="dropdown-menu">
-				  <li ng-repeat="method in console.SelectedService.methods">
+				  <li ng-repeat="method in console.SelectedService.methods | filter:{name:'!As'}">
 					  <a href ng-click="console.SelectMethod(this)">{{method.name}}</a>
 				  </li>
 			  </ul>
 			</span>
-			<pre>{{console.SelectedEndpoint.UriTemplate}}</pre>
+				<pre>{{console.SelectedEndpoint.UriTemplate}}</pre>
 			<span class="btn btn-link" ng-if="console.SelectedEndpoint && console.SelectedEndpoint.Parameters.length" ng-click="console.SelectedEndpoint.showParams = !console.SelectedEndpoint.showParams">
 				Params
 			</span>
-			<button class="btn btn-primary" ng-click="console.Execute()">Send <i class="fa fa-send-o"></i></button>
-		</section>
-		<section id="Configuration" ng-show="console.SelectedEndpoint">
-			<div collapse="!console.SelectedEndpoint.showParams">
-				<table class="table">
-					<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Value</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr ng-repeat="param in console.SelectedEndpoint.Parameters" ng-class="{'danger':(param.Required && !console.SelectedMethod.resolvedParameters[$index].Value)}">
-						<td>{{param.Name}}</td>
-						<td>{{param.Type}}</td>
-						<td><input type="{{param.Type == 'integer' ? 'number' : 'text'}}" class="form-control"
-								   tooltip="{{param.Description}}"
-								   tooltip-trigger="focus"
-								   ng-model="console.SelectedMethod.resolvedParameters[$index].Value" ng-required="param.Required"/></td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-			<div ng-repeat="parameter in console.SelectedMethod.resolvedParameters | objectParams">
-				<label class="label label-primary text-capitalize">
-					{{parameter.Name + ' object'}}
-				</label>
-				<div ui-ace="{theme:'twilight',mode: 'json'}" ng-model="parameter.Value">
+				<button class="btn btn-primary" ng-click="console.Execute()">Send <i class="fa fa-send-o"></i></button>
+			</section>
+			<section id="Configuration" ng-show="console.SelectedEndpoint">
+				<div collapse="!console.SelectedEndpoint.showParams">
+					<table class="table">
+						<thead>
+						<tr>
+							<th>Name</th>
+							<th>Type</th>
+							<th>Value</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="param in console.SelectedEndpoint.Parameters"> <!--ng-class="{'danger':(param.Required && !console.SelectedMethod.resolvedParameters[$index].Value)}"-->
+							<td>{{param.Name}} <small class="text-muted" ng-if="!param.Required">(optional)</small></td>
+							<td><div class="label" ng-class="{
+									'label-primary': param.Type == 'string',
+									'label-warning': param.Type == 'boolean',
+									'label-info': param.Type == 'integer'
+								}">{{param.Type}}</div></td>
+							<td><input type="{{param.Type == 'integer' ? 'number' : 'text'}}" class="form-control"
+									   tooltip="{{param.Description}}"
+									   tooltip-trigger="focus"
+									   ng-model="console.SelectedMethod.resolvedParameters[$index].Value" ng-required="param.Required"/></td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div ng-repeat="parameter in console.SelectedMethod.resolvedParameters | objectParams">
+					<label class="label label-primary text-capitalize">
+						{{parameter.Name + ' object'}}
+					</label>
+					<div ui-ace="{
+						onLoad: console.setMaxLines,
+						useWrapMode : true,
+						theme:'twilight',
+						mode: 'json',
+						tabSize: '4',
+						useSoftTabs: true,
+						showPrintMargin: false
+					}" ng-model="parameter.Value">
+					</div>
+				</div>
+											<!--<pre>{{console.SelectedService.name + '.' + console.SelectedMethod.name + '('}}<span ng-repeat="p in console.SelectedMethod.resolvedParameters">{{((p.Value != null && p.Value != '') ? (p.Type == 'text' ? ('\'' + p.Value + '\'') : p.Value) : p.Name) + (!$last ? ', ' : ')') }}</span></pre>-->
+			</section>
+
+		</article>
+		<div id="Response">
+			<div id="ResponseList">
+				<div class="apiRequestDisplay" ng-repeat="response in console.Responses" ng-click="console.SelectResponse(response)">
+					<pre>{{response.config.method}}</pre>
+					<pre>{{response.config.url}}</pre>
 				</div>
 			</div>
-		</section>
-		<!--							<pre>{{console.SelectedService.name + '.' + console.SelectedMethod.name + '('}}<span ng-repeat="p in console.SelectedMethod.resolvedParameters">{{((p.Value != null && p.Value != '') ? (p.Type == 'text' ? ('\'' + p.Value + '\'') : p.Value) : p.Name) + (!$last ? ', ' : ')') }}</span></pre>-->
-	</article>
+			<div id="ResponseBody" ui-ace="{
+			useWrapMode : true,
+			theme:'twilight',
+			mode: 'json',
+			tabSize: '4',
+			useSoftTabs: true,
+			showPrintMargin: false
+		}" ng-model="console.SelectedResponseBody"></div>
+		</div>
+	</div>
 </div>
 
