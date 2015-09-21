@@ -84,9 +84,9 @@
 		</article>
 		<div id="Response">
 			<div id="ResponseList">
-				<div class="apiRequestDisplay" ng-repeat="response in console.Responses" ng-click="console.SelectResponse(response)">
+				<div class="apiRequestDisplay" ng-class="{success: response.status < 400, danger: response.status >= 400}" ng-repeat="response in console.Responses" ng-click="console.SelectResponse(response)">
 					<pre>{{response.config.method}}</pre>
-					<pre>{{response.config.url}}</pre>
+					<pre>{{response.config.url | OCRoutingUrl}} <small>{{response.status + ' ' + response.statusText}}</small></pre>
 				</div>
 			</div>
 			<div id="ResponseBody" ui-ace="{
@@ -95,7 +95,8 @@
 			mode: 'json',
 			tabSize: '4',
 			useSoftTabs: true,
-			showPrintMargin: false
+			showPrintMargin: false,
+			showGutter: false
 		}" ng-model="console.SelectedResponseBody"></div>
 		</div>
 	</div>

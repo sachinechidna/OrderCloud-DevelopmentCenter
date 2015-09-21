@@ -119,13 +119,39 @@
 	  background-color:@brand-primary;
 	  color:white;
 	  font-weight:bold;
-	  flex:0 1 auto;
+	  flex:1;
+	  max-width:75px;
+	  text-align:center;
 	  .border-right-radius(0);
 	}
 	&:last-child {
-	  flex:1 0 auto;
+	  flex:1;
 	  border-left:none;
 	  .border-left-radius(0);
+	}
+  }
+  &.danger {
+	pre {
+	  border-color:@brand-danger;
+	  &:first-child {
+		background-color:@brand-danger;
+	  }
+	  &:last-child {
+		color:@brand-danger;
+		background-color:lighten(@brand-danger, 38);
+	  }
+	}
+  }
+  &.success {
+	pre {
+	  border-color:@brand-success;
+	  &:first-child {
+		background-color:@brand-success;
+	  }
+	  &:last-child {
+		color: @brand-success;
+		background-color:lighten(@brand-success, 38);
+	  }
 	}
   }
 }

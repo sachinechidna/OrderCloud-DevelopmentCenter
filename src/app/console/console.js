@@ -54,7 +54,7 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 
 	vm.setMaxLines = function(editor) {
 		editor.setOptions({
-			maxLines:100
+			maxLines:200
 		});
 	};
 
@@ -130,6 +130,7 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 	$scope.$on('event:responseError', function(event, c) {
 		if (c.config.url.indexOf('.html') > -1 || c.config.url.indexOf('docs/') > -1) return;
 		vm.Responses.push(c);
+		vm.SelectResponse(c);
 	});
 
 	vm.SelectResponse = function(response) {
