@@ -242,7 +242,7 @@ function ClassesService($q, Underscore) {
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
-						NextOnSuccess:true
+						NextOnSuccess: false
 					}
 				]
 			},
