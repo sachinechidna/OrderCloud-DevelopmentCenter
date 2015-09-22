@@ -11,19 +11,46 @@
 	}
   }
   #ContextMenu {
-	padding: 8px;
+	padding: 6px 30px 6px 6px;
+	>button {
+	  color: @gray-lighter;
+	  width: 40px;
+	  height: 40px;
+	  border-radius: 40px;
+	}
 	.context-content {
-	  margin: 0 8px 12px 0;
-	  width: 250px;
+	  background-color: @gray-lighter;
+	  margin: 0 15px 12px 0;
+	  width: 290px;
 	  padding: 10px;
+	  i {
+		color: #FF5F32;
+		font-size: 5em;
+		padding: 10px 100px 5px 100px;
+	  }
 	  .context-title {
 		text-align: center;
 		font-weight: 700;
 		font-size: 1.2em;
-		padding: 5px 0 10px 0;
+		padding: 5px 0 5px 0;
 		white-space: nowrap;
-		border-bottom: 3px solid @four51-blue;
 		margin-bottom: 15px;
+	  }
+	  .form-group {
+		margin-bottom: 5px;
+	  }
+	  .form-divider {
+		background-color: lighten(@gray-light, 30);
+		border-radius: 6px;
+		margin: 10px 5px;
+		height: 2px;
+	  }
+	  .form-group:last-of-type {
+		margin-bottom: 20px;
+	  }
+	  input {
+		font-size: .9em;
+		text-align: center;
 	  }
 	  .context-knob {
 		position: absolute;
@@ -34,8 +61,19 @@
 		height: 0;
 		border-left: 16px solid transparent;
 		border-right: 16px solid transparent;
-		border-top: 16px solid white;
+		border-top: 16px solid @gray-lighter;
 		background-color: transparent;
+	  }
+	  .btn {
+		width: 49%;
+	  }
+	  .btn-danger {
+		background-color: @gray-light;
+		border-color: @gray-light;
+	  }
+	  .btn-info {
+		background-color: @four51-orange;
+		border-color: @four51-orange;
 	  }
 	}
   }

@@ -5,22 +5,25 @@
 				<a class="navbar-brand">{{course.current.Name + ' / ' + class.current.Name}}</a>
 			</div>
 			<div class="nav navbar-nav navbar-right dropup" id="ContextMenu" dropdown auto-close="outsideClick">
-				<button type="button" id="context-btn" class="btn btn-primary" dropdown-toggle>{{class.context || 'Context'}}</button>
+				<button type="button" id="context-btn" class="btn btn-primary" dropdown-toggle><i class="fa fa-cogs"></i></button>
 				<div class="dropdown-menu dropup context-content" aria-labelledby="context-btn">
+					<i class="fa fa-group"></i>
 					<div class="context-title">
-						Set Your Context
+						App Context Definition
 					</div>
 					<form>
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="clientID">
+							<input type="text" class="form-control" placeholder="clientID" ng-model="class.context.clientID">
+						</div>
+						<div class="form-divider"></div>
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Username" ng-model="class.context.username">
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Username">
+							<input type="password" class="form-control" placeholder="Password" ng-model="class.context.password">
 						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Password">
-						</div>
-						<button type="submit" class="btn btn-info btn-block">Set Context</button>
+						<button type="submit" class="btn btn-info pull-right" ng-click="class.context.setContext()">Set Context</button>
+						<button class="btn btn-danger pull-left" ng-click="class.context.clearContext()">Clear Context</button>
 					</form>
 					<div class="context-knob"></div>
 				</div>

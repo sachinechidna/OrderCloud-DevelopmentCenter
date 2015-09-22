@@ -83,9 +83,11 @@ function CourseController( SelectedCourse, ClassesList ) {
 	vm.classes = ClassesList;
 }
 
-function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Courses, SelectedCourse, SelectedClass ) {
+function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Courses, SelectedCourse, SelectedClass, Context ) {
 	var vm = this;
 	vm.current = SelectedClass;
+	vm.alert = {};
+	vm.context = {};
 	vm.requests = [];
 	vm.responses = [];
 	vm.allResponses = [];
@@ -248,6 +250,31 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 			}
 		});
 	});
+
+	vm.context.setContext = function() {
+		Context.setContext(vm.context.clientID, vm.context.username, vm.context.password)
+			.then(function() {
+				vm.contextSet = true;
+				vm.context.username = '';
+				vm.context.password = '';
+				vm.alert.contextOnAlert = true;
+				setTimeout(function() {
+					vm.alert.contextOnAlert = false;
+				}, 3000)
+			}, function(reason) {
+				vm.context.SetError = true;
+				vm.context.SetErrorMsg = reason;
+			});
+	};
+
+	vm.context.clearContext = function() {
+		Context.clearContext();
+		vm.contextSet = false;
+		vm.alert.contextOffAlert = true;
+		setTimeout(function() {
+			vm.alert.contextOffAlert = false;
+		}, 3000)
+	}
 
 }
 
