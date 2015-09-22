@@ -238,7 +238,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'get.js',
-						Model: '\n\n\nProducts.Get(prod);',
+						Model: '\n\n\nProducts.Get();',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,

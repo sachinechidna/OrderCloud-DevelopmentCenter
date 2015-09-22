@@ -66,10 +66,12 @@
 	  border-radius:0;
 	}
 	#Response {
+	  overflow: hidden;
+	  position: relative;
 	  max-width: 650px;
 	  min-width: 450px;
 	  padding:@padding-base-horizontal;
-	  & > div {
+	  & > div:nth-of-type(1) {
 		background-color:@gray-dark;
 		height:550px;
 	  }
@@ -99,6 +101,32 @@
 		.tab-content {
 		  margin-top: 10px;
 		}
+	  }
+	  .response-alert {
+		position: absolute;
+		right: -100%;
+		bottom: 40px;
+		width: 90%;
+		opacity: 1;
+		.response-words {
+		  font-weight: 700;
+		  padding-left: 5px;
+		}
+		a {
+		  color: #3c763d;
+		}
+		i {
+		  font-size: 1.3em;
+		}
+	  }
+	  .response-alert.alert-danger a {
+		color: #a94442;
+	  }
+	  .response-alert.slide {
+		right: 5%;
+		transition-duration: 0.5s;
+		transition-timing-function: ease;
+		opacity: 1;
 	  }
 	}
 	.code-block {

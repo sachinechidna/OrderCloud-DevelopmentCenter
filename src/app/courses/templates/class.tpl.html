@@ -39,10 +39,11 @@
 					<accordion class="howto-log">
 						<accordion-group is-open="status.open" class="log-entry" ng-repeat="response in class.allResponses">
 							<accordion-heading class="row">
-								<span class="log-entry-header">{{response.config.method}}</span>
-								<span class="log-entry-header">{{response.config.url}}</span>
-								<span class="log-entry-header">{{response.status}} {{response.statusText}}</span>
 								<div class="pull-right"><a href><i class="fa" ng-class="{'fa-chevron-down': !status.open, 'fa-chevron-up': status.open}"></i></a></div>
+								<span class="log-entry-header">{{response.config.method}}</span>
+								<span class="log-entry-header">{{response.config.url | OCRoutingUrl}}</span>
+								<span class="log-entry-header">{{response.status}} {{response.statusText}}</span>
+
 							</accordion-heading>
 							<tabset class=log-entry-content justified="true">
 								<tab heading="Headers">
@@ -57,6 +58,12 @@
 							</tabset>
 						</accordion-group>
 					</accordion>
+				</div>
+				<div class="alert alert-success response-alert" role="alert" ng-class="{slide: class.responseSuccess}">
+					<a class="pull-right" href>GO TO NEXT CLASS</a> <span class="response-words">All Requests Succeeded. Great Job!</span><i class="fa fa-check pull-left"></i>
+				</div>
+				<div class="alert alert-danger response-alert" role="alert" ng-class="{slide: class.responseFailure}">
+					<a class="pull-right" href><i class="fa fa-close"></i></a> <span class="response-words">One or More Requests Failed.</span><i class="fa fa-warning pull-left"></i>
 				</div>
 			</div>
 		</div>

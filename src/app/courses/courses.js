@@ -91,12 +91,35 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 	vm.allResponses = [];
 	vm.responseErrors = [];
 	vm.requestErrors = [];
+	vm.openRequestCount = 0;
 	vm.docs = {};
 	vm.classIndex = SelectedCourse.Classes.indexOf(vm.current.ID);
 	vm.totalClasses = SelectedCourse.Classes.length;
 	var nextClassID = (vm.classIndex + 1 < vm.totalClasses) ? SelectedCourse.Classes[vm.classIndex + 1] : null;
 	var nextCourseID;
 	if (!nextClassID) findNextCourseID();
+
+	$scope.$watch(function() {
+		return vm.openRequestCount;
+	}, function (n, o) {
+		if (n == 0 && vm.turnOnLog) {
+			vm.responseFailure = false;
+			angular.forEach(vm.allResponses, function(data) {
+				if (data.status > 399) {
+					vm.responseFailure = true;
+				}
+			});
+			if (!vm.responseFailure) {
+				vm.responseSuccess = true;
+			}
+		}
+		else {
+			if (vm.turnOnLog) {
+				console.log('not yet');
+			}
+		}
+	});
+
 
 	function findNextCourseID() {
 		Courses.List().then(function(data) {
@@ -145,6 +168,12 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 
 
 	if (SelectedClass.Interactive) {
+		$scope.$on('event:requestSuccess', function() {
+			if (vm.turnOnLog) {
+				vm.openRequestCount += 1;
+			}
+		});
+
 		$scope.$on('event:responseSuccess', function(event, c) {
 			if (vm.turnOnLog) {
 				if (c.config.url.indexOf('docs/') == -1) {
@@ -152,6 +181,7 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 					vm.allResponses.push(c);
 					vm.success = true;
 				}
+				vm.openRequestCount -= 1;
 			}
 		});
 		$scope.$on('event:responseError', function(event, c) {
@@ -161,6 +191,7 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 					vm.allResponses.push(c);
 					vm.success = false;
 				}
+				vm.openRequestCount -= 1;
 			}
 		});
 	}
