@@ -154,6 +154,18 @@
 	  }
 	}
   }
+  &.disabled {
+	pre {
+	  border-color:@gray;
+	  &:first-child {
+		background-color:@gray-light;
+	  }
+	  &:last-child {
+		color: @text-muted;
+		background-color:lighten(@gray-lighter,5);
+	  }
+	}
+  }
 }
 
 @interactive-ui-bg: #141414;

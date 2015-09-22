@@ -8,6 +8,22 @@ angular.module('orderCloud')
 	.directive('parameterObject', ParameterObjectDirective)
 	.directive('emptyToNull', EmptyToNullDirective)
 	.filter('objectParams', objectParams)
+	.animation('.log-animation', function() {
+		return {
+			enter : function(element, done) {
+				var childEl = element.children()[0];
+				element[0].style.transformOrigin = 'center bottom';
+				//element[0].style.transform = 'translateZ(-25px)';
+				element[0].style.perspective = '2000px';
+				//element[0].style.perspectiveOrigin = '50% 50%';
+				TweenMax.from(childEl,0.5, {transform: 'rotateX(90deg) translateY(15px)', opacity:0, onComplete: done});
+				TweenMax.from(element,0.5, {height: 0, onComplete:removeHeight});
+				function removeHeight(el) {
+					el[0].style.height = '';
+				}
+			}
+		}
+	})
 ;
 
 function objectParams() {
@@ -28,8 +44,8 @@ function ApiConsoleConfig( $stateProvider, $urlMatcherFactoryProvider ) {
         'controller': 'ApiConsoleCtrl',
         'controllerAs': 'console',
         'resolve': {
-			OrderCloudServices: function (ApiLoader) {
-                return ApiLoader.getServices('orderCloud.sdk');
+			OrderCloudResources: function (ApiLoader) {
+                return ApiLoader.getResources('orderCloud.sdk');
             }
         },
         'data':{
@@ -39,18 +55,16 @@ function ApiConsoleConfig( $stateProvider, $urlMatcherFactoryProvider ) {
     });
 };
 
-function ApiConsoleController($scope, $resource, $injector, $filter, $modal, apiurl, OrderCloudServices, ApiConsoleService) {
+function ApiConsoleController($scope, $resource, $filter, apiurl, OrderCloudResources, ApiConsoleService) {
 	var vm = this;
-	vm.Resources = OrderCloudServices;
+	vm.Resources = OrderCloudResources;
 	vm.SelectedResource = null;
 
-	vm.Services = OrderCloudServices;
-	vm.SelectedService = "";
 	vm.SelectedMethod = "";
 	vm.SelectedEndpoint = null;
 	vm.Response = null;
 	vm.Responses = [];
-	vm.SelectedResponseBody = null;
+	vm.SelectedResponse = null;
 
 	vm.setMaxLines = function(editor) {
 		editor.setOptions({
@@ -59,35 +73,21 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 	};
 
 	vm.Execute = function() {
-		ApiConsoleService.ExecuteApi(vm.SelectedService, vm.SelectedMethod)
+		ApiConsoleService.ExecuteApi(vm.SelectedResource, vm.SelectedMethod)
 			.then( function(data) {
 				console.log(data);
 				if (!(data.ID || data.Meta)) return;
-				vm.Response = $filter('json')(data);//OpenResponseModal(data);
+				vm.Response = $filter('json')(data);
 			})
 			.catch( function(ex) {
 				if (!ex) return;
-				vm.Response = $filter('json')(ex);//OpenResponseModal(ex);
+				vm.Response = $filter('json')(ex);
 			});
 	};
 
-	function OpenResponseModal(response) {
-		$modal.open({
-			templateUrl: 'console/templates/console.responseModal.tpl.html',
-			controller: 'ResponseModalCtrl',
-			controllerAs: 'ResponseModal',
-			bindToController: true,
-			resolve: {
-				Response: function() {
-					return response;
-				}
-			}
-		});
-	}
-
-	vm.SelectService = function(scope) {
-		vm.SelectedService = scope.service;
-		vm.SelectedService.Documentation = $resource( apiurl + '/v1/docs/' + vm.SelectedService.name ).get();
+	vm.SelectResource = function(scope) {
+		vm.SelectedResource = scope.resource;
+		vm.SelectedResource.Documentation = $resource( apiurl + '/v1/docs/' + vm.SelectedResource.name ).get();
 		vm.SelectedMethod = null;
 	};
 
@@ -96,7 +96,7 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 	};
 
 	$scope.$watch(function () {
-		return vm.SelectedService;
+		return vm.SelectedResource;
 	}, function (n, o) {
 		if (!n || n === o) return;
 		vm.Response = null;
@@ -112,7 +112,7 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 		vm.SelectedEndpoint = null;
 		if (angular.isDefined(n.params)) {
 			console.log('trigger');
-			ApiConsoleService.CreateParameters(vm.SelectedService, n)
+			ApiConsoleService.CreateParameters(vm.SelectedResource, n)
 				.then(function(data) {
 					console.log('trigger 2');
 					vm.SelectedEndpoint = data.SelectedEndpoint;
@@ -123,18 +123,20 @@ function ApiConsoleController($scope, $resource, $injector, $filter, $modal, api
 
 	$scope.$on('event:responseSuccess', function(event, c) {
 		if (c.config.url.indexOf('.html') > -1 || c.config.url.indexOf('docs/') > -1) return;
+		c.data = $filter('json')(c.data);
 		vm.Responses.push(c);
 		vm.SelectResponse(c);
 	});
 
 	$scope.$on('event:responseError', function(event, c) {
 		if (c.config.url.indexOf('.html') > -1 || c.config.url.indexOf('docs/') > -1) return;
+		c.data = $filter('json')(c.data);
 		vm.Responses.push(c);
 		vm.SelectResponse(c);
 	});
 
 	vm.SelectResponse = function(response) {
-		vm.SelectedResponseBody = $filter('json')(response.data);
+		vm.SelectedResponse = response;
 	}
 }
 
@@ -153,20 +155,21 @@ function ApiConsoleService($injector, $resource, apiurl) {
 	return service;
 
 	/////
-	function _executeApi(SelectedService, SelectedMethod) {
+	function _executeApi(SelectedResource, SelectedMethod) {
 		var params = [];
 		angular.forEach(SelectedMethod.resolvedParameters, function(p) {
+			if (p.Value == "") return; //Avoid registering blank strings
 			params.push(p.Type == 'object' ? JSON.parse(p.Value) : p.Value);
 		});
-		return $injector.get(SelectedService.name)[SelectedMethod.name].apply(this, params);
+		return $injector.get(SelectedResource.name)[SelectedMethod.name].apply(this, params);
 	}
 
-	function _createParameters(SelectedService, SelectedMethod) {
+	function _createParameters(SelectedResource, SelectedMethod) {
 		var result = {
 			SelectedEndpoint: null,
 			ResolvedParameters: []
 		};
-		return $resource( apiurl + '/v1/docs/' + SelectedService.name + '/' + SelectedMethod.name).get().$promise
+		return $resource( apiurl + '/v1/docs/' + SelectedResource.name + '/' + SelectedMethod.name).get().$promise
 			.then( function(data) {
 				result.SelectedEndpoint = data;
 				analyzeParamters(data);
@@ -206,7 +209,7 @@ function ApiConsoleService($injector, $resource, apiurl) {
 
 function ApiLoaderService($q, $injector) {
 	var service = {
-		getServices: _getServices
+		getResources: _getResources
 	};
 
 	return service;
@@ -223,7 +226,7 @@ function ApiLoaderService($q, $injector) {
 		return result;
 	};
 
-	function _getServices(moduleName) {
+	function _getResources(moduleName) {
 		var deferred = $q.defer();
 		var filterFactories = [
 			'Auth',
