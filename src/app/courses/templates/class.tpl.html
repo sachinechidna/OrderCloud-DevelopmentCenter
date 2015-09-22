@@ -4,6 +4,27 @@
 			<div class="navbar-header">
 				<a class="navbar-brand">{{course.current.Name + ' / ' + class.current.Name}}</a>
 			</div>
+			<div class="nav navbar-nav navbar-right dropup" id="ContextMenu" dropdown auto-close="outsideClick">
+				<button type="button" id="context-btn" class="btn btn-primary" dropdown-toggle>{{class.context || 'Context'}}</button>
+				<div class="dropdown-menu dropup context-content" aria-labelledby="context-btn">
+					<div class="context-title">
+						Set Your Context
+					</div>
+					<form>
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="clientID">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Username">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" placeholder="Password">
+						</div>
+						<button type="submit" class="btn btn-info btn-block">Set Context</button>
+					</form>
+					<div class="context-knob"></div>
+				</div>
+			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
 					<a ng-hide="class.current.Interactive" href="" ng-click="class.nextClass()">Next Class</a>
