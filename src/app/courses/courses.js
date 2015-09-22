@@ -102,9 +102,8 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 	$scope.$watch(function() {
 		return vm.openRequestCount;
 	}, function (n, o) {
-		var allowNextOnSuccess = Underscore.where(vm.current.ScriptModels.Scripts, {Title: vm.current.ActiveScript})[0].NextOnSuccess;
-		console.log(allowNextOnSuccess);
-		if (n == 0 && vm.turnOnLog && allowNextOnSuccess) {
+		vm.allowNextOnSuccess = Underscore.where(vm.current.ScriptModels.Scripts, {Title: vm.current.ActiveScript})[0].NextOnSuccess;
+		if (n == 0 && vm.turnOnLog) {
 			vm.responseFailure = false;
 			angular.forEach(vm.allResponses, function(data) {
 				if (data.status > 399) {
@@ -202,6 +201,8 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 	vm.Execute = function() {
 
 		vm.allResponses = [];
+		vm.responseSuccess = false;
+		vm.responseFailure = false;
 
 		vm.turnOnLog = true;
 		var fullScript = '';
