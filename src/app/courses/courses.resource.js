@@ -34,7 +34,7 @@ function CoursesService($q, Underscore) {
 			Name: 'The Basics',
 			Description: 'A real-world, interactive introduction to help you get started using OrderCloud',
 			Difficulty: 'Beginner',
-			Classes: ['authentication', 'create-buyer', 'create-buyer-user', 'api-access', 'get-me']
+			Classes: ['create-buyer', 'create-buyer-user', 'api-access', 'get-me']
 		},
 		{
 			ID: 'user-prod-access',

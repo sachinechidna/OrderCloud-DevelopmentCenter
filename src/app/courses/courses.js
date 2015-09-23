@@ -82,7 +82,7 @@ function CourseController( SelectedCourse, ClassesList ) {
 	vm.classes = ClassesList;
 }
 
-function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Courses, SelectedCourse, SelectedClass, Context, Me ) {
+function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Courses, SelectedCourse, SelectedClass, Context, Me, $filter ) {
 	var vm = this;
 	vm.current = SelectedClass;
 	vm.alert = {};
@@ -109,7 +109,9 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 	$scope.$watch(function() {
 		return vm.openRequestCount;
 	}, function (n, o) {
-		vm.allowNextOnSuccess = Underscore.where(vm.current.ScriptModels.Scripts, {Title: vm.current.ActiveScript})[0].NextOnSuccess;
+		if (vm.current.ScriptModels) {
+			vm.allowNextOnSuccess = Underscore.where(vm.current.ScriptModels.Scripts, {Title: vm.current.ActiveScript})[0].NextOnSuccess;
+		}
 		if (n == 0 && vm.turnOnLog) {
 			vm.responseFailure = false;
 			angular.forEach(vm.allResponses, function(data) {
@@ -155,6 +157,54 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 
 	};
 	setActiveScript();
+	angular.forEach(vm.current.ClassMethods, function(method) { //sets docs and replaces model string constant with request example
+		ClassSvc.getDocs(method)
+			.then(function(data) {
+				var svc = data[0];
+				var mtd = data[1];
+				var doc = data[2];
+				if (!vm.docs[svc]) {
+					vm.docs[svc] = {};
+					vm.docs[svc][mtd] = doc;
+				} else {
+					vm.docs[svc][mtd] = doc;
+				}
+				angular.forEach(vm.current.ScriptModels.Scripts, function(script) {
+					angular.forEach(vm.current.ClassMethods, function(method) {
+						var split = method.split('.');
+						var svc = split[0];
+						var mtd = split[1];
+						if (vm.docs[svc][mtd]) {
+							var stringReplace = vm.docs[svc][mtd].RequestBody.Sample;
+							var newString = "";
+							var on = true;
+							for (var i = 0; i < stringReplace.length; i++) {
+								var e = stringReplace[i];
+								if (on) {
+									if (e != '"') {
+										newString += e;
+									}
+								} else {
+									newString += e;
+								}
+								if (e == ':') {
+									on = false;
+								}
+								if (e == ",") {
+									on = true;
+								}
+								if (e == "[") {
+									on = true;
+								}
+							}
+							console.log(newString);
+							script.Model = script.Model.replace('{' + method + '}', newString)
+						}
+					});
+				});
+			})
+	});
+
 	vm.nextClass = function() {
 		if (nextClassID) {
 			console.log(nextClassID);
@@ -245,16 +295,7 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 		}
 
 	};
-	angular.forEach(vm.current.ClassMethods, function(method) {
-		ClassSvc.getDocs(method, function(svc, mtd, doc) {
-			if (!vm.docs[svc]) {
-				vm.docs[svc] = {};
-				vm.docs[svc][mtd] = doc;
-			} else {
-				vm.docs[svc][mtd] = doc;
-			}
-		});
-	});
+
 
 	vm.context.setContext = function() {
 		Context.setContext(vm.context.clientID, vm.context.username, vm.context.password)
@@ -284,11 +325,12 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 
 }
 
-function ClassService($resource, apiurl) {
+function ClassService($resource, apiurl, $q) {
 	var service = {
 		getDocs: _getDocs
 	};
-	function _getDocs(target, cb) {
+	function _getDocs(target) {
+		var dfd = $q.defer();
 		var targetSplit = target.split('.');
 		var serviceName = targetSplit[0];
 		var methodName = targetSplit[1];
@@ -296,10 +338,11 @@ function ClassService($resource, apiurl) {
 			.then(function(data) {
 				angular.forEach(data.Endpoints, function(ep) {
 					if (ep.ID == methodName) {
-						cb(serviceName, methodName, ep);
+						dfd.resolve([serviceName, methodName, ep]);
 					}
 				});
-			})
+			});
+		return dfd.promise;
 	}
 
 

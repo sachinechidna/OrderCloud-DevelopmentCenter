@@ -12,9 +12,9 @@ angular.module( 'orderCloud', [
 ])
 
 	.run( Security )
-	.run(function($rootScope) {
+	/*.run(function($rootScope) {
 		$rootScope.clientid = '0e0450e6-27a0-4093-a6b3-d7cd9ebc2b8f';
-	})
+	})*/
 	.config( Routing )
 	.config( ErrorHandling )
 	.controller( 'AppCtrl', AppCtrl )
@@ -25,7 +25,7 @@ angular.module( 'orderCloud', [
 
 	//Client ID for a Registered Distributor or Buyer Company
 	//.constant('clientid', '7a26bc3f-cff2-497d-8ead-83e569e9d849')
-	//.constant('clientid', '0e0450e6-27a0-4093-a6b3-d7cd9ebc2b8f') //DISTRIBUTOR - Four51 OrderCloud Components
+	.constant('clientid', '0e0450e6-27a0-4093-a6b3-d7cd9ebc2b8f') //DISTRIBUTOR - Four51 OrderCloud Components
 
 	//Test Environment
 	.constant('authurl', 'https://testauth.ordercloud.io/oauth/token')
