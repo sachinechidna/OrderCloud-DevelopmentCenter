@@ -8,22 +8,6 @@ angular.module('orderCloud')
 	.directive('parameterObject', ParameterObjectDirective)
 	.directive('emptyToNull', EmptyToNullDirective)
 	.filter('objectParams', objectParams)
-	.animation('.log-animation', function() {
-		return {
-			enter : function(element, done) {
-				var childEl = element.children()[0];
-				element[0].style.transformOrigin = 'center bottom';
-				//element[0].style.transform = 'translateZ(-25px)';
-				element[0].style.perspective = '2000px';
-				//element[0].style.perspectiveOrigin = '50% 50%';
-				TweenMax.from(childEl,0.5, {transform: 'rotateX(90deg) translateY(15px)', opacity:0, onComplete: done});
-				TweenMax.from(element,0.5, {height: 0, onComplete:removeHeight(element)});
-				function removeHeight(el) {
-					el[0].style.height = '';
-				}
-			}
-		}
-	})
 ;
 
 function objectParams() {

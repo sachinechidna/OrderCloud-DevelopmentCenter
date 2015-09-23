@@ -84,10 +84,12 @@
 		</article>
 		<div id="Response">
 			<div id="ResponseList">
-				<div class="log-animation" ng-repeat="response in console.Responses | orderBy:'+':true">
-					<div class="apiRequestDisplay" ng-class="{success: (response.status < 300 && response.status >= 200), danger: (response.status >= 300 || response.status < 200), disabled: response != console.SelectedResponse}" ng-click="console.SelectResponse(response)">
-						<pre>{{response.config.method}}</pre>
-						<pre><i class="fa pull-right" ng-class="{'fa-check':(response.status < 300 && response.status >= 200), 'fa-warning': (response.status >= 300 || response.status < 200)}"></i>{{(response.config.url | OCRoutingUrl) + (response.config.params | OCUrlParams)}} <small>{{response.status + ' ' + response.statusText}}</small></pre>
+				<div class="log-item-container" ng-repeat="response in console.Responses | orderBy:'+':true">
+					<div class="log-item">
+						<div class="apiRequestDisplay" ng-class="{success: (response.status < 300 && response.status >= 200), danger: (response.status >= 300 || response.status < 200), disabled: response != console.SelectedResponse}" ng-click="console.SelectResponse(response)">
+							<pre>{{response.config.method}}</pre>
+							<pre><i class="fa pull-right" ng-class="{'fa-check':(response.status < 300 && response.status >= 200), 'fa-warning': (response.status >= 300 || response.status < 200)}"></i>{{(response.config.url | OCRoutingUrl) + (response.config.params | OCUrlParams)}} <small>{{response.status + ' ' + response.statusText}}</small></pre>
+						</div>
 					</div>
 				</div>
 			</div>
