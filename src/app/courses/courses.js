@@ -9,7 +9,7 @@ angular.module( 'orderCloud' )
 ;
 
 function CoursesConfig( $stateProvider, $httpProvider ) {
-	$httpProvider.interceptors.push(function($rootScope) {
+	$httpProvider.interceptors.push(function($q, $rootScope) {
 		return {
 			'request': function(config) {
 				$rootScope.$broadcast('event:requestSuccess', config);
@@ -17,7 +17,7 @@ function CoursesConfig( $stateProvider, $httpProvider ) {
 			},
 			'requestError': function(rejection) {
 				$rootScope.$broadcast('event:requestError', rejection);
-				return rejection;
+				return $q.reject(rejection);
 			},
 			'response': function(response) {
 				$rootScope.$broadcast('event:responseSuccess', response);
@@ -25,11 +25,10 @@ function CoursesConfig( $stateProvider, $httpProvider ) {
 			},
 			'responseError': function(rejection) {
 				$rootScope.$broadcast('event:responseError', rejection);
-				return rejection;
+				return $q.reject(rejection);
 			}
 		};
 	});
-
 	$stateProvider
 		.state( 'base.courses', {
 			url: '/courses',

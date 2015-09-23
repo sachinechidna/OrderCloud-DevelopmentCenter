@@ -17,7 +17,7 @@ angular.module('orderCloud')
 				element[0].style.perspective = '2000px';
 				//element[0].style.perspectiveOrigin = '50% 50%';
 				TweenMax.from(childEl,0.5, {transform: 'rotateX(90deg) translateY(15px)', opacity:0, onComplete: done});
-				TweenMax.from(element,0.5, {height: 0, onComplete:removeHeight});
+				TweenMax.from(element,0.5, {height: 0, onComplete:removeHeight(element)});
 				function removeHeight(el) {
 					el[0].style.height = '';
 				}
