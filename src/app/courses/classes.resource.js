@@ -61,7 +61,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'tools',
-			Name: 'AngularJS & the SDK',
+			Name: 'OrderCloud Development Tools',
 			Description: 'What are the tools available?',
 			TemplateUrl: 'courses/classTemplates/intro.tools.tpl.html',
 			Interactive: false
