@@ -22,8 +22,8 @@ function LoginController( $rootScope, $state, Credentials ) {
 
 	vm.submit = function( ) {
 		console.log('hit');
-		Credentials.Get( vm.credentials ).then(
-			function() {
+		Credentials.Get( vm.credentials )
+			.then(function() {
 				console.log('hit 2');
 				$rootScope.isAuthenticated = true;
 				$state.go( 'base.dashboard' );

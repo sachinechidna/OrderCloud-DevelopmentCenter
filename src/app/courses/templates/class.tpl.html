@@ -5,7 +5,7 @@
 				<a class="navbar-brand">{{course.current.Name + ' / ' + class.current.Name}}</a>
 			</div>
 			<div class="nav navbar-nav navbar-right dropup" id="ContextMenu" dropdown auto-close="outsideClick">
-				<button type="button" id="context-btn" class="btn btn-primary" dropdown-toggle><i class="fa fa-cogs"></i></button>
+				<a href dropdown-toggle><i class="fa fa-user"></i></a>
 				<div class="dropdown-menu dropup context-content" aria-labelledby="context-btn">
 					<i class="fa fa-group"></i>
 					<div class="context-title">
@@ -28,6 +28,11 @@
 					<div class="context-knob"></div>
 				</div>
 			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a dropdown-toggle class="context-user" ng-class="{contextSet: class.context.User}">{{class.context.User ? 'Context User: ' + class.context.User.FirstName + ' ' + class.context.User.LastName : 'No Context User Set'}}</a>
+				</li>
+			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
 					<a ng-hide="class.current.Interactive" href="" ng-click="class.nextClass()">Next Class</a>

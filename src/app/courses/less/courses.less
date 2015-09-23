@@ -10,13 +10,18 @@
 	  }
 	}
   }
+  .context-user {
+	font-size: 1.1em;
+	color: @alert-danger-text;
+  }
+  .context-user.contextSet {
+	color: @alert-info-text;
+  }
   #ContextMenu {
 	padding: 6px 30px 6px 6px;
-	>button {
+	>a {
 	  color: @gray-lighter;
-	  width: 40px;
-	  height: 40px;
-	  border-radius: 40px;
+	  font-size: 2em;
 	}
 	.context-content {
 	  background-color: @gray-lighter;
@@ -56,7 +61,7 @@
 		position: absolute;
 		z-index: 500;
 		bottom: -16px;
-		right: 19px;
+		right: 9px;
 		width: 0;
 		height: 0;
 		border-left: 16px solid transparent;

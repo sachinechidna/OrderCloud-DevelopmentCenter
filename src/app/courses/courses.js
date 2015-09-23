@@ -83,7 +83,7 @@ function CourseController( SelectedCourse, ClassesList ) {
 	vm.classes = ClassesList;
 }
 
-function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Courses, SelectedCourse, SelectedClass, Context ) {
+function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Courses, SelectedCourse, SelectedClass, Context, Me ) {
 	var vm = this;
 	vm.current = SelectedClass;
 	vm.alert = {};
@@ -100,6 +100,12 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 	var nextClassID = (vm.classIndex + 1 < vm.totalClasses) ? SelectedCourse.Classes[vm.classIndex + 1] : null;
 	var nextCourseID;
 	if (!nextClassID) findNextCourseID();
+	Me.Get()
+		.then(function(data) {
+			vm.context.User = data;
+		}, function() {
+			vm.context.User = null;
+		});
 
 	$scope.$watch(function() {
 		return vm.openRequestCount;
@@ -257,10 +263,14 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 				vm.contextSet = true;
 				vm.context.username = '';
 				vm.context.password = '';
-				vm.alert.contextOnAlert = true;
-				setTimeout(function() {
-					vm.alert.contextOnAlert = false;
-				}, 3000)
+				Me.Get()
+					.then(function(data) {
+						if (vm.context.User) {
+							vm.context.User = data;
+						}
+					}, function(reason) {
+						console.log(reason);
+					})
 			}, function(reason) {
 				vm.context.SetError = true;
 				vm.context.SetErrorMsg = reason;
@@ -270,10 +280,7 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 	vm.context.clearContext = function() {
 		Context.clearContext();
 		vm.contextSet = false;
-		vm.alert.contextOffAlert = true;
-		setTimeout(function() {
-			vm.alert.contextOffAlert = false;
-		}, 3000)
+		vm.context.User = null;
 	}
 
 }
