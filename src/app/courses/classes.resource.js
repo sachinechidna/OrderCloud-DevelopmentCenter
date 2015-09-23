@@ -195,7 +195,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'prod-crud',
-			Name: 'Product CRUD',
+			Name: 'Setting up a Product',
 			Description: "Create or access a product to be used in later classes",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.prod-crud.tpl.html',
 			Interactive: true,
@@ -251,7 +251,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'price-sched-crud',
-			Name: 'Price Schedule CRUD',
+			Name: 'Defining a Price Schedule',
 			Description: "Create or access a price schedule to be used in creating a product assignment to your buyer-user",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.price-sched-crud.tpl.html',
 			Interactive: true,
@@ -340,7 +340,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'category-crud',
-			Name: 'Category CRUD',
+			Name: 'Setting a Category',
 			Description: "Create or Get a category that you will give a user access to",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.category-crud.tpl.html',
 			Interactive: true,

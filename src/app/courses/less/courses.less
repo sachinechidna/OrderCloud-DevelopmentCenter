@@ -105,7 +105,7 @@
 	}
 	#CourseContent {
 	  max-width:400px;
-	  min-width: 350px;
+	  min-width: 300px;
 	  overflow-y:auto;
 	}
 	#InteractiveUI {
@@ -123,7 +123,7 @@
 	#ScriptInputContainer {
 	  display:flex;
 	  flex-flow:column nowrap;
-	  min-width: 400px;
+	  min-width: 500px;
 	  & > .script-nav {
 		flex:0 1 auto;
 		display:flex;
@@ -279,16 +279,21 @@
 @script-nav-tabs-inactive-link-color: darken(@script-nav-tabs-active-link-color, 30);
 @script-nav-tabs-active-link-border-color: lighten(@interactive-ui-bg, 10);
 .script-nav {
+
   padding-top:@padding-base-horizontal;
   border-bottom: 1px solid @script-nav-tabs-inactive-link-bg;
   .nav-tabs {
 	border-bottom:none;
 	> li {
+	  font-size: .9em;
+	  padding: auto 3px;
 	  margin-bottom: 0;
 	  > a {
 		background-color: @script-nav-tabs-inactive-link-bg;
 		color: @script-nav-tabs-inactive-link-color;
 		cursor: pointer;
+		padding-left: 7px;
+		padding-right: 7px;
 		&:focus,
 		&:hover {
 		  border-color: @script-nav-tabs-hover-border-color;
