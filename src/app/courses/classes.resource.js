@@ -206,11 +206,43 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: '\n\nvar prod = {\n\tDescription: "...",\n\tName: "...",\n\tQuantityMultiplier: 1,\n\tActive: true,\n};\n\n\nProducts.Create(prod);',
+						Model: '\n\nvar prod = {Products.Create};\n\n\nProducts.Create(prod);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
 						NextOnSuccess: true
+					},
+					{
+						Title: 'get.js',
+						Model: '\n\n\nProducts.Get();',
+						Disable: false,
+						ListOrder: 2,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'update.js',
+						Model: '\n//must provide entire object in update\n\nvar prod = {Products.Create};\n\n\nProducts.Update(prod);',
+						Disable: false,
+						ListOrder: 3,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'patch.js',
+						Model: '\n//will only update Description\n\nvar prod = {\n\tID: "...",\n\tDescription: "..."\n};\n\n\nProducts.Update(prod); ',
+						Disable: false,
+						ListOrder: 4,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'delete.js',
+						Model: '\n\n var productID = {productID};\n\n Products.Delete(productID);',
+						Disable: false,
+						ListOrder: 5,
+						ExecuteOrder: null,
+						NextOnSuccess: false
 					}
 				]
 			},
@@ -230,7 +262,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: '\n\nvar prod = {\n\tDescription: "...",\n\tName: "...",\n\tQuantityMultiplier: 1,\n\tActive: true,\n};\n\n\nProducts.Create(prod);',
+						Model: '\n\nvar ps = {PriceSchedules.Create};\n\n\nProducts.Create(prod);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
@@ -238,16 +270,49 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'get.js',
-						Model: '\n\n\nProducts.Get();',
+						Model: '\n\nvar priceScheduleID = {priceScheduleID};\n\n\nProducts.Get(priceScheduleID);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'list.js',
+						Model: '\n\n\nProducts.List();',
+						Disable: false,
+						ListOrder: 3,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'update.js',
+						Model: '\n\nvar ps = {PriceSchedules.Update};\n\n\nProducts.Create(prod);',
+						Disable: false,
+						ListOrder: 4,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'patch.js',
+						Model: '\n\nvar ps = {PriceSchedules.Patch};\n\n\nProducts.Create(prod);',
+						Disable: false,
+						ListOrder: 5,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'delete.js',
+						Model: '\n\nvar priceScheduleID = {priceScheduleID};\n\n\nProducts.Delete(priceScheduleID);',
+						Disable: false,
+						ListOrder: 6,
+						ExecuteOrder: null,
 						NextOnSuccess: false
 					}
+
 				]
 			},
-			Dependencies: ["Products"],
-			ClassMethods: ['Products.Create']
+			Dependencies: ["PriceSchedules"],
+			ClassMethods: ['PriceSchedules.Create', 'PriceSchedules.Update', 'PriceSchedules.Patch']
 		},
 		{
 			ID: 'prod-assignments',
