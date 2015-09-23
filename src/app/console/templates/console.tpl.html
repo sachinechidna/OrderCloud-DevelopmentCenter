@@ -21,21 +21,21 @@
 			<!--		<p ng-bind-html="comment | markdown" ng-repeat="comment in console.SelectedResource.Documentation.Comments"></p>
 					<p ng-bind-html="comment | markdown" ng-repeat="comment in console.SelectedEndpoint.Comments"></p>-->
 			<section class="console-selector">
-			<span dropdown>
-			  <a href dropdown-toggle>
-				  {{console.SelectedMethod.name || 'Method'}} <span class="caret"></span>
-			  </a>
-			  <ul class="dropdown-menu">
-				  <li ng-repeat="method in console.SelectedResource.methods" ng-class="{active:console.SelectedMethod.name == method.name}">
-					  <a href ng-click="console.SelectMethod(this)">{{method.name}}</a>
-				  </li>
-			  </ul>
-			</span>
-				<pre>{{console.SelectedEndpoint.UriTemplate}}</pre>
-			<span class="btn btn-link" ng-if="console.SelectedEndpoint && console.SelectedEndpoint.Parameters.length" ng-click="console.SelectedEndpoint.showParams = !console.SelectedEndpoint.showParams">
-				Params
-			</span>
-				<button class="btn btn-primary" ng-click="console.Execute()">Send <i class="fa fa-send-o"></i></button>
+				<span dropdown>
+				  <a href dropdown-toggle>
+					  {{console.SelectedMethod.name || 'Method'}} <span class="caret"></span>
+				  </a>
+				  <ul class="dropdown-menu">
+					  <li ng-repeat="method in console.SelectedResource.methods" ng-class="{active:console.SelectedMethod.name == method.name}">
+						  <a href ng-click="console.SelectMethod(this)">{{method.name}}</a>
+					  </li>
+				  </ul>
+				</span>
+					<pre>{{console.SelectedEndpoint.UriTemplate}}</pre>
+				<span class="btn btn-link" ng-if="console.SelectedEndpoint && console.SelectedEndpoint.Parameters.length" ng-click="console.SelectedEndpoint.showParams = !console.SelectedEndpoint.showParams">
+					Params
+				</span>
+				<button class="btn btn-primary" ng-click="console.Execute()" ng-disabled="!console.SelectedMethod">Send <i class="fa fa-send-o"></i></button>
 			</section>
 			<section id="Configuration" ng-show="console.SelectedEndpoint">
 				<div collapse="!console.SelectedEndpoint.showParams">
@@ -94,14 +94,14 @@
 				</div>
 			</div>
 			<div id="ResponseBody" readonly ui-ace="{
-			useWrapMode : true,
-			theme:'twilight',
-			mode: 'json',
-			tabSize: '4',
-			useSoftTabs: true,
-			showPrintMargin: false,
-			showGutter: false
-		}" ng-model="console.SelectedResponse.data"></div>
+				useWrapMode : true,
+				theme:'twilight',
+				mode: 'json',
+				tabSize: '4',
+				useSoftTabs: true,
+				showPrintMargin: false,
+				showGutter: false
+			}" ng-model="console.SelectedResponse.data"></div>
 		</div>
 	</div>
 </div>
