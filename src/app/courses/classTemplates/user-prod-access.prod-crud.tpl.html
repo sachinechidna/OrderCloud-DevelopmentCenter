@@ -18,18 +18,27 @@
         Before you get started, you will want to write down the userID of the user you plan on working with.
         This will help you keep track of things during this course, so you won't have to start over. If you
         do not have any users, step out of this course and create a user in one of two ways: Create a user
-        in the <a ui-sref="base.console">API Console</a>, or, Take the <a ui-sref="base.course({courseid: 'basics'})">Basics</a> course, where we will help
-        you create a basic environment, including your first user.
+        in the <a ui-sref="base.console">API Console</a>, or, Take the
+        <a ui-sref="base.course({courseid: 'basics'})">Basics</a> course, where we will help you create a
+        basic environment, including your first user.
     </p>
     <h3 class="page-title">Creating & Getting a Product</h3>
     <p>
-        On the right, we have setup a short script for you to authenticate your distributor user. All you need
-        to do is enter your 'Username' and 'Password' in their respective locations. The
-        <code>Credentials.Get(creds);</code> function call will take care of everything else for you, including sending the
-        request to get your access token, and storing the token in your browser cookies.
+        Looking over to the right, you can see that we have provided you with multiple scripts. While ultimate
+        goal of this class is to set up a product OR get a product that you have already created, we also want
+        to introduce you to the relevant CRUD operations you have access to. Take a look at the <code>update.js</code>,
+        <code>patch.js</code>, and <code>delete.js</code> scripts and feel free to give them a try.
     </p>
     <p>
-        When you have filled in your Username and Password, go ahead and click 'Run'. If you get an error, make
-        sure that you are using the credentials of a Distributor User and not a Buyer User.
+        Once you are done playing around with these CRUD scripts, let's focus on the goal of this class. If you
+        have a product in mind (and its ID), go into the <code>get.js</code> script. The Script is ready to
+        run once you have filled in the <code>var productID</code> with the ID of the product you want to use.
+        If this is your plan, go ahead and run it, and you are done!
+    </p>
+    <p>
+        If instead you would like to create an entirely new product, we will focus on the <code>create.js</code>
+        script. As you can see, there is an entire product object set inside the <code>var prod</code> variable.
+        To create the new product, all you need to do is set the <code>ID</code>, <code>Description</code>,
+        <
     </p>
 </div>

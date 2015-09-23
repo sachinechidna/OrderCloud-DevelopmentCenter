@@ -197,7 +197,6 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 									on = true;
 								}
 							}
-							console.log(newString);
 							script.Model = script.Model.replace('{' + method + '}', newString)
 						}
 					});
