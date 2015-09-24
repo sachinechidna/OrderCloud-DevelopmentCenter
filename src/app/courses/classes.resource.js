@@ -199,9 +199,57 @@ function ClassesService($q, Underscore) {
 			ClassMethods: ['Me.Get']
 		},
 		{
+			ID: 'user-crud',
+			Name: 'Select a User',
+			Description: "Create or access a user to be used to create a product and category assignment",
+			TemplateUrl: 'courses/classTemplates/user-prod-access.user-crud.tpl.html',
+			Interactive: true,
+			ScriptModels: {
+				Meta: {
+					ExecuteAll: false
+				},
+				Scripts: [
+					{
+						Title: 'create.js',
+						Model: '\n\nvar user = {Users.Create};\n\n\nUsers.Create(users);',
+						Disable: false,
+						ListOrder: 1,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'get.js',
+						Model: '\nvar userID = "{userID}";\n\nUsers.Get(userID);',
+						Disable: false,
+						ListOrder: 2,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'update.js',
+						Model: '\n\nvar users = {Users.Update};\n\n\nProducts.Update(prod);',
+						Disable: false,
+						ListOrder: 3,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'delete.js',
+						Model: '\n\n var userID = "{userID}";\n\n Users.Delete(userID);',
+						Disable: false,
+						ListOrder: 4,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					}
+				]
+			},
+			Dependencies: ["Users"],
+			ClassMethods: ['Users.Create', 'Users.Update']
+		},
+		{
 			ID: 'prod-crud',
-			Name: 'Setting up a Product',
-			Description: "Create or access a product to be used in later classes",
+			Name: 'Select a Product',
+			Description: "Create or access a product to be used to create a product and category assignment",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.prod-crud.tpl.html',
 			Interactive: true,
 			ScriptModels: {
@@ -219,7 +267,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'get.js',
-						Model: '\n\n\nProducts.Get();',
+						Model: '\nvar productID = "{productID};"\n\nProducts.Get(productID);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
@@ -243,7 +291,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'delete.js',
-						Model: '\n\n var productID = {productID};\n\n Products.Delete(productID);',
+						Model: '\n\n var productID = "{productID}";\n\n Products.Delete(productID);',
 						Disable: false,
 						ListOrder: 5,
 						ExecuteOrder: null,
@@ -256,8 +304,8 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'price-sched-crud',
-			Name: 'Defining a Price Schedule',
-			Description: "Create or access a price schedule to be used in creating a product assignment to your buyer-user",
+			Name: 'Select a Price Schedule',
+			Description: "Create or access a price schedule to be used to create a product assignment",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.price-sched-crud.tpl.html',
 			Interactive: true,
 			ScriptModels: {
@@ -267,7 +315,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: '\n\nvar ps = {PriceSchedules.Create};\n\n\nProducts.Create(prod);',
+						Model: '\n\nvar ps = {PriceSchedules.Create};\n\n\nPriceSchedules.Create(ps);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
@@ -275,7 +323,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'get.js',
-						Model: '\n\nvar priceScheduleID = {priceScheduleID};\n\n\nProducts.Get(priceScheduleID);',
+						Model: '\n\nvar priceScheduleID = "{priceScheduleID}";\n\n\nPriceSchedules.Get(priceScheduleID);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
@@ -283,7 +331,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'list.js',
-						Model: '\n\n\nProducts.List();',
+						Model: '\n\n\nPriceSchedules.List();',
 						Disable: false,
 						ListOrder: 3,
 						ExecuteOrder: null,
@@ -291,23 +339,15 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'update.js',
-						Model: '\n\nvar ps = {PriceSchedules.Update};\n\n\nProducts.Create(prod);',
+						Model: '\n\nvar ps = {PriceSchedules.Update};\n\n\nPriceSchedules.Update(prod);',
 						Disable: false,
 						ListOrder: 4,
 						ExecuteOrder: null,
 						NextOnSuccess: false
 					},
 					{
-						Title: 'patch.js',
-						Model: '\n\nvar ps = {PriceSchedules.Patch};\n\n\nProducts.Create(prod);',
-						Disable: false,
-						ListOrder: 5,
-						ExecuteOrder: null,
-						NextOnSuccess: false
-					},
-					{
 						Title: 'delete.js',
-						Model: '\n\nvar priceScheduleID = {priceScheduleID};\n\n\nProducts.Delete(priceScheduleID);',
+						Model: '\n\nvar priceScheduleID = "{priceScheduleID}";\n\n\nPriceSchedules.Delete(priceScheduleID);',
 						Disable: false,
 						ListOrder: 6,
 						ExecuteOrder: null,
@@ -332,21 +372,37 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: '',
+						Model: '\n\nvar assignment = {Products.SaveAssignment};\n\nProducts.SaveAssignment(assignment);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
 						NextOnSuccess: true
+					},
+					{
+						Title: 'list.js',
+						Model: 'var productID = "{productID}";\nvar buyerID = null;\nvar userID = "{userID}";\nvar userGroupID = null;\nvar level = null;\nvar priceScheduleID = "{priceScheduleID}";\nvar page = null;\nvar pageSize = null;\n\n\nProducts.ListAssignments(productID, buyerID, userID, userGroupID, level, priceScheduleID, page, pageSize);',
+						Disable: false,
+						ListOrder: 1,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'delete.js',
+						Model: '\n\nvar buyerID = null;\nvar productID = "{productID}";\nvar userID = "{userID}";\nvar userGroupID = null;\n\nProducts.DeleteAssignment(buyerID, productID, userID, userGroupID);',
+						Disable: false,
+						ListOrder: 1,
+						ExecuteOrder: null,
+						NextOnSuccess: false
 					}
 				]
 			},
-			Dependencies: ["PriceSchedules"],
-			ClassMethods: ['Products.Create']
+			Dependencies: ["Products"],
+			ClassMethods: ['Products.SaveAssignment']
 		},
 		{
 			ID: 'category-crud',
-			Name: 'Setting a Category',
-			Description: "Create or Get a category that you will give a user access to",
+			Name: 'Select a Category',
+			Description: "Create or access a category that you will give a user access to a product",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.category-crud.tpl.html',
 			Interactive: true,
 			ScriptModels: {
@@ -356,16 +412,48 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: '',
+						Model: '\n\nvar cat = {Categories.Create};\n\nCategories.Create(cat);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
 						NextOnSuccess: true
+					},
+					{
+						Title: 'get.js',
+						Model: '\nvar catID = "{categoryID};"\n\nCategories.Get(categoryID);',
+						Disable: false,
+						ListOrder: 2,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'update.js',
+						Model: '\n\nvar cat = {Categories.Update};\n\n\nCategories.Update(cat);',
+						Disable: false,
+						ListOrder: 3,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'patch.js',
+						Model: '\n//will only update Description\n\nvar prod = {\n\tID: "...",\n\tDescription: "..."\n};\n\n\nProducts.Update(prod); ',
+						Disable: false,
+						ListOrder: 4,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'delete.js',
+						Model: '\n\n var productID = "{productID}";\n\n Products.Delete(productID);',
+						Disable: false,
+						ListOrder: 5,
+						ExecuteOrder: null,
+						NextOnSuccess: false
 					}
 				]
 			},
-			Dependencies: ["PriceSchedules"],
-			ClassMethods: ['Products.Create']
+			Dependencies: ["Categories"],
+			ClassMethods: ['Categories.Create', 'Categories.Update']
 		},
 		{
 			ID: 'category-assignment',
