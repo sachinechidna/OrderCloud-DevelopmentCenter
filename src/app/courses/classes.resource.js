@@ -71,7 +71,12 @@ function ClassesService($q, Underscore) {
 			Name: 'OrderCloud AngularJS SDK',
 			Description: 'An in depth look at the AngularJS SDK for OrderCloud',
 			TemplateUrl: 'courses/classTemplates/intro.sdk.tpl.html',
-			Interactive: false
+			Interactive: false,
+			ReadmeScripts: [
+				"\nif (response.status === 200 && response.data && response.data['access_token']) {\n\tAuth.SetToken(response.data['access_token']);\n}\n",
+				"\nif (config.url.indexOf('OAuth') > -1) config.headers['Content-Type'] = 'application/x-www-form-urlencoded';\nif (Auth.GetToken()) config.headers['Authorization'] = 'Bearer ' + Auth.GetToken();\n",
+				"angular.module('orderCloud', [])\n\n\t.constant('buyerid', '...') //A useful constant for using the SDK, buyerID is an extremely commmon parameter.\n\t.constant('clientid', '...') //The client ID to be used during OAuth 2 authentication\n\t.constant('ocscope', '...') //Used for defining access scope in OAuth 2 authentication\n\t.constant('authurl', '...') //The Request URL for OAuth2\n\t.constant('apiurl', '...') //The Request URL for all other API calls\n;"
+			]
 		},
 		{
 			ID: 'authentication',
