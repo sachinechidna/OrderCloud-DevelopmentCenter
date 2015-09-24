@@ -464,9 +464,49 @@ function ClassesService($q, Underscore) {
 			ClassMethods: ['Categories.Create', 'Categories.Update']
 		},
 		{
+			ID: 'category-prod-assignment',
+			Name: 'Category Prod Assignment',
+			Description: "Assign your category to a product",
+			TemplateUrl: 'courses/classTemplates/user-prod-access.category-prod-assignment.tpl.html',
+			Interactive: true,
+			ScriptModels: {
+				Meta: {
+					ExecuteAll: false
+				},
+				Scripts: [
+					{
+						Title: 'create.js',
+						Model: 'var buyerID = "{buyerID}";\n\nvar assignment = {Categories.SaveProductAssignments}\n\nCategories.SaveProductAssignments(buyerID, assignment);',
+						Disable: false,
+						ListOrder: 1,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'list.js',
+						Model: 'var buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar productID = "{productID}";\nvar page = null;\nvar pageSize = null;\n\n\nCategories.ListProductAssignments(buyerID, categoryID, productID, page, pageSize);',
+						Disable: false,
+						ListOrder: 2,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'delete.js',
+						Model: 'var buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar productID = "{productID}";\n\n\nCategories.DeleteProductAssignments(buyerID, categoryID, productID);',
+						Disable: false,
+						ListOrder: 2,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					}
+				]
+			},
+			Dependencies: ["Categories"],
+			ClassMethods: ['Categories.SaveProductAssignments']
+		},
+		{
 			ID: 'category-assignment',
 			Name: 'Category Assignment',
-			Description: "Assign your category to a user and your product to the category",
+			Description: "Assign your category to a user",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.category-assignment.tpl.html',
 			Interactive: true,
 			ScriptModels: {
@@ -476,16 +516,32 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: '',
+						Model: 'var buyerID = "{buyerID}";\n\nvar assignment = {Categories.SaveAssignment}\n\nCategories.SaveAssignment(buyerID, assignment);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
 						NextOnSuccess: true
+					},
+					{
+						Title: 'list.js',
+						Model: 'var buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar userID = "{userID}";\nvar userGroupID = null;\nvar level = null;\nvar page = null;\nvar pageSize = null;\n\n\nCategories.ListAssignments(buyerID, categoryID, userID, userGroupID, level, page, pageSize);',
+						Disable: false,
+						ListOrder: 2,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'delete.js',
+						Model: 'var buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar userID = "{userID}";\nvar userGroupID = null;\n\n\nCategories.DeleteProductAssignments(buyerID, categoryID, userID, userGroupID);',
+						Disable: false,
+						ListOrder: 2,
+						ExecuteOrder: null,
+						NextOnSuccess: false
 					}
 				]
 			},
 			Dependencies: ["Categories"],
-			ClassMethods: ['Products.Create']
+			ClassMethods: ['Categories.SaveAssignment']
 		},
 		{
 			ID: 'get-products-as-user',
@@ -499,8 +555,8 @@ function ClassesService($q, Underscore) {
 				},
 				Scripts: [
 					{
-						Title: 'create.js',
-						Model: '',
+						Title: 'get.js',
+						Model: '\n\nMe.ListProducts();',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
@@ -508,8 +564,8 @@ function ClassesService($q, Underscore) {
 					}
 				]
 			},
-			Dependencies: ["PriceSchedules"],
-			ClassMethods: ['Products.Create']
+			Dependencies: ["Me"],
+			ClassMethods: ["Me.Products"]
 		},
 
 	];
