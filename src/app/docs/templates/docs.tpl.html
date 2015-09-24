@@ -1,16 +1,18 @@
 <div class="container">
 	<h1 class="page-header" ui-sref="base.docs">API Documentation</h1>
 	<div class="row">
-		<aside class="col-sm-3">
-			<ul class="list-group">
-				<li class="list-group-item" ng-repeat="section in docs.content.Sections">
+		<aside class="col-sm-3 docs-nav">
+			<ul class="section-list">
+				<li ng-class="{active: docs.activeSection == section}" ng-repeat-start="section in docs.content.Sections">
 					<a href="" ng-click="docs.activeSection = section">{{section}}</a>
-					<ul class="list-group" collapse="docs.activeSection != section">
-						<li class="list-group-item" ng-repeat="resource in docs.content.Resources | filter:{Section:section}" ui-sref="base.docs.resource({resourceID:resource.ID})">
+				</li>
+				<div ng-repeat-end collapse="docs.activeSection != section">
+					<ul class="resource-list">
+						<li class="resource-list-item" ui-sref-active="active" ng-repeat="resource in docs.content.Resources | filter:{Section:section}" ui-sref="base.docs.resource({resourceID:resource.ID})">
 							{{resource.Name}}
 						</li>
 					</ul>
-				</li>
+				</div>
 			</ul>
 		</aside>
 		<article class="col-sm-9" ui-view></article>
