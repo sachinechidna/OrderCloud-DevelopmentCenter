@@ -40,7 +40,7 @@ function CoursesService($q, Underscore) {
 			ID: 'user-prod-access',
 			Name: 'View Products as a Buyer User',
 			Description: 'Tackle the challenge of making a product accessible to a buyer-user',
-			Difficulty: 'Novice',
+			Difficulty: 'Intermediate',
 			Classes: [ 'prod-crud', 'price-sched-crud', 'user-crud', 'prod-assignments', 'category-crud', 'category-prod-assignment', 'category-assignment', 'get-products-as-user']
 		}
 	];

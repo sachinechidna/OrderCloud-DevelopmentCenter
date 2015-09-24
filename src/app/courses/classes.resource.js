@@ -115,7 +115,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 					Title: 'create.js',
-					Model: "\nvar buyer = {\n\tName: '...',\n\tActive: true\n};\n\nBuyers.Create(buyer);",
+					Model: "\nvar buyer = {Buyers.Create};\n\nBuyers.Create(buyer);",
 					Disable: false,
 					ListOrder: 1,
 					ExecuteOrder: null,
@@ -139,7 +139,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 					Title: 'create.js',
-					Model: "\nvar buyerID = {buyerID};\n\nvar user = {\n\tUsername: '...',\n\tPassword: '...',\n\tFirstName: '...',\n\tLastName: '...',\n\tEmail: '...',\n\tActive: true\n};\n\nUsers.Create(buyerID, user);",
+					Model: '\nvar buyerID = "{buyerID}";\n\nvar user = {Users.Create};\n\nUsers.Create(buyerID, user);',
 					Disable: false,
 					ListOrder: 1,
 					ExecuteOrder: null,
@@ -152,8 +152,8 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'api-access',
-			Name: 'API Access Claim',
-			Description: 'Create an access claim to receive your buyers clientID',
+			Name: 'API Clients',
+			Description: 'Create a client to receive your buyers clientID',
 			TemplateUrl: 'courses/classTemplates/basics.access-claim.tpl.html',
 			Interactive: true,
 			ScriptModels: {
@@ -163,7 +163,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 					Title: 'create.js',
-					Model: "\nvar claim = {\n\tAccessTokenDuration: 99999999,\n\tActive: true,\n\tAppName: '...',\n\tClaims: [\n\t\t'FullAccess'\n\t],\n\tRefreshTokenDuration: 99999999\n};\n\nBuyerApiAccess.Create(claim);",
+					Model: '\nvar buyerID = "{buyerID}";\n\nvar claim = {ApiClients.Create};\n\nApiClients.Create(buyerID, claim);',
 					Disable: false,
 					ListOrder: 1,
 					ExecuteOrder: null,

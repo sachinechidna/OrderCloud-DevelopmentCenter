@@ -174,7 +174,7 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 						var split = method.split('.');
 						var svc = split[0];
 						var mtd = split[1];
-						if (vm.docs[svc][mtd]) {
+						if (vm.docs[svc][mtd] && vm.docs[svc][mtd].RequestBody) {
 							var stringReplace = vm.docs[svc][mtd].RequestBody.Sample;
 							var newString = "";
 							var on = true;
