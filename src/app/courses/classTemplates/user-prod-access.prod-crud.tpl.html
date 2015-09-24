@@ -33,12 +33,30 @@
         Once you are done playing around with these CRUD scripts, let's focus on the goal of this class. If you
         have a product in mind (and its ID), go into the <code>get.js</code> script. The Script is ready to
         run once you have filled in the <code>var productID</code> with the ID of the product you want to use.
-        If this is your plan, go ahead and run it, and you are done!
+        Make sure you take note of the ID that you are using, so you don't forget it in future classes!!! If
+        this is your plan, go ahead and run it, and you are done!
     </p>
     <p>
         If instead you would like to create an entirely new product, we will focus on the <code>create.js</code>
         script. As you can see, there is an entire product object set inside the <code>var prod</code> variable.
-        To create the new product, all you need to do is set the <code>ID</code>, <code>Description</code>,
-        <
+        To create the new product, you only need to set the <code>ID</code>, <code>Description</code>,
+        <code>Name</code>, <code>QuantityMultiplier</code>, and <code>Active</code> values. Everything else
+        is up to you, but we recommend you focus on the fundamentals right now.
+    </p>
+    <p>
+        Set the <code>ID</code>, <code>Description</code>, and <code>Name</code> to whatever you like. Set the
+        <code>QuantityMultiplier</code> to 1 or more, and set <code>Active</code> to true. Note that in order
+        for a buyer-user to access a product, in MUST be active.
+    </p>
+    <p>
+        Now that you have completed the configuration, review the code block. Note that the service
+        call to create a Product is, <code>Products.Create(prod);</code>, where 'prod' is the new object you are
+        creating, and the only parameter as part of the method call.
+    </p>
+    <p>
+        On success, you will see in your console log the HTTP Request details. Click on the down button to see
+        the JSON representation of the Request's response. In the response, you should see the same object you
+        sent off in the request as your request object. Make sure you keep a note on the <code>ID</code> of the
+        product you just created. Now Hit 'Run' when you are ready!
     </p>
 </div>
