@@ -420,11 +420,19 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'get.js',
-						Model: '\nvar catID = "{categoryID};"\n\nCategories.Get(categoryID);',
+						Model: '\nvar catID = "{categoryID}";\n\nCategories.Get(categoryID);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
 						NextOnSuccess: true
+					},
+					{
+						Title: 'list.js',
+						Model: '\n\nvar buyerID = "{buyerID}";\nvar search = null;\n var depth = null;\nvar page = null;\nvar pageSize = null;\n\n\nCategories.List(buyerID, search, depth, page, pageSize);',
+						Disable: false,
+						ListOrder: 3,
+						ExecuteOrder: null,
+						NextOnSuccess: false
 					},
 					{
 						Title: 'update.js',
@@ -436,7 +444,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'patch.js',
-						Model: '\n//will only update Description\n\nvar prod = {\n\tID: "...",\n\tDescription: "..."\n};\n\n\nProducts.Update(prod); ',
+						Model: '\n//will only update Description\n\nvar cat = {\n\tID: "...",\n\tDescription: "..."\n};\n\n\nCategories.Update(cat); ',
 						Disable: false,
 						ListOrder: 4,
 						ExecuteOrder: null,
@@ -476,7 +484,7 @@ function ClassesService($q, Underscore) {
 					}
 				]
 			},
-			Dependencies: ["PriceSchedules"],
+			Dependencies: ["Categories"],
 			ClassMethods: ['Products.Create']
 		},
 		{
