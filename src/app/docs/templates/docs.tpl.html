@@ -1,12 +1,30 @@
+<header class="jumbotron" ui-sref="base.docs">
+	<div class="container">
+		<h2>API Documentation</h2>
+	</div>
+</header>
 <div class="container">
-	<h1 class="page-header" ui-sref="base.docs">API Documentation</h1>
 	<div class="row">
 		<aside class="col-sm-3 docs-nav">
+<!--			<div class="panel panel-info" ng-repeat="section in docs.content.Sections">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						{{section}}
+					</h3>
+				</div>
+				<div class="panel-body">
+					<ul class="list-group">
+						<li class="list-group-item" ui-sref-active="active" ng-repeat="resource in docs.content.Resources | filter:{Section:section}" ui-sref="base.docs.resource({resourceID:resource.ID})">
+							{{resource.Name}}
+						</li>
+					</ul>
+				</div>
+			</div>-->
 			<ul class="section-list">
 				<li ng-class="{active: docs.activeSection == section}" ng-repeat-start="section in docs.content.Sections">
 					<a href="" ng-click="docs.activeSection = section">{{section}}</a>
 				</li>
-				<div ng-repeat-end collapse="docs.activeSection != section">
+				<div ng-repeat-end>
 					<ul class="resource-list">
 						<li class="resource-list-item" ui-sref-active="active" ng-repeat="resource in docs.content.Resources | filter:{Section:section}" ui-sref="base.docs.resource({resourceID:resource.ID})">
 							{{resource.Name}}
@@ -15,6 +33,7 @@
 				</div>
 			</ul>
 		</aside>
+		<article class="col-sm-9" ng-if="application.$state.is('base.docs')" ng-include="'courses/classTemplates/intro.ordercloud.tpl.html'"></article>
 		<article class="col-sm-9" ui-view></article>
 	</div>
 </div>

@@ -10,7 +10,8 @@
 }
 #ConsoleMenu {
   flex: 0 1 auto;
-  min-width:300px;
+  min-width:200px;
+  border-right:1px solid @list-group-border;
   .list-group {
     margin:0;
   }
@@ -42,8 +43,15 @@
 
 #Request {
   padding:@padding-base-vertical @padding-base-horizontal;
+  .body-title {
+    color:white;
+    background-color:@gray;
+    margin:@padding-base-vertical 0 0;
+    padding:@padding-base-vertical @padding-base-horizontal;
+    .border-top-radius(4px);
+  }
   .ace_editor {
-    border-radius: 0 @border-radius-base @border-radius-base;
+    border-radius: 0 0 @border-radius-base @border-radius-base;
   }
 }
 

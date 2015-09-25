@@ -61,11 +61,10 @@
 										   tooltip="{{param.Description}}"
 										   tooltip-trigger="focus"
 										   ng-model="console.SelectedMethod.resolvedParameters[$index].Value" ng-required="param.Required" ng-disabled="console.isLocked(param.Name)"/>
-									<span class="input-group-btn" ng-if="console.SelectedMethod.resolvedParameters[$index].Lockable">vb
-										<button class="btn btn-default" ng-click="console.isLocked(param.Name) ? console.unlockParam(param.Name) : console.lockParam(param.Name, console.SelectedMethod.resolvedParameters[$index].Value)" ng-disabled="!console.SelectedMethod.resolvedParameters[$index].Value" tooltip="{{console.isLocked(param.Name) ? 'Unlock Value' : 'Lock Value'}}">
-											<i class="fa" ng-class="{'fa-lock': console.isLocked(param.Name), 'fa-unlock': !console.isLocked(param.Name)}"></i>
+									<span class="input-group-btn" ng-if="console.SelectedMethod.resolvedParameters[$index].Lockable">
+										<button class="btn btn-default" ng-click="console.isLocked(param.Name) ? console.unlockParam(param.Name) : console.lockParam(param.Name, console.SelectedMethod.resolvedParameters[$index].Value)" ng-disabled="!console.SelectedMethod.resolvedParameters[$index].Value" tooltip="{{console.isLocked(param.Name) ? 'Unlock Value' : 'Lock Value'}}" tooltip-append-to-body="true">
+											<i class="fa" ng-class="{'fa-lock': console.isLocked(param.Name), 'fa-unlock-alt': !console.isLocked(param.Name)}"></i>
 										</button>
-										<!--<button class="btn btn-default" ng-click="console.lockParam(param.Name, console.SelectedMethod.resolvedParameters[$index].Value)" ng-disabled="!console.SelectedMethod.resolvedParameters[$index].Value" ng-if="!console.isLocked(param.Name)"><i class="fa fa-unlock"></i></button>-->
 									</span>
 								</div>
 
@@ -75,9 +74,9 @@
 					</table>
 				</div>
 				<div ng-repeat="parameter in console.SelectedMethod.resolvedParameters | objectParams">
-					<label class="label label-primary text-capitalize">
-						{{parameter.Name + ' object'}}
-					</label>
+					<p class="body-title" class="page-header">
+						{{'Request Body: ' + parameter.Name + ' object'}}
+					</p>
 					<div ui-ace="{
 						onLoad: console.setMaxLines,
 						useWrapMode : true,

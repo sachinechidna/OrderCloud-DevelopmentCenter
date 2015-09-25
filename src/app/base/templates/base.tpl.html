@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" ng-init="mainCollapsed = true">
+<nav id="dev-center-navigation" class="navbar navbar-default navbar-fixed-top" ng-init="mainCollapsed = true">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
@@ -15,28 +15,31 @@
 		<div class="navbar-collapse" collapse="mainCollapsed" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li class="dropdown" dropdown>
-					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Learn<span class="caret"></span></a>
-					<ul class="dropdown-menu" dropdown-menu>
-						<li ui-sref-active="active" ng-if="base.currentUser"><a>Get Started</a></li>
-						<li ui-sref-active="active"><a ui-sref="base.docs">API Docs</a></li>
-						<li ui-sref-active="active" ng-if="base.currentUser"><a ui-sref="base.courses">Courses</a></li>
+					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Learn</a>
+					<ul class="dropdown-menu top-caret bordered" dropdown-menu>
+						<!--<li ui-sref-active="active" ng-if="base.currentUser"><a>Get Started</a></li>-->
+						<li ><a ui-sref="base.docs">API Docs</a></li>
+						<li  ng-if="base.currentUser"><a ui-sref="base.courses">Courses</a></li>
 					</ul>
 				</li>
-				<li class="dropdown" dropdown ng-if="base.currentUser">
-					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Explore<span class="caret"></span></a>
-					<ul class="dropdown-menu" dropdown-menu>
+				<li>
+					<a href="" ui-sref="base.console">Console</a>
+				</li>
+<!--				<li class="dropdown" dropdown ng-if="base.currentUser">
+					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Explore</a>
+					<ul class="dropdown-menu top-caret bordered" dropdown-menu>
 						<li ui-sref-active="active"><a ui-sref="base.console">API Console</a></li>
 						<li ui-sref-active="active"><a>Components</a></li>
 					</ul>
-				</li>
-				<li ui-sref-active="active"  ng-if="base.currentUser"><a>My Apps</a></li>
+				</li>-->
+				<!--<li ui-sref-active="active"  ng-if="base.currentUser"><a>My Apps</a></li>-->
 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-if="!base.currentUser"><a ui-sref="login">Sign In</a></li>
 				<li class="dropdown" dropdown ng-if="base.currentUser">
-					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Account<span class="caret"></span></a>
-					<ul class="dropdown-menu" dropdown-menu>
+					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Account</a>
+					<ul class="dropdown-menu top-caret" dropdown-menu>
 						<li class="dropdown-header">{{base.currentUser.FirstName + ' ' + base.currentUser.LastName}}</li>
 						<li><a href>Settings</a></li>
 						<li><a href>Notifications</a></li>
