@@ -32,13 +32,13 @@
 				  </ul>
 				</span>
 					<pre>{{console.SelectedEndpoint.UriTemplate}}</pre>
-				<span class="btn btn-link" ng-if="console.SelectedEndpoint && console.SelectedEndpoint.Parameters.length" ng-click="console.SelectedEndpoint.showParams = !console.SelectedEndpoint.showParams">
+				<!--<span class="btn btn-link" ng-if="console.SelectedEndpoint && console.SelectedEndpoint.Parameters.length" ng-click="console.SelectedEndpoint.showParams = !console.SelectedEndpoint.showParams">
 					Params
-				</span>
+				</span>-->
 				<button class="btn btn-primary" ng-click="console.Execute()" ng-disabled="!console.SelectedMethod">Send <i class="fa fa-send-o"></i></button>
 			</section>
 			<section id="Configuration" ng-show="console.SelectedEndpoint">
-				<div collapse="!console.SelectedEndpoint.showParams">
+				<div ng-if="console.SelectedEndpoint.Parameters.length">
 					<table class="table">
 						<thead>
 						<tr>
@@ -55,10 +55,21 @@
 									'label-warning': param.Type == 'boolean',
 									'label-info': param.Type == 'integer'
 								}">{{param.Type}}</div></td>
-							<td><input type="{{param.Type == 'integer' ? 'number' : 'text'}}" class="form-control"
-									   tooltip="{{param.Description}}"
-									   tooltip-trigger="focus"
-									   ng-model="console.SelectedMethod.resolvedParameters[$index].Value" ng-required="param.Required"/></td>
+							<td>
+								<div ng-class="{'input-group': console.SelectedMethod.resolvedParameters[$index].Lockable}">
+									<input type="{{param.Type == 'integer' ? 'number' : 'text'}}" class="form-control"
+										   tooltip="{{param.Description}}"
+										   tooltip-trigger="focus"
+										   ng-model="console.SelectedMethod.resolvedParameters[$index].Value" ng-required="param.Required" ng-disabled="console.isLocked(param.Name)"/>
+									<span class="input-group-btn" ng-if="console.SelectedMethod.resolvedParameters[$index].Lockable">vb
+										<button class="btn btn-default" ng-click="console.isLocked(param.Name) ? console.unlockParam(param.Name) : console.lockParam(param.Name, console.SelectedMethod.resolvedParameters[$index].Value)" ng-disabled="!console.SelectedMethod.resolvedParameters[$index].Value" tooltip="{{console.isLocked(param.Name) ? 'Unlock Value' : 'Lock Value'}}">
+											<i class="fa" ng-class="{'fa-lock': console.isLocked(param.Name), 'fa-unlock': !console.isLocked(param.Name)}"></i>
+										</button>
+										<!--<button class="btn btn-default" ng-click="console.lockParam(param.Name, console.SelectedMethod.resolvedParameters[$index].Value)" ng-disabled="!console.SelectedMethod.resolvedParameters[$index].Value" ng-if="!console.isLocked(param.Name)"><i class="fa fa-unlock"></i></button>-->
+									</span>
+								</div>
+
+							</td>
 						</tr>
 						</tbody>
 					</table>

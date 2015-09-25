@@ -4,6 +4,7 @@ angular.module('orderCloud')
     .controller('ApiConsoleCtrl', ApiConsoleController)
     .controller('ResponseModalCtrl', ResponseModalController)
 	.factory('ApiLoader', ApiLoaderService)
+	.factory('LockableParams', LockableParamsService)
 	.factory('ApiConsoleService', ApiConsoleService)
 	.directive('parameterObject', ParameterObjectDirective)
 	.directive('emptyToNull', EmptyToNullDirective)
@@ -39,7 +40,7 @@ function ApiConsoleConfig( $stateProvider, $urlMatcherFactoryProvider ) {
     });
 };
 
-function ApiConsoleController($scope, $resource, $filter, apiurl, OrderCloudResources, ApiConsoleService) {
+function ApiConsoleController($scope, $resource, $filter, apiurl, OrderCloudResources, ApiConsoleService, LockableParams) {
 	var vm = this;
 	vm.Resources = OrderCloudResources;
 	vm.SelectedResource = null;
@@ -49,6 +50,18 @@ function ApiConsoleController($scope, $resource, $filter, apiurl, OrderCloudReso
 	vm.Response = null;
 	vm.Responses = [];
 	vm.SelectedResponse = null;
+
+	vm.isLocked = function(paramName) {
+		return LockableParams.IsLocked(paramName);
+	};
+
+	vm.unlockParam = function(paramName) {
+		LockableParams.RemoveLock(paramName)
+	};
+
+	vm.lockParam = function(paramName, paramValue) {
+		LockableParams.SetLock(paramName, paramValue)
+	};
 
 	vm.setMaxLines = function(editor) {
 		editor.setOptions({
@@ -130,7 +143,7 @@ function ResponseModalController($modalInstance, Response) {
 
 }
 
-function ApiConsoleService($injector, $resource, apiurl) {
+function ApiConsoleService($injector, $resource, apiurl, LockableParams) {
 	var service = {
 		ExecuteApi: _executeApi,
 		CreateParameters: _createParameters
@@ -164,6 +177,14 @@ function ApiConsoleService($injector, $resource, apiurl) {
 			angular.forEach(SelectedMethod.params, function(methodParameter) {
 				var isText = false;
 				var isRequired = true;
+				var isLockable = false;
+				var lockedValue = null;
+				angular.forEach(LockableParams.Get(), function(value, key) {
+					if (methodParameter == key) {
+						isLockable = true;
+						lockedValue = value
+					}
+				});
 				angular.forEach(endpoint.Parameters, function(parameter) {
 					if (parameter.Name == methodParameter) {
 						isText = true;
@@ -173,7 +194,7 @@ function ApiConsoleService($injector, $resource, apiurl) {
 
 				function setValue() {
 					if (isText) {
-						return null;
+						return lockedValue;
 					} else {
 						return endpoint.RequestBody ? endpoint.RequestBody.Sample : null;
 					}
@@ -183,7 +204,8 @@ function ApiConsoleService($injector, $resource, apiurl) {
 					Name: methodParameter,
 					Type: isText ? 'text' : 'object',
 					Value: setValue(),
-					Required: isRequired
+					Required: isRequired,
+					Lockable: isLockable
 				};
 				result.ResolvedParameters.push(resolvedParameter);
 			});
@@ -255,6 +277,45 @@ function ApiLoaderService($q, $injector) {
 
 		return deferred.promise;
 	};
+}
+
+function LockableParamsService($q) {
+	var service = {
+		Get: _get,
+		IsLocked: _isLocked,
+		SetLock: _setLock,
+		RemoveLock: _removeLock
+	};
+
+	var lockableParams = {
+		'buyerID':null,
+		'page':null,
+		'pageSize':null
+	};
+
+	return service;
+
+	function _get() {
+		return lockableParams;
+	}
+
+	function _isLocked(key) {
+		return lockableParams[key] ? true : false;
+	}
+
+	function _setLock(key, value) {
+		var defer = $q.defer();
+		lockableParams[key] = value;
+		defer.resolve();
+		return defer.promise;
+	}
+
+	function _removeLock(key) {
+		var defer = $q.defer();
+		lockableParams[key] = null;
+		defer.resolve();
+		return defer.promise;
+	}
 }
 
 function ParameterObjectDirective() {
