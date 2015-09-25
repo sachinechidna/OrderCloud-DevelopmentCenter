@@ -7,13 +7,17 @@
 		</div>
 	</header>
 	<div class="container">
-		<p class="lead">Whether you're completely new to using RESTful APIs or you've done it thousands of times, this is the place to learn everything there is to know about creating custom OrderCloud applications.</p>
-		<div class="courses-container">
-			<a class="course" ng-repeat="course in courses.list" ui-sref="^.course({courseid:course.ID})">
-				<span class="badge">{{course.Difficulty}}</span>
-				<h4 class="list-group-item-heading">{{course.Name}}</h4>
-				<p class="list-group-item-text">{{course.Description}}</p>
-			</a>
+		<p class="lead">Whether you're completely new to using RESTful APIs or it's second nature, this is the place to learn everything there is to know about creating custom OrderCloud applications.</p>
+		<div class="courses-container" ng-repeat="course in courses.list">
+			<div class="course-summary" ui-sref="^.course({courseid:course.ID})">
+				<figure>
+					<img class="img-responsive" ng-src="{{course.ImgUrl}}" alt=""/>
+				</figure>
+				<div>
+					<h4><b>{{course.Name}}</b></h4>
+					<p class="text-info">{{course.Description}}</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </article>

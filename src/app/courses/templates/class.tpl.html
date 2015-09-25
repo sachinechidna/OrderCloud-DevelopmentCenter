@@ -40,7 +40,7 @@
 			</ul>
 		</div>
 	</nav>
-	<article id="ClassContainer" ng-class="{'container':!class.current.Interactive}">
+	<article id="ClassContainer" ng-class="{'interactive':!class.current.Interactive}">
 		<div id="CourseContent" ng-include="class.current.TemplateUrl"></div>
 		<div id="InteractiveUI" ng-if="class.current.Interactive">
 			<div id="ScriptInputContainer">

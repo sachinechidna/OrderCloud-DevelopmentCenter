@@ -1,13 +1,40 @@
+.courses-container {
+  .course-summary {
+	padding:15px;
+	border:1px solid @list-group-border;
+	margin-bottom:5px;
+	display:flex;
+	flex-flow:row nowrap;
+	align-content:center;
+	&:hover {
+	  background-color:@list-group-hover-bg;
+	}
+	figure {
+	  flex:1;
+	  max-width:100px;
+	}
+	div {
+	  padding:15px;
+	  flex:1;
+	  display:flex;
+	  flex-flow:column nowrap;
+	  align-items:flex-start;
+	  justify-content: center;
+	}
+	h4 {
+	  margin:0;
+	}
+  }
+}
+
 #Class {
-  background-color:@gray-light;
   &:not(.interactive) {
 	max-height:~'calc(100vh - 102px)';
 	overflow-y:auto;
-	#CourseContent {
-	  & > div,
-	  header {
-		padding:1em 4em;
-	  }
+  }
+  &.interactive {
+	header.jumbotron {
+	  padding:15px;
 	}
   }
   .context-user {
@@ -84,13 +111,8 @@
   }
   #CourseContent {
 	background-color:white;
-	header {
-	  padding:@padding-base-horizontal;
-	  background-color:@gray-dark;
-	  color:white;
-	}
 	& > div {
-	  padding:@padding-base-horizontal;
+	  padding:0 @padding-base-horizontal;
 	}
   }
   &.interactive {
