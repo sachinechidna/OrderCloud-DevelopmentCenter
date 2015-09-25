@@ -171,7 +171,7 @@ function ClassesService($q, Underscore) {
 					}
 				]
 			},
-			Dependencies: ["BuyerApiAccess"],
+			Dependencies: ["ApiClients"],
 			ClassMethods: ['ApiClients.Create']
 		},
 		{
@@ -211,7 +211,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: '\n\nvar user = {Users.Create};\n\n\nUsers.Create(users);',
+						Model: '\nvar buyerID = "{buyerID}";\n\nvar user = {Users.Create};\n\n\nUsers.Create(buyerID, user);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
@@ -219,25 +219,41 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'get.js',
-						Model: '\nvar userID = "{userID}";\n\nUsers.Get(userID);',
+						Model: '\nvar buyerID = "{buyerID}";\nvar userID = "{userID}";\n\nUsers.Get(buyerID, userID);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
 						NextOnSuccess: true
 					},
+                    {
+                        Title: 'list.js',
+                        Model: '\nvar buyerID = "{buyerID}";\n\nUsers.List(buyerID);',
+                        Disable: false,
+                        ListOrder: 3,
+                        ExecuteOrder: null,
+                        NextOnSuccess: false
+                    },
 					{
 						Title: 'update.js',
-						Model: '\n\nvar users = {Users.Update};\n\n\nProducts.Update(prod);',
+						Model: '\nvar buyerID = "{buyerID}";\n\nvar users = {Users.Update};\n\n\nUsers.Update(buyerID, user.ID, user);',
 						Disable: false,
-						ListOrder: 3,
+						ListOrder: 4,
 						ExecuteOrder: null,
 						NextOnSuccess: false
 					},
+                    {
+                        Title: 'patch.js',
+                        Model: '\nvar buyerID = "{buyerID}";\n\n//will only update Username\n\nvar user = {\n\tID: "...",\n\tUsername: "..."\n};\n\n\nUsers.Patch(buyerID, user.ID, user); ',
+                        Disable: false,
+                        ListOrder: 5,
+                        ExecuteOrder: null,
+                        NextOnSuccess: false
+                    },
 					{
 						Title: 'delete.js',
 						Model: '\n\n var userID = "{userID}";\n\n Users.Delete(userID);',
 						Disable: false,
-						ListOrder: 4,
+						ListOrder: 6,
 						ExecuteOrder: null,
 						NextOnSuccess: false
 					}
@@ -267,7 +283,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'get.js',
-						Model: '\nvar productID = "{productID};"\n\nProducts.Get(productID);',
+						Model: '\nvar productID = "{productID}";\n\nProducts.Get(productID);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
@@ -275,7 +291,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'update.js',
-						Model: '\n//must provide entire object in update\n\nvar prod = {Products.Create};\n\n\nProducts.Update(prod);',
+						Model: '\n//must provide entire object in update\n\nvar prod = {Products.Create};\n\n\nProducts.Update(prod.ID, prod);',
 						Disable: false,
 						ListOrder: 3,
 						ExecuteOrder: null,
@@ -283,7 +299,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'patch.js',
-						Model: '\n//will only update Description\n\nvar prod = {\n\tID: "...",\n\tDescription: "..."\n};\n\n\nProducts.Update(prod); ',
+						Model: '\n//will only update Description\n\nvar prod = {\n\tID: "...",\n\tDescription: "..."\n};\n\n\nProducts.Patch(prod.ID, prod); ',
 						Disable: false,
 						ListOrder: 4,
 						ExecuteOrder: null,
@@ -339,12 +355,20 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'update.js',
-						Model: '\n\nvar ps = {PriceSchedules.Update};\n\n\nPriceSchedules.Update(prod);',
+						Model: '\n\nvar ps = {PriceSchedules.Update};\n\n\nPriceSchedules.Update(ps.ID, ps);',
 						Disable: false,
 						ListOrder: 4,
 						ExecuteOrder: null,
 						NextOnSuccess: false
 					},
+                    {
+                        Title: 'patch.js',
+                        Model: '\n//will only update OrderType\n\nvar ps = {\n\tID: "...",\n\tOrderType: "..."\n};\n\n\nPriceSchedules.Patch(ps.ID, ps); ',
+                        Disable: false,
+                        ListOrder: 5,
+                        ExecuteOrder: null,
+                        NextOnSuccess: false
+                    },
 					{
 						Title: 'delete.js',
 						Model: '\n\nvar priceScheduleID = "{priceScheduleID}";\n\n\nPriceSchedules.Delete(priceScheduleID);',
@@ -372,7 +396,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: '\n\nvar assignment = {Products.SaveAssignment};\n\nProducts.SaveAssignment(assignment);',
+						Model: '\nvar assignment = {Products.SaveAssignment};\n\nProducts.SaveAssignment(assignment);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
@@ -380,7 +404,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'list.js',
-						Model: 'var productID = "{productID}";\nvar buyerID = null;\nvar userID = "{userID}";\nvar userGroupID = null;\nvar level = null;\nvar priceScheduleID = "{priceScheduleID}";\nvar page = null;\nvar pageSize = null;\n\n\nProducts.ListAssignments(productID, buyerID, userID, userGroupID, level, priceScheduleID, page, pageSize);',
+						Model: '\nvar productID = "{productID}";\nvar buyerID = null;\nvar userID = "{userID}";\nvar userGroupID = null;\nvar level = null;\nvar priceScheduleID = "{priceScheduleID}";\nvar page = null;\nvar pageSize = null;\n\n\nProducts.ListAssignments(productID, buyerID, userID, userGroupID, level, priceScheduleID, page, pageSize);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
@@ -388,7 +412,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'delete.js',
-						Model: '\n\nvar buyerID = null;\nvar productID = "{productID}";\nvar userID = "{userID}";\nvar userGroupID = null;\n\nProducts.DeleteAssignment(buyerID, productID, userID, userGroupID);',
+						Model: '\nvar buyerID = null;\nvar productID = "{productID}";\nvar userID = "{userID}";\nvar userGroupID = null;\n\nProducts.DeleteAssignment(buyerID, productID, userID, userGroupID);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
@@ -412,7 +436,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: '\n\nvar cat = {Categories.Create};\n\nCategories.Create(cat);',
+						Model: '\nvar buyerID = "{buyerID}";\n\nvar cat = {Categories.Create};\n\nCategories.Create(buyerID, cat);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
@@ -420,7 +444,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'get.js',
-						Model: '\nvar catID = "{categoryID}";\n\nCategories.Get(categoryID);',
+						Model: '\nvar buyerID = "{buyerID}";\nvar catID = "{categoryID}";\n\nCategories.Get(buyerID, categoryID);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
@@ -428,7 +452,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'list.js',
-						Model: '\n\nvar buyerID = "{buyerID}";\nvar search = null;\n var depth = null;\nvar page = null;\nvar pageSize = null;\n\n\nCategories.List(buyerID, search, depth, page, pageSize);',
+						Model: '\nvar buyerID = "{buyerID}";\nvar search = null;\nvar depth = null;\nvar page = null;\nvar pageSize = null;\n\n\nCategories.List(buyerID, search, depth, page, pageSize);',
 						Disable: false,
 						ListOrder: 3,
 						ExecuteOrder: null,
@@ -436,25 +460,25 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'update.js',
-						Model: '\n\nvar cat = {Categories.Update};\n\n\nCategories.Update(cat);',
-						Disable: false,
-						ListOrder: 3,
-						ExecuteOrder: null,
-						NextOnSuccess: false
-					},
-					{
-						Title: 'patch.js',
-						Model: '\n//will only update Description\n\nvar cat = {\n\tID: "...",\n\tDescription: "..."\n};\n\n\nCategories.Update(cat); ',
+						Model: '\nvar buyerID = "{buyerID}";\n\nvar cat = {Categories.Update};\n\n\nCategories.Update(buyerID, cat);',
 						Disable: false,
 						ListOrder: 4,
 						ExecuteOrder: null,
 						NextOnSuccess: false
 					},
 					{
-						Title: 'delete.js',
-						Model: '\n\n var productID = "{productID}";\n\n Products.Delete(productID);',
+						Title: 'patch.js',
+						Model: '\n//will only update Description\n\nvar buyerID = "{buyerID}";\n\nvar cat = {\n\tID: "...",\n\tDescription: "..."\n};\n\n\nCategories.Patch(buyerID, cat); ',
 						Disable: false,
 						ListOrder: 5,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'delete.js',
+						Model: '\nvar buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\n\n Categories.Delete(buyerID, categoryID);',
+						Disable: false,
+						ListOrder: 6,
 						ExecuteOrder: null,
 						NextOnSuccess: false
 					}
@@ -476,7 +500,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: 'var buyerID = "{buyerID}";\n\nvar assignment = {Categories.SaveProductAssignments}\n\nCategories.SaveProductAssignments(buyerID, assignment);',
+						Model: '\nvar buyerID = "{buyerID}";\n\nvar assignment = {Categories.SaveProductAssignments}\n\nCategories.SaveProductAssignments(buyerID, assignment);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
@@ -484,7 +508,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'list.js',
-						Model: 'var buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar productID = "{productID}";\nvar page = null;\nvar pageSize = null;\n\n\nCategories.ListProductAssignments(buyerID, categoryID, productID, page, pageSize);',
+						Model: '\nvar buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar productID = "{productID}";\nvar page = null;\nvar pageSize = null;\n\nCategories.ListProductAssignments(buyerID, categoryID, productID, page, pageSize);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
@@ -492,7 +516,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'delete.js',
-						Model: 'var buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar productID = "{productID}";\n\n\nCategories.DeleteProductAssignments(buyerID, categoryID, productID);',
+						Model: '\nvar buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar productID = "{productID}";\n\nCategories.DeleteProductAssignments(buyerID, categoryID, productID);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
@@ -516,7 +540,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'create.js',
-						Model: 'var buyerID = "{buyerID}";\n\nvar assignment = {Categories.SaveAssignment}\n\nCategories.SaveAssignment(buyerID, assignment);',
+						Model: '\nvar buyerID = "{buyerID}";\n\nvar assignment = {Categories.SaveAssignment}\n\nCategories.SaveAssignment(buyerID, assignment);',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
@@ -524,7 +548,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'list.js',
-						Model: 'var buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar userID = "{userID}";\nvar userGroupID = null;\nvar level = null;\nvar page = null;\nvar pageSize = null;\n\n\nCategories.ListAssignments(buyerID, categoryID, userID, userGroupID, level, page, pageSize);',
+						Model: '\nvar buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar userID = "{userID}";\nvar userGroupID = null;\nvar level = null;\nvar page = null;\nvar pageSize = null;\n\nCategories.ListAssignments(buyerID, categoryID, userID, userGroupID, level, page, pageSize);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
@@ -532,7 +556,7 @@ function ClassesService($q, Underscore) {
 					},
 					{
 						Title: 'delete.js',
-						Model: 'var buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar userID = "{userID}";\nvar userGroupID = null;\n\n\nCategories.DeleteProductAssignments(buyerID, categoryID, userID, userGroupID);',
+						Model: '\nvar buyerID = "{buyerID}";\nvar categoryID = "{categoryID}";\nvar userID = "{userID}";\nvar userGroupID = null;\n\nCategories.DeleteProductAssignments(buyerID, categoryID, userID, userGroupID);',
 						Disable: false,
 						ListOrder: 2,
 						ExecuteOrder: null,
@@ -556,7 +580,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 						Title: 'get.js',
-						Model: '\n\nMe.ListProducts();',
+						Model: '\nMe.ListProducts();',
 						Disable: false,
 						ListOrder: 1,
 						ExecuteOrder: null,
