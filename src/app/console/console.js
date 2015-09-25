@@ -29,6 +29,13 @@ function ApiConsoleConfig( $stateProvider, $urlMatcherFactoryProvider ) {
         'controller': 'ApiConsoleCtrl',
         'controllerAs': 'console',
         'resolve': {
+			OrderCloudSections:  function($q, Docs) {
+				var defer = $q.defer();
+				Docs.GetAll().then(function(data) {
+					defer.resolve(data.Sections);
+				});
+				return defer.promise;
+			},
 			OrderCloudResources: function (ApiLoader) {
                 return ApiLoader.getResources('orderCloud.sdk');
             }
