@@ -12,11 +12,11 @@
         platform.
     </p>
     <p>
-        The first example of this defined 'context' is within a user object. A user object must be
-        defined under the context of a buyer. In other words, one user object must be 'under' one
-        and only one buyer. This rule is very logical and easy to understand, so it provides a good
+        The first example of this defined "context" is within a user object. A user object must be
+        defined under the context of a buyer. In other words, one user object must be <em>under</em> one
+        and only one buyer. This specific rule is pretty logical and straight forward, so it provides a good
         starting point for developing your understanding of these context rules. We will explain these
-        contexts as we move through the beginner courses, and eventually you will be an expert!
+        contexts as we move through the each course, and eventually you will be an expert!
     </p>
     <h3 class="page-title">Creating a New User</h3>
     <p>
@@ -32,15 +32,25 @@
       useSoftTabs: true
     }" ng-model="class.docs.Users.Create.RequestBody.Sample"></div>
     <p>
-        As usual, the ID will be auto-generated if you do not provide one yourself.
-        Take a look at the code block we have provided you to the right. We have provided you with
-        a basic user object with the values that are either required or highly recommended.
+        Take a look at the code block we have provided you to the right. You will see the full
+        request object, but you do not need to touch every value (some will stay as their default. Fill
+        in everything from <code>ID</code> to <code>Phone</code> with whatever values you would like. Leave
+        <code>TermsAccepted</code> and <code>xp</code> null, and set <code>Active</code> to true.
     </p>
     <p>
-        When you are ready, go ahead and fill in the values in the <code>user</code> object. Make sure
-        you don't leave any blank or with the <code>'...'</code> placeholder.
+        One difference you will notice between this class and the <em>Create a Buyer</em> class is that there is
+        an extra parameter in the SDK call. In addition to the request object (<code>var user</code> in this
+        case), you also need to provide a <code>buyerID</code> for the user to be created under. This was explained
+        above in the <em>What You Need To Know</em> section, and is manifested by including this ID as the first
+        parameter in the SDK call. Take the <code>ID</code> of the buyer you created in the previous class and
+        store it inside of <code>var buyerID</code>, where "{buyerID}" is currently sitting as a placeholder.
     </p>
     <p>
-        Remember to read through the response console to work through any errors if you run into any trouble!
+        Make sure you keep a note on your new User's ID, username, and password, as you will be using it to change
+        contexts in an upcoming class (and in other courses as well). Remember to read through the response console
+        to work through any errors if you run into any trouble!
     </p>
+    <h4>
+        When you are ready, go ahead and hit 'Run'!
+    </h4>
 </div>
