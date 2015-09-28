@@ -4,16 +4,22 @@
 <div>
     <h3 class="page-title">What You Need To Know</h3>
     <p>
-        Creating a Buyer is very easy. In fact, you are only required to provide a name of your
-        new buyer when creating one. If you choose to do this, your new buyer's buyerID will be
-        auto-generated, and 'Active' will be set to false. Creating a buyer uses the 'Buyers'
-        service provided from the SDK. The 'Buyers' service provides all the stander CRUD
-        operations as service methods.
+        A Buyer in OrderCloud is an organization or set of related users that <em>make orders</em> to
+        a distributor (wholesaler, manufacturer, etc.) through an OrderCloud application, having a similar level
+        of access and using a similar set of purchasing rules. A Buyer is one of the foundations of an OrderCloud
+        application, because it often provides the <em>context</em> in which some other object is being defined
+        (such as a user or category).
+    </p>
+    <p>
+        Creating a Buyer is one of the most straightforward API Requests you will make in OrderCloud.
+        In fact, you are only required to provide a name of your new buyer when creating one.
+        If you choose to do this, your new buyer's <code>ID</code> will be auto-generated, and <code>Active</code> will
+        be set to false. Creating a buyer uses the <em>Buyers</em> service provided from the SDK. The <em>Buyers</em>
+        service, in turn, provides all the standard CRUD operations for dealing with Buyers.
     </p>
     <h3 class="page-title">Creating a New Buyer</h3>
     <p>
-        Below is a look at a full Buyer object. As you can see, it is very minimal with only
-        3 stored values,
+        Below is a look at a full Buyer object. As you can see, it is very minimal,
     </p>
     <div style="height: 100px;" readonly
          ui-ace="{
@@ -25,20 +31,25 @@
     }" ng-model="class.docs.Buyers.Create.RequestBody.Sample"></div>
     <p>
         Take a look at the code block we have provided you to the right. Creating a buyer
-        only requires a few lines of easily readable code (in fact, you could put it all
-        in one line very easily).
+        only requires a few lines of code.
     </p>
     <p>
-        Go ahead and fill in the Name of your new buyer to the right. If you insist, you can add
-        your own 'ID' along with your new buyer, but it is much easier if you just let it
-        auto-generate. Finally , set 'Active' to true and your new buyer object is ready to go.
-        Take note of the 'Buyers' service call with the 'Create' method, taking the new buyer
-        object as the first and only parameter. This will make the request to OrderCloud and return
-        your new full buyer object.
+        Go ahead and fill in the Name of your new buyer to the right. Set the Buyer <code>ID</code> to
+        whatever you like (we usually choose something readable), and set <code>Active</code> to true.
+        Review the SDK service call, <code>Buyers.Create(buyer);</code>. This is the first of many
+        SDK API Requests you will be making. The syntax is "Service.Method(params);" where the <em>Service</em>
+        is synonymous with an OrderCloud resource, and the <em>Method</em> is synonymous with an OrderCloud endpoint.
+        This particular operation will make the request to OrderCloud and return your new buyer object in full.
+    </p>
+    <p>
+        Make sure you write down the <code>ID</code> of the buyer you are creating, as you will be using it in the next class.
     </p>
     <p>
         If you run into any errors, read through the console on the right of the code block, as it should
-        give you some verbose error messaging on what went wrong. But chances are good that you will
-        have a successful call the first time!
+        give you some verbose error messaging on what went wrong. Also, make sure you write down the <code>ID</code>
+        of the buyer you are creating, as you will be using it in the next class.
     </p>
+    <h4>
+        When you are ready, go ahead and hit 'Run'!
+    </h4>
 </div>
