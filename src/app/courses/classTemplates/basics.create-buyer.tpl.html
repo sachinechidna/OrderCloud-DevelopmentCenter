@@ -4,14 +4,14 @@
 <div>
     <h3 class="page-title">What You Need To Know</h3>
     <p>
-        A Buyer in OrderCloud is an organization or set of related users that <em>make orders</em> to
+        A Buyer in OrderCloud is an organization or set of related users that <em>submit orders</em> to
         a distributor (wholesaler, manufacturer, etc.) through an OrderCloud application, having a similar level
         of access and using a similar set of purchasing rules. A Buyer is one of the foundations of an OrderCloud
         application, because it often provides the <em>context</em> in which some other object is being defined
         (such as a user or category).
     </p>
     <p>
-        Creating a Buyer is one of the most straightforward API Requests you will make in OrderCloud.
+        Creating a Buyer is one of the more straightforward API Requests you will make in OrderCloud.
         In fact, you are only required to provide a name of your new buyer when creating one.
         If you choose to do this, your new buyer's <code>ID</code> will be auto-generated, and <code>Active</code> will
         be set to false. Creating a buyer uses the <em>Buyers</em> service provided from the SDK. The <em>Buyers</em>
@@ -30,26 +30,34 @@
       useSoftTabs: true
     }" ng-model="class.docs.Buyers.Create.RequestBody.Sample"></div>
     <p>
-        Take a look at the code block we have provided you to the right. Creating a buyer
-        only requires a few lines of code.
+        Before we dive into the code itself note that over to the right, just above the code block,
+        there are multiple tabs with different javascript verb-specified scripts. The tabs in {primary-tab-color} are tabs
+        in which you will use to accomplish the primary goal of the specific class. The scripts in {secondary-tab-color}
+        are there for you to become versed in the related CRUD operations that are available to you through
+        the SDKs. In the case of this class, for example, you will only be required to successfully run the
+        <code class="script">create.js</code> script. However, nearly all of these secondary scripts are
+        <em>executable</em>, acting as a playground for you to run CRUD operations as you
+        please. Primary and secondary scripts will be standard in the How-To Courses, as we want to
+        help you accomplish a specific goal, but also introduce you to the broader functionality and concepts that are
+        specific to the class topic.
     </p>
     <p>
-        Go ahead and fill in the Name of your new buyer to the right. Set the Buyer <code>ID</code> to
-        whatever you like (we usually choose something readable), and set <code>Active</code> to true.
-        Review the SDK service call, <code>Buyers.Create(buyer);</code>. This is the first of many
-        SDK API Requests you will be making. The syntax is "Service.Method(params);" where the <em>Service</em>
-        is synonymous with an OrderCloud resource, and the <em>Method</em> is synonymous with an OrderCloud endpoint.
-        This particular operation will make the request to OrderCloud and return your new buyer object in full.
+        Now getting back to the topic at hand, creating a buyer. Over to the right in the
+        <code class="script">create.js</code> script, there are two pieces we want to focus on to successfully
+        create a new Buyer.
     </p>
     <p>
-        Make sure you write down the <code>ID</code> of the buyer you are creating, as you will be using it in the next class.
+        First, on line 2 you can see a variable named <code class="var">buyer</code> that stores the object of
+        the new buyer you will be creating. All you need to do is set the <code>ID</code> and <code>Name</code> to
+        whatever you please, and change <code>Active</code> to true. Note that the ID must not include any spaces
+        (non-alphanumeric is okay). Additionally, it is important that you set <code>Active</code> to true,
+        or you will run into issues later when trying to access the catalogue as a buyer-user. If you accidentally
+        set it to false, you can go over to the API console and update the buyer object to make it active.
     </p>
     <p>
-        If you run into any errors, read through the console on the right of the code block, as it should
-        give you some verbose error messaging on what went wrong. Also, make sure you write down the <code>ID</code>
-        of the buyer you are creating, as you will be using it in the next class.
+        The second and final piece to create a new buyer is to make the SDK call to the OrderCloud API. This is
+        a very simple SDK call, because it only requires one parameter--the buyer object. When you are ready,
+        go ahead and run the script. We highly recommend that you make a note of your new buyer's ID so you
+        can readily access and use it for future classes.
     </p>
-    <h4>
-        When you are ready, go ahead and hit 'Run'!
-    </h4>
 </div>

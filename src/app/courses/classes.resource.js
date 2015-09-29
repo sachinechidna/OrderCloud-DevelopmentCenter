@@ -103,7 +103,7 @@ function ClassesService($q, Underscore) {
 			ClassMethods: ['Me.Get']
 		},
 		{
-			ID: 'create-buyer',
+			ID: 'buyer-crud',
 			Name: 'Create a Buyer',
 			Description: 'Create a buyer to use in your application',
 			TemplateUrl: 'courses/classTemplates/basics.create-buyer.tpl.html',
@@ -114,23 +114,47 @@ function ClassesService($q, Underscore) {
 				},
 				Scripts: [
 					{
-					Title: 'create.js',
-					Model: "\nvar buyer = {Buyers.Create};\n\nBuyers.Create(buyer);",
-					Disable: false,
-					ListOrder: 1,
-					ExecuteOrder: null,
-					NextOnSuccess: true
+						Title: 'create.js',
+						Model: "\nvar buyer = {Buyers.Create};\n\nBuyers.Create(buyer);",
+						Disable: false,
+						ListOrder: 1,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'get.js',
+						Model: '\nvar buyerID = "{buyerID}";\n\nBuyers.Get(buyerID);',
+						Disable: false,
+						ListOrder: 2,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'list.js',
+						Model: '\nBuyers.Get();',
+						Disable: false,
+						ListOrder: 3,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'update.js',
+						Model: '\nvar buyerID = "{buyerID}";\n\nvar buyer = {Buyers.Update};\n\nBuyers.Update(buyerID, buyer);',
+						Disable: false,
+						ListOrder: 4,
+						ExecuteOrder: null,
+						NextOnSuccess: false
 					}
 				]
 			},
 			Dependencies: ["Buyers"],
-			ClassMethods: ['Buyers.Create']
+			ClassMethods: ['Buyers.Create', 'Buyers.Update']
 		},
 		{
-			ID: 'create-buyer-user',
-			Name: 'Create a User',
-			Description: 'Create your first user under your new buyer company',
-			TemplateUrl: 'courses/classTemplates/basics.create-user.tpl.html',
+			ID: 'group-crud',
+			Name: 'Create a Group',
+			Description: 'Create your first group under your new buyer company comprised of your new users',
+			TemplateUrl: 'courses/classTemplates/basics.create-group.tpl.html',
 			Interactive: true,
 			ScriptModels: {
 				Meta: {
@@ -139,7 +163,7 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 					Title: 'create.js',
-					Model: '\nvar buyerID = "{buyerID}";\n\nvar user = {Users.Create};\n\nUsers.Create(buyerID, user);',
+					Model: '\nvar buyerID = "{buyerID}";\n\nvar group = {Groups.Create};\n\nGroups.Create(buyerID, user);',
 					Disable: false,
 					ListOrder: 1,
 					ExecuteOrder: null,
@@ -147,8 +171,8 @@ function ClassesService($q, Underscore) {
 					}
 				]
 			},
-			Dependencies: ["Users"],
-			ClassMethods: ['Users.Create']
+			Dependencies: ["Groups"],
+			ClassMethods: ['Groups.Create']
 		},
 		{
 			ID: 'api-access',
@@ -201,8 +225,8 @@ function ClassesService($q, Underscore) {
 		{
 			ID: 'user-crud',
 			Name: 'Select a User',
-			Description: "Create or access a user to be used to create a product and category assignment",
-			TemplateUrl: 'courses/classTemplates/user-prod-access.user-crud.tpl.html',
+			Description: "Create your first set of users under your new buyer",
+			TemplateUrl: 'courses/classTemplates/basics.create-user.tpl.html',
 			Interactive: true,
 			Assert: [
 				{
