@@ -37,7 +37,10 @@ function CoursesService($q, Underscore) {
 			Difficulty: 'Beginner',
 			Classes: ['buyer-crud', 'user-crud', 'prod-crud', 'price-sched-crud', 'prod-assignments', 'category-crud', 'category-prod-assignment', 'category-assignment', 'get-products-as-user'],
 			ImgUrl: 'assets/basics.png'
-		},
+		}
+	];
+
+	var archive = [
 		{
 			ID: 'misc',
 			Name: 'Get Authenticated',
