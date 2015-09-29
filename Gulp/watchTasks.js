@@ -1,7 +1,6 @@
 gulp = require('gulp');
 jshint = require('gulp-jshint');
 mainBowerFiles = require('main-bower-files');
-var watch = require('gulp-watch');
 var karma = require('gulp-karma');
 
 var server = 'server.js';

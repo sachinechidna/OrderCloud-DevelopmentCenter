@@ -204,6 +204,12 @@ function ClassesService($q, Underscore) {
 			Description: "Create or access a user to be used to create a product and category assignment",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.user-crud.tpl.html',
 			Interactive: true,
+			Assert: [
+				{
+					method: 'Users.Create',
+					count: 3
+				}
+			],
 			ScriptModels: {
 				Meta: {
 					ExecuteAll: false
@@ -429,6 +435,12 @@ function ClassesService($q, Underscore) {
 			Description: "Create or access a category that you will give a user access to a product",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.category-crud.tpl.html',
 			Interactive: true,
+			Assert: [
+				{
+					method: 'Categories.Create',
+					count: 3
+				}
+			],
 			ScriptModels: {
 				Meta: {
 					ExecuteAll: false
