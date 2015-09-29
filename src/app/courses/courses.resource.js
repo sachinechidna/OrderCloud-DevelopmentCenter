@@ -35,15 +35,15 @@ function CoursesService($q, Underscore) {
 			Name: 'The Basics',
 			Description: 'A real-world, interactive introduction to help you get started using OrderCloud',
 			Difficulty: 'Beginner',
-			Classes: ['create-buyer', 'create-buyer-user', 'api-access', 'get-me'],
+			Classes: ['buyer-crud', 'user-crud', 'prod-crud', 'price-sched-crud', 'prod-assignments', 'category-crud', 'category-prod-assignment', 'category-assignment', 'get-products-as-user'],
 			ImgUrl: 'assets/basics.png'
 		},
 		{
-			ID: 'user-prod-access',
-			Name: 'View Products as a Buyer User',
-			Description: 'Tackle the challenge of making a product accessible to a buyer-user',
+			ID: 'misc',
+			Name: 'Get Authenticated',
+			Description: 'Take the steps towards getting an authenticated user',
 			Difficulty: 'Intermediate',
-			Classes: [ 'prod-crud', 'price-sched-crud', 'user-crud', 'prod-assignments', 'category-crud', 'category-prod-assignment', 'category-assignment', 'get-products-as-user'],
+			Classes: [ 'api-access'],
 			ImgUrl: 'assets/productAsBuyer.png'
 		}
 	];

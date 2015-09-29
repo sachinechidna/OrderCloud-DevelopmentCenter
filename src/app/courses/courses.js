@@ -121,6 +121,7 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 			});
 			if (!vm.responseFailure) {
 				vm.responseSuccess = true;
+				checkAssertions();
 			}
 		}
 		else {
@@ -130,6 +131,24 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 		}
 	});
 
+
+	function checkAssertions() {
+		angular.forEach(vm.current.Assert, function(assertion) {
+			var split = assertion.method.split('.');
+			var doc = vm.docs[split[0]][split[1]];
+			console.log(vm.current.Assert);
+
+			console.log(doc);
+			var assertUrl = doc.UriTemplate;
+			console.log(assertUrl);
+			angular.forEach(vm.responses, function(response) {
+				/*if (response.method == doc.HttpVerb) {
+					console.log('hello');
+				}*/
+
+			});
+		})
+	}
 
 	function findNextCourseID() {
 		Courses.List().then(function(data) {
@@ -155,11 +174,13 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 			vm.activeScriptFn(activeScriptTitle);
 		}
 
-	};
+	}
 	setActiveScript();
+
 	angular.forEach(vm.current.ClassMethods, function(method) { //sets docs and replaces model string constant with request example
 		ClassSvc.getDocs(method)
 			.then(function(data) {
+
 				var svc = data[0];
 				var mtd = data[1];
 				var doc = data[2];
@@ -239,6 +260,7 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 					vm.success = true;
 				}
 				vm.openRequestCount -= 1;
+				checkAssertions();
 			}
 		});
 		$scope.$on('event:responseError', function(event, c) {
@@ -254,9 +276,9 @@ function ClassController( $scope, $state, $injector, Underscore, ClassSvc, Cours
 	}
 
 
+
 	vm.Execute = function() {
 
-		vm.allResponses = [];
 		vm.responseSuccess = false;
 		vm.responseFailure = false;
 
