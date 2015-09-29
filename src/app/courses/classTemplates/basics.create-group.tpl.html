@@ -27,49 +27,37 @@
         A full user object has more stored values than what you saw in the buyer object,
         as you can see below,
     </p>
-    <div style="height: 200px;" readonly
+    <div style="height: 120px;" readonly
          ui-ace="{
       useWrapMode : false,
       theme:'twilight',
       mode: 'json',
       tabSize: '4',
       useSoftTabs: true
-    }" ng-model="class.docs.Groups.Create.RequestBody.Sample"></div>
+    }" ng-model="class.docs.UserGroups.Create.RequestBody.Sample"></div>
     <p>
         Take a look at the code block we have provided you to the right. You will see across the top all of
         the CRUD operation scripts, but for now we will be focusing on creating a new user in the
         <code class="script">create.js</code> script. As you can see inside of <code class="script">create.js</code>,
-        you have a full user object like the one above stored in a variable called <code class="var">var user</code>.
-        There are three important pieces to this script that will eventually be used together to create your first user.
+        you have a full group object like the one above stored in a variable called <code class="var">var group</code>.
+        Much like when creating your first set of users, creating a group has an identical number and type of
+        parameters. Because of this, I will focus on the new user object and skim through the rest.
     </p>
     <p>
-        First, you have <code class="var">var buyerID</code>, which is the variable in which you will store the
-        ID of the buyer you will be using as the <em>context</em> for this user. Go ahead and replace
-        <code class="string">"{buyerID}"</code> with the ID of the buyer you created in the previous class.
-        Make sure you store this value as a string or you will run into an error processing the code.
+        Let's focus again on the <code class="script">create.js</code> script for this class.
+        As with creating a new user, creating a new group requires that you include an ID of the buyer you plan on
+        using as the context. Set this the same as you did in the <em>Create a User</em> course in the
+        <code class="var">buyerID</code> variable. Now move your focus down to line 4 where <code class="var">group</code>
+        is set with the new group object. Go ahead and fill out the <code>ID</code>, <code>Name</code>, and
+        <code>Description</code> values as you would like. Note again that <code>ID</code> must not have any spaces.
+        Leave <code>ReportingGroup</code> set to false and <code>xp</code> set to null. Do not worry about what either
+        of these are right now, as it is outside of the scope of this course.
     </p>
     <p>
-        Second, you have <code class="var">var user</code>, which is the variable storing the new user object
-        you will be creating. Go ahead and fill out everything from <code>ID</code> to <code>Phone</code> with
-        whatever you like. Note that it is important that your ID, Username, and Password do not have any spaces
-        (non-alphanumeric values are ok), and the Email be in the format of a standard email address. Once you
-        are done with this, leave <code>TermsAccepted</code> and <code>xp</code> to null. Finally, set
-        <code>Active</code> to true. It is important that you set this to active or you will not be able to gain
-        access to the products, categories, and other objects you should be able to when authenticating as one
-        of these users (you can of course always update a user who is inactive to make them active).
+        We recommend you write down the ID of your new group. You will end up using it in the next class.
     </p>
     <p>
-        And finally, on line 18 of the code block in <code class="script">create.js</code>, we have the SDK
-        call to create the User. This SDK Service Method takes two parameters, the <code class="var">buyerID</code>
-        and <code class="var">user</code> variables, in that order.
-    </p>
-    <p>
-        We recommend you write down each of the new users <code>ID</code>, <code>Username</code>, and <code>Password</code>
-        somewhere so you can refer to them in later classes. Remember to read through the response console
-        to work through any errors if you run into any trouble!
-    </p>
-    <p>
-        If you are ready, go ahead and process the request by hitting "Run". You will need to create 3 new users
+        If you are ready, go ahead and process the request by hitting "Run". You only need to create one new group
         before you continue to the next course.
     </p>
 </div>

@@ -163,16 +163,96 @@ function ClassesService($q, Underscore) {
 				Scripts: [
 					{
 					Title: 'create.js',
-					Model: '\nvar buyerID = "{buyerID}";\n\nvar group = {Groups.Create};\n\nGroups.Create(buyerID, user);',
+					Model: '\nvar buyerID = "{buyerID}";\n\nvar group = {UserGroups.Create};\n\nUserGroups.Create(buyerID, group);',
 					Disable: false,
 					ListOrder: 1,
 					ExecuteOrder: null,
 					NextOnSuccess: true
+					},
+					{
+						Title: 'get.js',
+						Model: '\nvar buyerID = "{buyerID}";\nvar groupID = "{groupID}";\n\nUserGroups.Get(buyerID, groupID);',
+						Disable: false,
+						ListOrder: 2,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'list.js',
+						Model: '\nvar buyerID = "{buyerID}";\nvar search = null;\nvar page = null;\nvar pageSize = null;\n\nvar group = {UserGroups.Create};\n\nUserGroups.List(buyerID, search, page, pageSize);',
+						Disable: false,
+						ListOrder: 3,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'update.js',
+						Model: '\nvar buyerID = "{buyerID}";\nvar groupID = "{groupID}";\n\nvar group = {UserGroups.Update};\n\nUserGroups.Update(buyerID, groupID, group);',
+						Disable: false,
+						ListOrder: 4,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'patch.js',
+						Model: '\nvar buyerID = "{buyerID}";\nvar groupID = "{groupID}";\n\nvar groupPatch = {UserGroups.Patch};\n\nUserGroups.Patch(buyerID, groupID, groupPatch);',
+						Disable: false,
+						ListOrder: 5,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'delete.js',
+						Model: '\nvar buyerID = "{buyerID}";\nvar groupID = "{groupID}";\n\nUserGroups.Delete(buyerID, groupID);',
+						Disable: false,
+						ListOrder: 6,
+						ExecuteOrder: null,
+						NextOnSuccess: true
 					}
 				]
 			},
-			Dependencies: ["Groups"],
-			ClassMethods: ['Groups.Create']
+			Dependencies: ["UserGroups"],
+			ClassMethods: ['UserGroups.Create', 'UserGroups.Update', 'UserGroups.Patch']
+		},
+		{
+			ID: 'group-assignment',
+			Name: 'Create Group Assignment',
+			Description: 'Create your first group assignment with your newly created group and users',
+			TemplateUrl: 'courses/classTemplates/basics.create-group-assignment.tpl.html',
+			Interactive: true,
+			ScriptModels: {
+				Meta: {
+					ExecuteAll: false
+				},
+				Scripts: [
+					{
+						Title: 'create.js',
+						Model: '\nvar buyerID = "{buyerID}";\n\nvar assignment = {UserGroups.SaveMemberAssignment};\n\nUserGroups.SaveMemberAssignment(buyerID, assignment);',
+						Disable: false,
+						ListOrder: 1,
+						ExecuteOrder: null,
+						NextOnSuccess: true
+					},
+					{
+						Title: 'list.js',
+						Model: '\nvar buyerID = "{buyerID}";\nvar userID = null;\nvar groupID = "{groupID}";\nvar page = null;\nvar pageSize = null;\n\n\nUserGroups.ListMemberAssignments(buyerID, userID, groupID, page, pageSize);',
+						Disable: false,
+						ListOrder: 2,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					},
+					{
+						Title: 'delete.js',
+						Model: '\nvar buyerID = "{buyerID}";\nvar groupID = "{groupID}";\nvar userID = "{userID}";\n\n\nUserGroups.DeleteMemberAssignment(buyerID, groupID, userID);',
+						Disable: false,
+						ListOrder: 3,
+						ExecuteOrder: null,
+						NextOnSuccess: false
+					}
+				]
+			},
+			Dependencies: ["UserGroups"],
+			ClassMethods: ['UserGroups.SaveMemberAssignment', 'UserGroups.ListMemberAssignments', 'UserGroups.DeleteMemberAssignment']
 		},
 		{
 			ID: 'api-access',
@@ -224,7 +304,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'user-crud',
-			Name: 'Select a User',
+			Name: 'Create a User',
 			Description: "Create your first set of users under your new buyer",
 			TemplateUrl: 'courses/classTemplates/basics.create-user.tpl.html',
 			Interactive: true,
@@ -294,7 +374,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'prod-crud',
-			Name: 'Select a Product',
+			Name: 'Create a Product',
 			Description: "Create or access a product to be used to create a product and category assignment",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.prod-crud.tpl.html',
 			Interactive: true,
@@ -350,7 +430,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'price-sched-crud',
-			Name: 'Select a Price Schedule',
+			Name: 'Create a Price Schedule',
 			Description: "Create or access a price schedule to be used to create a product assignment",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.price-sched-crud.tpl.html',
 			Interactive: true,
@@ -415,7 +495,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'prod-assignments',
-			Name: 'Product Assignments',
+			Name: 'Create Product Assignment',
 			Description: "Assign your product to a user with your newly created price schedule",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.prod-assignments.tpl.html',
 			Interactive: true,
@@ -455,7 +535,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'category-crud',
-			Name: 'Select a Category',
+			Name: 'Create a Category',
 			Description: "Create or access a category that you will give a user access to a product",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.category-crud.tpl.html',
 			Interactive: true,
@@ -525,7 +605,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'category-prod-assignment',
-			Name: 'Category Prod Assignment',
+			Name: 'Create Category Product Assignment',
 			Description: "Assign your category to a product",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.category-prod-assignment.tpl.html',
 			Interactive: true,
@@ -565,7 +645,7 @@ function ClassesService($q, Underscore) {
 		},
 		{
 			ID: 'category-assignment',
-			Name: 'Category Assignment',
+			Name: 'Create Category Assignment',
 			Description: "Assign your category to a user",
 			TemplateUrl: 'courses/classTemplates/user-prod-access.category-assignment.tpl.html',
 			Interactive: true,
@@ -626,7 +706,7 @@ function ClassesService($q, Underscore) {
 			},
 			Dependencies: ["Me"],
 			ClassMethods: ["Me.Products"]
-		},
+		}
 
 	];
 
