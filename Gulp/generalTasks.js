@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var inject = require('gulp-inject');
-var clean = require('gulp-clean');
+var del = require('del');
 var pkg = require('../package.json');
 var currVersion = pkg.name + "-" + pkg.version;
 
@@ -16,7 +16,7 @@ gulp.task('build:inject', function() {
     //task injects dep into index.html
     return gulp
         .src(config.source + 'index.html')
-        .pipe(inject(gulp.src([config.build + 'vendor/json.js', config.build + 'vendor/**/angular.js', config.build + 'vendor/**/*.js'], {read:false}), {name: 'bower', ignorePath: config.build.replace('.', ''), addRootSlash: false}))
+        .pipe(inject(gulp.src([config.build + 'vendor/**/angular.js', config.build + 'vendor/**/*.js'], {read:false}), {name: 'bower', ignorePath: config.build.replace('.', ''), addRootSlash: false}))
         .pipe(inject(gulp.src([
             config.build + 'src/templates-app.js',
             config.build + 'src/app/app.js',
@@ -33,9 +33,11 @@ gulp.task('build:inject', function() {
 
 
 gulp.task('masterClean', function() {
-    return gulp
-        .src([config.build, config.compile, config.temp])
-        .pipe(clean({read:false}));
+    return del([
+        config.build,
+        config.compile,
+        config.temp
+    ]);
 });
 
 //Major Project Build Tasks

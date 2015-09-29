@@ -4,10 +4,10 @@ var less = require('gulp-less');
 var sass = require('gulp-sass');
 var filter = require('gulp-filter');
 var autoprefixer = require('gulp-autoprefixer');
-var minify = require('gulp-minify-css');
+var minify = require('gulp-csso');
 var mainBowerFiles = require('main-bower-files');
 var concat = require('gulp-concat');
-var clean = require('gulp-clean');
+var del = require('del');
 var plumber = require('gulp-plumber');
 var lessImport = require('gulp-less-import');
 var replace = require('gulp-replace');
@@ -60,7 +60,7 @@ gulp.task('b_m:appCss', function() {
 
 gulp.task('b_m:styles', function() {
     return gulp
-        .src([config.temp + 'bowerStyles.css', config.temp + 'lessStyles.css', config.temp + 'sassStyles.css', config.temp + 'appCss.css'])
+        .src(config.temp + '*.css')
         .pipe(replace('../fonts/', 'fonts/'))
         .pipe(concat(currVersion + '.css'))
         .pipe(gulp.dest(config.build + 'assets'))
@@ -68,8 +68,10 @@ gulp.task('b_m:styles', function() {
 });
 
 gulp.task('b_c:styles', function() {
-    return gulp.src([config.build + 'assets/**/*.css', config.temp + '**/*' ], {read:false})
-        .pipe(clean());
+    return del([
+        config.build + 'assets/**/*.css',
+        config.temp + '**/*'
+    ]);
 });
 
 gulp.task('b_m:assets', function() {
@@ -95,14 +97,14 @@ gulp.task('b_m:fonts', function() {
 });
 
 gulp.task('b_c:assets', function() {
-    return gulp.src([
+    return del([
         config.build + 'assets/**/*',
         '!' + config.build + '**/*.css',
         '!' + config.build + '**/*.less',
         '!' + config.build + '**/*.scss',
         '!' + config.build + '**/*.sass',
-        '!' + config.build + 'assets/fonts/**/*'], {read:false})
-        .pipe(clean())
+        '!' + config.build + 'assets/fonts/**/*'
+    ]);
 });
 
 /*COMPILE*/
@@ -113,9 +115,7 @@ gulp.task('c_m:css', function() {
 });
 
 gulp.task('c_c:css', function() {
-    return gulp
-        .src(config.compile + '**/*.css', {read:false})
-        .pipe(clean());
+    return del(config.compile + '**/*.css');
 });
 
 gulp.task('c_m:assets', function() {
@@ -129,9 +129,10 @@ gulp.task('c_m:assets', function() {
 });
 
 gulp.task('c_c:assets', function() {
-    return gulp
-        .src([config.compile + 'assets/**/*', '!' + config.compile + 'assets/**/*.css'], {read:false})
-        .pipe(clean());
+    return del([
+        config.compile + 'assets/**/*',
+        '!' + config.compile + 'assets/**/*.css'
+    ]);
 });
 
 //Master Asset Tasks
