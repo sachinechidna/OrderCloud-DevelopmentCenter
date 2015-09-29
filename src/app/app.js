@@ -43,13 +43,14 @@ angular.module( 'orderCloud', [
 
 ;
 
-function Security( $rootScope, $state, Auth ) {
+function Security( $rootScope, $state, Auth, Me ) {
 	$rootScope.$on('$stateChangeStart', function(e, to) {
 		/*TODO: make the '$stateChangeStart event' accept a function so users can control the redirect from each state's declaration.*/
 		if (!to.data || !to.data.limitAccess) return;
 		Auth.IsAuthenticated()
 			.catch(sendToLogin);
-
+		Me.Get()
+			.catch(sendToLogin);
 		function sendToLogin() {
 			$state.go('login');
 		}
