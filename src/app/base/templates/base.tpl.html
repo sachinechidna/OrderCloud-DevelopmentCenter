@@ -1,30 +1,63 @@
 <nav id="dev-center-navigation" class="navbar navbar-default navbar-fixed-top" ng-init="mainCollapsed = true">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
+		<div class="navbar-header header-logo">
 			<button type="button" class="navbar-toggle" ng-click="mainCollapsed = !mainCollapsed" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" ui-sref="base.dashboard">Development Center</a>
+			<!--<a class="navbar-brand" ui-sref="base.dashboard">Development Center</a>-->
+			<img src="assets/images/OrderCloud_Logo.png" alt="" class="img-responsive">
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="navbar-collapse" collapse="mainCollapsed" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li class="dropdown" dropdown>
-					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Learn</a>
-					<ul class="dropdown-menu top-caret bordered" dropdown-menu>
-						<!--<li ui-sref-active="active" ng-if="base.currentUser"><a>Get Started</a></li>-->
-						<li ><a ui-sref="base.docs">API Docs</a></li>
-						<li  ng-if="base.currentUser"><a ui-sref="base.courses">Courses</a></li>
-					</ul>
+			<ul class="nav navbar-nav header-nav">
+				<li>
+					<a href="" ui-sref="base.about">About</a>
 				</li>
 				<li>
 					<a href="" ui-sref="base.console">Console</a>
 				</li>
+				<li>
+					<a href="" ui-sref="base.sdks">SDKS</a>
+				</li>
+				<li>
+					<a href="" ui-sref="base.components">Components</a>
+				</li>
+				<li id="doc-nav">
+					<a href="" ui-sref="base.documentation">Documentation</a>
+					
+				  <div class="dropDownMenu">
+                    <div class="menuNav">
+      <ul>
+          <li><a href="#">how to's</a></li>
+		  <li><a href="#">four51 glossary</a></li>
+		  <li><a href="#">dev center</a></li>
+		  <li><a href="#">app development</a></li>
+		  <li><a href="#">quick start</a></li>
+		  <li><a href="#">theme development</a></li>
+		  <li><a href="#">getting started 7</a></li>
+      </ul>
+  </div>
+   <div class="menuContent">
+      <span>Four51 Glossary</span>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </p>
+  </div>
+  <div class="arrow-up"></div>
+  </div>	
+					
+				</li>
+				<!--<li class="dropdown" dropdown>
+					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Learn</a>
+					<ul class="dropdown-menu top-caret bordered" dropdown-menu>
+						<!--<li ui-sref-active="active" ng-if="base.currentUser"><a>Get Started</a></li>
+						<li ><a ui-sref="base.docs">API Docs</a></li>
+						<li  ng-if="base.currentUser"><a ui-sref="base.courses">Courses</a></li>
+					</ul>
+				</li>-->
 <!--				<li class="dropdown" dropdown ng-if="base.currentUser">
 					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Explore</a>
 					<ul class="dropdown-menu top-caret bordered" dropdown-menu>
@@ -35,8 +68,8 @@
 				<!--<li ui-sref-active="active"  ng-if="base.currentUser"><a>My Apps</a></li>-->
 
 			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li ng-if="!base.currentUser"><a ui-sref="login">Sign In</a></li>
+		<!--	<ul class="nav navbar-nav navbar-right">
+				<li ng-if="!base.currentUser"><a ui-sref="login">Log In</a></li>
 				<li class="dropdown" dropdown ng-if="base.currentUser">
 					<a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Account</a>
 					<ul class="dropdown-menu top-caret" dropdown-menu>
@@ -48,8 +81,99 @@
 						<li><a href="" ng-click="application.logout()"><i class="fa fa-power-off"></i> Logout</a></li>
 					</ul>
 				</li>
-			</ul>
+			</ul>-->
+			
+			<ul class="nav navbar-nav navbar-right headerControls">
+				<li class="repIcon"><img src="assets/images/repository.svg" alt=""><span>Repository XYZ</span><i class="fa fa-sort-desc"></i>
+				
+				<div class="dropDownRep">
+				<span>Repository App Items</span>
+  <div class="arrow-up"></div>
+</div>
+				
+				</li>
+<li class="controlIcons"><div class="notIcon"><span class="notCount">4</span><i class="fa fa-bell"></i></div><div class="updatesIcon"><i class="fa fa-files-o"></i></div><div class="searchIcon"><i class="fa fa-search"></i></div></li>
+<li class="userLogin" id="userName"><span>Jessica Tuan</span><i class="fa fa-sort-desc"></i>
+<div class="dropDownLogin">
+  <img src="assets/images/Jessica.png" alt="" class="profileThumb">
+  <span >Jessica Tuan</span>
+  <span class="userMailAddress">jessicatuan@gmail.com</span>
+  <button class="viewProfileButton">VIEW PROFILE</button>
+  <ul>
+  <li><a href="#">My Account(s)</a></li>
+  <li><a href="#">Reports</a></li>
+  <li><a href="#">Clients</a></li>
+  <li id="logout"><a href="#">Log out</a></li>
+  </ul>
+  <div class="arrow-up"></div>
+</div>
+</li>
+			</ul>	
 		</div>
 	</div>
 </nav>
+
+
+<div class="notificationWrap" id="notPanel">
+<h2>Notification</h2>
+<ul>
+<li>
+    <span>June 26 2015</span>
+    <span>Improved Four51 Dev Center Reporting...more</span>
+    <span class="spanMT15"></span>
+</li>
+<li>
+    <span>June 26 2015</span>
+    <span>Four51 Dev Maintenance Alert...less</span>
+    <span class="spanMT15">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</span>
+</li>
+<li>
+    <span>June 26 2015</span>
+    <span>Notice Regarding XYXY 5.0 Vulnerability...more</span>
+    <span class="spanMT15"></span>
+</li>
+</ul>
+</div>
+
+
+<div class="productUpdateWrap" id="updatePanel">
+<h2>Product Updates</h2>
+<ul>
+<li>
+    <span>June 26 2015</span>
+    <span>Improved Four51 Dev Center Reporting...more</span>
+    <span class="spanMT15"></span>
+</li>
+<li>
+    <span>June 26 2015</span>
+    <span>Four51 Dev Maintenance Alert...less</span>
+    <span class="spanMT15">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</span>
+</li>
+<li>
+    <span>June 26 2015</span>
+    <span>Notice Regarding XYXY 5.0 Vulnerability...more</span>
+    <span class="spanMT15"></span>
+</li>
+</ul>
+</div>
+
+<div class="SearchWrap" id="searchPanel">
+<h2>Search</h2>
+<input type="text" value="Keyword search" id="searchField">
+<h3>Recent Search</h3>
+<ul>
+<li>
+    <span>Image - twitter bootstrap carousel size - Stack Overflow</span>
+    <span><a href="#">https://github.com/intervention/images</a></span>
+    <span class="spanMT15">8/28/2015 4.27 AM Jan 29, 2013 - You can just set the width of the carousel using CSS. Centering a block element is done with margin: 0 auto . Only change the CSS of .carousel ...</span>
+</li>
+<li>
+    <span>Image - twitter bootstrap carousel size - Stack Overflow</span>
+    <span><a href="#">https://github.com/intervention/images</a></span>
+    <span class="spanMT15">8/28/2015 4.27 AM Jan 29, 2013 - You can just set the width of the carousel using CSS. Centering a block element is done with margin: 0 auto . Only change the CSS of .carousel ...</span>
+</li>
+</ul>
+</div>
+
+
 <main ui-view></main>

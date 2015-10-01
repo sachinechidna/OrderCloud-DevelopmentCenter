@@ -19,16 +19,18 @@ function LoginConfig( $stateProvider ) {
 
 function LoginController( $rootScope, $state, Credentials ) {
 	var vm = this;
-
+	
 	vm.submit = function( ) {
 		console.log('hit');
-		Credentials.Get( vm.credentials )
+		$rootScope.isAuthenticated = true;
+				$state.go( 'base.dashboard' );
+		/* Credentials.Get( vm.credentials )
 			.then(function() {
 				console.log('hit 2');
 				$rootScope.isAuthenticated = true;
 				$state.go( 'base.dashboard' );
 			}).catch(function( ex ) {
 				console.dir( ex );
-			});
+			}); */
 	};
 }
