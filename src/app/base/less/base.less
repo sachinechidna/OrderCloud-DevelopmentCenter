@@ -85,13 +85,13 @@ color:#000 !important;
 	top: 70px;
 	left: 0;
 	box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
-	padding-top:10px;
 	display:none;
 }
 
 #doc-nav .dropDownMenu .menuNav{
 	float: left;
 	min-width: 200px;
+	border-right:1px solid #f8f8f8;
 }
 
 #doc-nav .dropDownMenu .menuContent{
@@ -100,6 +100,20 @@ color:#000 !important;
 	width: 200px;
 	padding: 15px;
 	margin: 0 25px;
+	position:absolute;
+	margin-left:200px;
+	top:0;
+}
+
+
+
+#userName:hover .dropDownLogin{
+	display:block !important;
+}
+
+
+#doc-nav:hover div.dropDownMenu{
+	display:block !important;
 }
 
 #doc-nav .dropDownMenu .menuContent span{
@@ -107,6 +121,7 @@ color:#000 !important;
 	color: #003843;
 	font-family: lato;
 	font-weight: bold;
+	text-transform:capitalize;
 	}
 
 #doc-nav .dropDownMenu .menuContent p{
@@ -150,6 +165,7 @@ background:#f8f8f8;
 
 #doc-nav .dropDownMenu .menuNav li a:hover{
    background:none !important;
+   color:#003843;
 }
 
 .header-logo{
@@ -177,7 +193,7 @@ cursor:pointer;
 }
 
 .headerControls li{
-	line-height: 40px;
+	line-height: 44px;
 	font-family: lato;
 	list-style: none;
 	float: left;
@@ -185,7 +201,11 @@ cursor:pointer;
 	font-weight: 700;
 	font-size: 9px;
 	color: #96c5e5;
-	margin-top:5px;
+	height:69px;
+}
+
+.headerControls .dropDownLogin li{
+	max-height:25px;
 }
 
 .headerControls li span{
@@ -198,12 +218,20 @@ font-size:11px;
 	float: left;
 	color: #fff;
 	margin-top: 4px;
+	cursor:pointer;
 }
 
 .repIcon img{
 	width: 16px;
 	height: 16px;
 	margin-right: 10px;
+}
+
+.updatesIcon img{
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    margin-top: -8px;
 }
 
 li.repIcon .fa, li.userLogin .fa{
@@ -235,8 +263,19 @@ float: none;}
 .headerControls .fa{
 font-size: 16px;margin-right:15px;}
 
+.headerControls .fa:hover{
+color:#96c5e5;
+}
+
 .headerControls .fa-bell, .notCount{
-color: #F16D3B;
+color: #fff;
+}
+
+.notCount{
+    position: absolute;
+    top: 6px;
+    left: 12px;
+	color:#03D2FF;
 }
 
 .headerControls .fa-bell{
@@ -254,7 +293,7 @@ margin-left:4px;
 	min-height: 300px;
 	background: #fff;
 	position: absolute;
-	top: 66px;
+	top: 69px;
 	z-index: 1;
 	right: 5px;
 	box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
@@ -309,15 +348,17 @@ padding:0;
 }
 
 .dropDownLogin button.viewProfileButton{
-	background: #F16D3B;
+	background: #ff5f32;
 	color: #fff;
 	font-family: lato;
+	font-weight:700;
 	border: none;
 	border-radius: 2px;
-	height: 30px;
-	margin-top: 4px;
+	height: 35px;
+	margin-top: 10px;
 	font-size: 10px;
-	line-height: 30px;
+	line-height: 35px;
+	padding:0 24px;
 }
 
 .dropDownLogin{
@@ -328,16 +369,30 @@ padding:0;
 	color:#2a4345;
 }
 
+.dropDownLogin #logout a:hover{
+	/*color:#999;*/
+}
+
 .dropDownLogin li{
 text-align: left;
-padding:5px 24px;
 font-size: 11px;
-line-height: 4px;
 color: #666;
-float: none;}
+cursor:pointer;
+float: none;
+padding:8px 15px;
+}
 
-header .dropDownLogin li a{
+.dropDownLogin li:hover{
+background:#f8f8f8;
+}
+
+.dropDownLogin li a{
 	color: #666;
+	display:block;
+}
+
+.dropDownLogin li a:hover{
+	text-decoration:none;
 }
 
 .spanMT15{
@@ -512,7 +567,7 @@ padding:0;
 }
 
 .SearchWrap li{
-margin:35px 0;
+margin:20px 0;
 list-style:none;
 }
 
@@ -556,6 +611,7 @@ display: block;
 
 .SearchWrap h3{
 font-size:15px;
+margin-top:10px;
 }
 
 #searchPanel input#searchField {
@@ -565,7 +621,11 @@ font-size:15px;
     border-radius: 4px;
     padding: 5px;
     font-size: 12px;
-	margin:24px 0;
+	margin:10px 0;
 }	
+
+#searchPanelh2{
+
+}
 
 /*Header Styles*/

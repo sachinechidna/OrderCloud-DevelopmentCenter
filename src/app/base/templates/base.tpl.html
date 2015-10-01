@@ -28,24 +28,28 @@
 					<a href="" ui-sref="base.components">Components</a>
 				</li>
 				<li id="doc-nav">
-					<a href="" ui-sref="base.documentation">Documentation</a>
+					<a href="">Documentation</a>
 					
 				  <div class="dropDownMenu">
                     <div class="menuNav">
       <ul>
-          <li><a href="#">how to's</a></li>
-		  <li><a href="#">four51 glossary</a></li>
-		  <li><a href="#">dev center</a></li>
-		  <li><a href="#">app development</a></li>
-		  <li><a href="#">quick start</a></li>
-		  <li><a href="#">theme development</a></li>
-		  <li><a href="#">getting started 7</a></li>
+         
+		 <li ng-repeat="doc in base.DocMenu" ng-mouseenter = "base.showSubMenu($index)" ng-class="{'active': base.selectedIndex == $index}">
+		 <a href="#">{{doc.title}}</a>
+		  
+			  <div class="menuContent" ng-show = "base.selectedIndex == $index">
+				  <span>{{doc.title}}</span>
+				  <p>{{doc.desc}}</p>
+			  </div>
+		  </li>
+		  
+		
       </ul>
   </div>
-   <div class="menuContent">
-      <span>Four51 Glossary</span>
+   <!--<div class="menuContent">
+      <span>How To's</span>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </p>
-  </div>
+  </div>-->
   <div class="arrow-up"></div>
   </div>	
 					
@@ -87,12 +91,16 @@
 				<li class="repIcon"><img src="assets/images/repository.svg" alt=""><span>Repository XYZ</span><i class="fa fa-sort-desc"></i>
 				
 				<div class="dropDownRep">
-				<span>Repository App Items</span>
-  <div class="arrow-up"></div>
-</div>
+				 <span>Repository App Items</span>
+				  <div class="arrow-up"></div>
+				</div>
 				
 				</li>
-<li class="controlIcons"><div class="notIcon"><span class="notCount">4</span><i class="fa fa-bell"></i></div><div class="updatesIcon"><i class="fa fa-files-o"></i></div><div class="searchIcon"><i class="fa fa-search"></i></div></li>
+<li class="controlIcons">
+<div class="notIcon" ng-click="base.showNotification($event)" ><span class="notCount">3</span><i class="fa fa-bell"></i></div>
+<div class="updatesIcon" ng-click="base.showUpdates($event)"><img src="assets/images/updates.svg" alt=""></div>
+<div class="searchIcon" ng-click="base.showSearch($event)"><i class="fa fa-search"></i></div></li>
+
 <li class="userLogin" id="userName"><span>Jessica Tuan</span><i class="fa fa-sort-desc"></i>
 <div class="dropDownLogin">
   <img src="assets/images/Jessica.png" alt="" class="profileThumb">

@@ -1,5 +1,5 @@
 <main id="Login" class="panel panel-default">
-	<form class="panel-body" name="LoginForm" ng-submit="login.submit()">
+<!--	<form class="panel-body" name="LoginForm" ng-submit="login.submit()">
 		<h1 class="text-center">Login</h1>
 		<div class="form-group">
 			<label for="Username">Username</label>
@@ -10,6 +10,43 @@
 			<input type="password" class="form-control" id="Password" ng-model="login.credentials.Password"/>
 		</div>
 		<button type="submit" class="btn btn-primary" ng-disabled="LoginForm.$invalid">Submit</button>
-		<a class="btn btn-link">Forgot Password?</a> <!--TODO: should this be functional in the Seed Project?-->
-	</form>
+		<a class="btn btn-link">Forgot Password?</a> <!--TODO: should this be functional in the Seed Project?
+	</form>-->
+	
+	
+			<div class='loginPage'>
+		<div class='positioner'>
+			<div class='loginContainer'>
+				<div class='logo' align='center'>
+					<img src='assets/images/loginLogo.png' class='img-responsive loginLogo'></img>
+				</div>
+				<p class='logintext'>Login to Your Four51 Dev Center Account</p>
+				
+				<form name="LoginForm" ng-submit="login.submit()">
+					<input type='text' class='u_email' placeholder='Email Address' id="Username" ng-model="login.credentials.Username"/>
+					<input type='password' class='u_pwd' placeholder='Password' id="Password" ng-model="login.credentials.Password"/>
+					<button type='submit' class='submitLogin btn btn-primary'  ng-disabled="LoginForm.$invalid">LOGIN</button>
+				</form>
+				
+				<div class='altLogin'>
+					<p> or </p>
+					<p> Signin with Your Guthub Account </p>
+				</div>
+				
+				<div class='githubLogo'>
+					<img src='assets/images/git.png' class='img-responsive gitlogo'></img>
+				</div>
+				
+				<div class='loginOptions'>
+					<span class=''>
+						<a href='#'>Forgot Password?</a>
+					</span>					
+					<span class=''>
+						<a href='#'>Dont have account?</a>
+					</span>
+				</div>
+			</div>
+			</div>
+		</div>
+	
 </main>
