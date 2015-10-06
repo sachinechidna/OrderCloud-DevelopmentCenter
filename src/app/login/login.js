@@ -17,11 +17,10 @@ function LoginConfig( $stateProvider ) {
 	});
 }
 
+// Logic is temporarily commented to work on 2 different headers
 function LoginController( $rootScope, $state, Credentials ) {
 	var vm = this;
-	
 	vm.submit = function( ) {
-		console.log('hit');
 		$rootScope.isAuthenticated = true;
 				$state.go( 'base.dashboard' );
 		/* Credentials.Get( vm.credentials )
