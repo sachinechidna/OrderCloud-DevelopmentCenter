@@ -8,6 +8,8 @@ angular.module( 'orderCloud', [
 	'ui.bootstrap',
 	'orderCloud.sdk',
 	'markdown',
+	"com.2fdevs.videogular",
+	"com.2fdevs.videogular.plugins.controls",
 	'ui.ace'
 ])
 
