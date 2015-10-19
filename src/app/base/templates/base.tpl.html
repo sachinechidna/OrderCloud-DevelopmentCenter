@@ -220,7 +220,10 @@ customers and millions of users worldwide.</span>
 <div>
 
   <uib-accordion close-others="base.oneAtATime">
- <uib-accordion-group heading="Quick Links" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+ <uib-accordion-group is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+ <uib-accordion-heading> Quick Links
+ <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': base.status.open, 'glyphicon-chevron-right': !base.status.open}"></i>
+      </uib-accordion-heading>
     <ul>
       <li><a href="#">Source Code on Github</a></li>
       <li><a href="#">API Overview</a></li>
@@ -238,8 +241,10 @@ customers and millions of users worldwide.</span>
     </ul>
     </uib-accordion-group>
      <uib-accordion-group heading="Social" is-disabled="status.isFirstDisabled">
-    <p><i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i></p>
-    <p><i class="fa fa-youtube-play"></i> <i class="fa fa-google-plus"></i></i></p>
+  <span><i class="fa fa-twitter"></i></span>
+  <span><i class="fa fa-facebook"></i></span>
+  <span><i class="fa fa-youtube-play"></i></span>
+  <span><i class="fa fa-google-plus"></i></span>
     </uib-accordion-group>
      <uib-accordion-group heading="Find out more" is-disabled="status.isFirstDisabled">
   <div class="col-md-3 col-sm-3">
@@ -252,11 +257,6 @@ customers and millions of users worldwide.</span>
     </uib-accordion-group>
   </uib-accordion>
 </div>
- <!-- <p>social</p>
-  <span><i class="fa fa-twitter"></i></span>
-  <span><i class="fa fa-facebook"></i></span>
-  <span><i class="fa fa-youtube-play"></i></span>
-  <span><i class="fa fa-google-plus"></i></span>-->
 </div>
 
 
@@ -266,10 +266,10 @@ customers and millions of users worldwide.</span>
 </div>
 
 
-<div class="row text-center footer-mobile-bottom visible-xs">
+<!--<div class="row text-center footer-mobile-bottom visible-xs">
   <p>FIND OUT MORE ABOUT FOUR51</p>
   <button>CLICK HERE</button>
-  </div>
+  </div>-->
 
 
 

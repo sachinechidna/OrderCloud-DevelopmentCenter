@@ -113,7 +113,7 @@ Built on 16 years solving complex eCommerce and order management challenges. Fea
       <uib-carousel interval="home.myInterval" no-wrap="home.noWrapSlides">
       <uib-slide ng-repeat="slide in home.mobileslides" active="slide.active">
       <div class="mobile-carousel">
-        <img ng-src="{{slide.image}}" style="margin:auto;" class="img-responsive">
+        <div class="mo-carousel-image"><img ng-src="{{slide.image}}" style="margin:auto;" class="img-responsive"></div>
         <h3>{{slide.title}}</h3>
         <span>{{slide.description}}</span>
         <p>{{slide.text}}</p>
