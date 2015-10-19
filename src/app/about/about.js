@@ -48,9 +48,10 @@ function AboutController($sce ) {
 					{src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.ogg"), type: "video/ogg"}
 				],
 				theme: {
-					url: "http://www.videogular.com/styles/themes/default/latest/videogular.css"
+					url: "about.less"
 				},
 				plugins: {
+					 poster: "http://www.videogular.com/assets/images/videogular.png",
 					controls: {
 						autoHide: true,
 						autoHideTime: 5000

@@ -81,6 +81,35 @@ function BaseController( CurrentUser ) {
 		$('#searchPanel').animate({right:'300px'});
 		 $event.stopPropagation();
 	}
+
+	vm.oneAtATime = true;
+
+  vm.groups = [
+    {
+      title: 'Quick Links',
+      content: 'Dynamic Group Body - 1'
+    },
+    {
+      title: 'Documentation',
+      content: 'Dynamic Group Body - 2'
+    },
+    {
+      title: 'Social',
+      content: 'Dynamic Group Body - 2'
+    },
+    {
+      title: 'Find out more about',
+      content: 'Dynamic Group Body - 2'
+    }
+  ];
+
+  vm.items = ['Item 1', 'Item 2', 'Item 3'];
+
+
+  vm.status = {
+    isFirstOpen: true,
+    isFirstDisabled: false
+  };
 }
 	//Dismiss All the slides on body click
 	$('body').on('click', function(event){
@@ -96,3 +125,5 @@ function BaseController( CurrentUser ) {
 		$('#searchPanel').animate({right:'0px'});
 		}
 	});
+
+
