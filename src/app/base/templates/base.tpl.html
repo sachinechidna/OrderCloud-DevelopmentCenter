@@ -220,9 +220,8 @@ customers and millions of users worldwide.</span>
 <div>
 
   <uib-accordion close-others="base.oneAtATime">
- <uib-accordion-group is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
- <uib-accordion-heading> Quick Links
- <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': base.status.open, 'glyphicon-chevron-right': !base.status.open}"></i>
+ <uib-accordion-group is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" style="display:none;">
+ <uib-accordion-heading> Quick Links <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
       </uib-accordion-heading>
     <ul>
       <li><a href="#">Source Code on Github</a></li>
@@ -231,7 +230,9 @@ customers and millions of users worldwide.</span>
       <li><a href="#">Download OrderCloud Overview</a></li>
     </ul>
     </uib-accordion-group>
-     <uib-accordion-group heading="Documentation" is-disabled="status.isFirstDisabled">
+     <uib-accordion-group is-disabled="status.isFirstDisabled" style="display:none;">
+     <uib-accordion-heading> Documentation <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+      </uib-accordion-heading>
     <ul>
       <li><a href="#">How to's</a></li>
       <li><a href="#">Glossary</a></li>
@@ -240,13 +241,17 @@ customers and millions of users worldwide.</span>
       <li><a href="#">Theme Development</a></li>
     </ul>
     </uib-accordion-group>
-     <uib-accordion-group heading="Social" is-disabled="status.isFirstDisabled">
+     <uib-accordion-group is-disabled="status.isFirstDisabled">
+     <uib-accordion-heading> Social <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+      </uib-accordion-heading>
   <span><i class="fa fa-twitter"></i></span>
   <span><i class="fa fa-facebook"></i></span>
   <span><i class="fa fa-youtube-play"></i></span>
   <span><i class="fa fa-google-plus"></i></span>
     </uib-accordion-group>
-     <uib-accordion-group heading="Find out more" is-disabled="status.isFirstDisabled">
+     <uib-accordion-group is-disabled="status.isFirstDisabled">
+     <uib-accordion-heading> Find out more <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+      </uib-accordion-heading>
   <div class="col-md-3 col-sm-3">
     <span class="find-out-more">FIND OUT MORE ABOUT</span>
     <div class="four51_logo"></div>

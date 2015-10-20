@@ -86,21 +86,21 @@ Built on 16 years solving complex eCommerce and order management challenges. Fea
 
 <div class="row three-column hidden-xs">
   <div class="col-md-4 col-sm-4">
-    <img src="assets/images/papa_johns.png" class="img-responsive" alt=""  />
+    <div class="three-column-image"><img src="assets/images/papa_johns.png" class="img-responsive" alt=""  /></div>
     <h3>Papa John's</h3>
     <span>15,000+ orders a month? No problem.</span>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip </p>
     <button>Learn more</button>
   </div>
   <div class="col-md-4 col-sm-4">
-        <img src="assets/images/staples.png" class="img-responsive" alt=""  />
+    <div class="three-column-image">    <img src="assets/images/staples.png" class="img-responsive" alt=""  /></div>
     <h3>Staples</h3>
     <span>400+ custom storefonts. In the Cloud.</span>
     <p>Staples needed to empower each corporate customer with a unique brand and product set. With OrderCloud they drive over 20,000 fully automated monthly orders online and via mobile. </p>
     <button>Learn more</button>
   </div>
   <div class="col-md-4 col-sm-4">
-        <img src="assets/images/burroughs_logo.png" class="img-responsive" alt=""  />
+        <div class="three-column-image"><img src="assets/images/burroughs_logo.png" class="img-responsive" alt=""  /></div>
     <h3>Burroughs</h3>
     <span>Massive Cost Savings? You bet.</span>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip </p>
@@ -147,15 +147,43 @@ Built on 16 years solving complex eCommerce and order management challenges. Fea
 <div class="row text-center tab-navigation">
 
       <div class="col-md-12">
-      <uib-tabset>
-    <uib-tab ng-repeat="tab in home.tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
-        <div class="col-md-5 tabpanel-one">
-        <img src="{{tab.image}}" alt="" />
+
+
+  <uib-tabset>
+    <uib-tab heading="DEVELOPERS">
+    <div class="col-md-5 tabpanel-one">
+        <img src="assets/images/help.png" class="img-responsive" alt="">
       </div>
       <div class="col-md-7 tabpanel-two">
-        <div class="tab-content"><p>{{tab.content}}</p></div>
-        <div class="tab-description"><p>{{tab.description1}}</p>
-        <p>{{tab.description2}}</p></div>
+        <div class="tab-content">
+        <p>Shortened development time driven by component based development. Code, configure, and optimize your project using OrderCloud Dev Center. Bring your development projects to market quickly.</p> 
+        </div>
+        <div class="tab-description"><p>OrderCloud documentation and courses get developers on track and building on our platform effectively.</p>
+        <p>Integration access to hundreds of 3rd party platforms for ERP, CRM, CMS, Analytics, Tax, PIM and more.</p></div>
+      </div>
+    </uib-tab>
+    <uib-tab heading="BUSINESS OWNER">
+    <div class="col-md-5 tabpanel-one">
+        <img src="assets/images/business.png" class="img-responsive" alt="">
+      </div>
+      <div class="col-md-7 tabpanel-two">
+        <div class="tab-content">
+        <ul>
+          <li>
+            <h3>Reduce order processing costs. </h3>
+            <p>OrderCloud helps you eliminate costly and complex processes, and save money. Most customers dramatically reduce cost per order.</p>
+          </li>
+          <li>
+          <h3>Personalized Customer Ordering Experiences.</h3>
+<p>With OrderCloud, your customers can now place orders 24x7, on their mobile device or in the office, on sites personalized to their needs.</p>
+</li>
+          <li>
+            
+            <h3>Get the solution you want.</h3>
+<p>Integrate your CRM, ERP or other solutions. Customize the currency, language and payment methods for each customer.</p>
+          </li>
+        </ul>
+        </div>
       </div>
     </uib-tab>
   </uib-tabset>

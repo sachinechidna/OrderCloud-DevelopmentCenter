@@ -28,7 +28,7 @@
 }
 .order-cloud-carousel {
     h4 {
-        color:#3590ce;
+        color:#fff;
         font-size: 38px;
         font-weight: 700;
         text-shadow:none;
@@ -40,7 +40,7 @@
         }
     }
     p {
-        color:#3590ce;
+        color:#fff;
         font-size: 25px;
         font-weight: 400;
         text-shadow:none;
@@ -64,10 +64,10 @@
 }
 .home-alt-carousel {
     .carousel-caption {
-        top: 33%;
+        top: 20%;
         left: 50%;
         text-align: left;
-        width: 400px;
+        width: 490px;
         h4 {
             color:#fff;
             font-size: 25px;
@@ -163,6 +163,10 @@
         width: 349px;
         padding: 20px;
     }
+
+    .three-column-image{
+    min-height:100px;
+    }
 }
 .three-column h3, .mobile-carousel h3 {
     font-family: lato;
@@ -238,6 +242,23 @@
             font-family: lato;
             margin: 0 20px;
             font-size: 18px;
+        }
+        li{
+        margin-bottom:35px;
+        h3{
+            color: #666666;
+    font-family: lato;
+    font-weight: 700;
+    font-size: 20px;
+    margin:0;
+        }
+        p{
+        color: #666;
+    font-family: lato;
+    font-weight: 400;
+    font-size: 15px;
+    margin:0;
+        }
         }
     }
     .tab-description {
@@ -474,21 +495,23 @@ min-height:100px;
 /*RESPONSIVE CSS*/
 
 .three-column .col-md-4{
-@media  (max-width: 980px){
-    width: 284px;
-}
+
 @media  (max-width: 1280px){
     width: 374px;
-    }        
     }
-.three-column .col-md-4{
+
+    @media  (max-width: 980px){
+    width: 284px;
+}
+
     @media  (max-width: 800px){
-    width: 230px;
+    width: 100% !important;
     }
     @media  (max-width: 768px){
     width: 220px;
     }
-}
+
+    }
 .three-column .col-sm-4{
 @media (max-width: 1024px){
 width: 284px;
@@ -569,16 +592,26 @@ width: 284px;
      top: 4%;
         left: 40%;
      }
-        @media (max-width: 767px){top:0;
-        right:0;
-        left: 0; 
+        @media (max-width: 767px){
+        top:65%;
+        left: 31% !important; 
         }
     }
     .home-alt-carousel .carousel-caption p{
     @media  (max-width: 768px){
     font-size: 14px;
+    display:none;
     }
     }
+
+        .home-alt-carousel .carousel-caption h4{
+    @media  (max-width: 768px){
+    font-size: 14px;
+    display:none;
+    }
+    }
+
+
 
     .more-stories{
         @media (max-width: 767px){
@@ -704,6 +737,7 @@ width: 284px;
 
     .cloud-stories-mobile .carousel-inner img{
         @media (max-width: 767px){min-height: auto;
+        width:auto;
     }}
 
     .home-alt-carousel .carousel-inner, .home-alt-carousel .carousel-inner img{

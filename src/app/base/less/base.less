@@ -648,7 +648,8 @@ div.updatesIcon {
         min-width:152px;
     }
     button.click-here:hover {
-        border: 1px solid rgba(255,255,255,0.6);
+        border: 1px solid #ff5f32;
+        background:#ff5f32;
     }
     button.click-here:focus {
         border:1px solid #fff;
@@ -748,8 +749,12 @@ div.updatesIcon {
 }
 
 .mobile-dropdown-links{
+.glyphicon{
+    display:block !important;
+}
 .panel{
     background:transparent;
+    border:none;
     .panel-heading{
     padding:0;
     background:transparent;
@@ -806,6 +811,9 @@ div.updatesIcon {
 @media (max-width:1024px){
 	width:140px;
 	margin:0 !important;
+    img{
+    margin-top:4px;
+    }
 }
 
 @media (max-width: 767px){
@@ -824,6 +832,7 @@ div.updatesIcon {
 	.header-nav > li > a{
 	@media (max-width:1024px){
 	padding:15px 5px;
+    font-size:12px;
 	}
 }
 
