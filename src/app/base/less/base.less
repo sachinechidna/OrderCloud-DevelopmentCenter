@@ -755,12 +755,14 @@ div.updatesIcon {
 .panel{
     background:transparent;
     border:none;
+    box-shadow:none;
     .panel-heading{
     padding:0;
     background:transparent;
     color:#fff;
     .panel-title{
      font-size:12px;
+     border-bottom:1px solid rgba(0,0,0,0.1);
      a{
      text-decoration:none;
      display:block;
@@ -769,6 +771,7 @@ div.updatesIcon {
     }
     }
     .panel-body{
+    border-top:0px !important;
     .fa{
     color:#fff;
     margin:0 21px;
@@ -841,6 +844,9 @@ div.updatesIcon {
 width:100%;
 margin:0 !important;
 border-color:#f8f8f8 !important;	
+@media (max-width:320px){
+    /*min-height:420px;*/
+}
 }
 }
 

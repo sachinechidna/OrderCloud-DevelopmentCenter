@@ -13,19 +13,22 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="navbar-collapse" collapse="mainCollapsed" id="bs-example-navbar-collapse-1">
          <ul class="nav navbar-nav header-nav">
+            <li class="visible-xs">
+               <a href="" ui-sref="base.home">Home</a>
+            </li>
             <li>
                <a href="" ui-sref="base.about">About</a>
             </li>
-            <li>
+            <li class="hidden-xs">
                <a href="" ui-sref="base.console">Console</a>
             </li>
-            <li>
+            <li class="hidden-xs">
                <a href="" ui-sref="base.sdks">SDKS</a>
             </li>
-            <li>
+            <li class="hidden-xs">
                <a href="" ui-sref="base.components">Components</a>
             </li>
-            <li id="doc-nav">
+            <li id="doc-nav" class="hidden-xs">
                <a href="">Documentation</a>
                <div class="dropDownMenu">
                   <div class="menuNav">
@@ -44,7 +47,7 @@
             </li>
          </ul>
          <!--If user logged out -->
-         <ul class="nav navbar-nav navbar-right anonymous">
+         <ul class="nav navbar-nav navbar-right anonymous hidden-xs">
             <li ng-if="!base.currentUser" class='loginLabel' ng-hide="isAuthenticated"><a ui-sref="login">Log In</a></li>
             <li class="dropdown" dropdown ng-if="base.currentUser">
                <a href="" class="dropdown-toggle" dropdown-toggle role="button" aria-haspopup="true">Account</a>
@@ -95,6 +98,12 @@
          </ul>
          <!--If user logged In end -->
       </div>
+
+<!--Mobile header dropdown starts-->
+
+<!--Mobile header dropdown ends-->
+
+
    </div>
 </nav>
 <div class="notificationWrap" id="notPanel">
@@ -220,7 +229,7 @@ customers and millions of users worldwide.</span>
 <div>
 
   <uib-accordion close-others="base.oneAtATime">
- <uib-accordion-group is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" style="display:none;">
+ <!--<uib-accordion-group is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
  <uib-accordion-heading> Quick Links <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
       </uib-accordion-heading>
     <ul>
@@ -230,7 +239,7 @@ customers and millions of users worldwide.</span>
       <li><a href="#">Download OrderCloud Overview</a></li>
     </ul>
     </uib-accordion-group>
-     <uib-accordion-group is-disabled="status.isFirstDisabled" style="display:none;">
+     <uib-accordion-group is-disabled="status.isFirstDisabled">
      <uib-accordion-heading> Documentation <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
       </uib-accordion-heading>
     <ul>
@@ -240,7 +249,7 @@ customers and millions of users worldwide.</span>
       <li><a href="#">Quick Start</a></li>
       <li><a href="#">Theme Development</a></li>
     </ul>
-    </uib-accordion-group>
+    </uib-accordion-group>-->
      <uib-accordion-group is-disabled="status.isFirstDisabled">
      <uib-accordion-heading> Social <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
       </uib-accordion-heading>

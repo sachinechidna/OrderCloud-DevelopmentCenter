@@ -64,7 +64,7 @@
 }
 .home-alt-carousel {
     .carousel-caption {
-        top: 20%;
+        top: 15%;
         left: 50%;
         text-align: left;
         width: 490px;
@@ -78,7 +78,7 @@
         }
         p {
             color:#fff;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 400;
             text-shadow:none;
             font-family: lato;
@@ -232,6 +232,9 @@
 }
 .tabpanel-one {
     padding: 9% 5%;
+    img{
+    display:initial;
+    }
 }
 .tabpanel-two {
     text-align: initial;
@@ -354,6 +357,12 @@
             font-size: 40px;
             line-height: 60px;
         }
+    }
+
+.col-md-4{
+    img{
+    display:initial;
+    }
     }
 }
 .about-end-to-end {
@@ -492,6 +501,7 @@ min-height:100px;
     
 }
 
+
 /*RESPONSIVE CSS*/
 
 .three-column .col-md-4{
@@ -525,14 +535,76 @@ width: 284px;
         @media (max-width: 767px){
         top: 20px;
         }
+
+
+         @media (max-width:568px){
+        top:20%;
+       } 
     }
 
-    .carousel-inner, .carousel-inner img{
-        @media (max-width: 767px){
-        min-height: 200px;
+    .home-carousel .carousel-caption h4{
+    @media (max-width:568px){
+    font-size:18px;
+    margin-bottom:14px;
+    }
+    }
+
+    .home-carousel .carousel-caption p{
+    @media (max-width:568px){
+    font-size:16px;
+    }
+    }
+
+    .order-cloud-carousel h4 sup{
+    @media (max-width:568px){
+    top:-1.5em;
+    }
+    }
+
+    .home-carousel .carousel-inner, .home-carousel .carousel-inner img{
+        @media (max-width: 568px){
+        min-height: 270px;
         }
     }
 
+   .home-alt-carousel .carousel-caption{
+     @media (max-width: 768px){
+     top: 4%;
+        left: 34%;
+     }
+
+     @media (max-width:767px){
+         width:200px;
+         left:50%;
+       }
+
+        @media (max-width:320px){
+         left:15%;
+       }
+
+    }
+
+
+    .home-alt-carousel .carousel-caption h4{
+    @media (max-width: 768px){
+    font-size:18px;
+     }
+     @media (max-width: 568px){
+    font-size:12px;
+     }
+    }
+
+    .home-alt-carousel .carousel-caption p{
+     @media (max-width: 568px){
+    font-size:9px;
+     }
+    }
+
+    .home-alt-carousel .carousel-inner, .home-alt-carousel .carousel-inner img{
+        @media (max-width: 568px){
+        min-height: 270px;
+        }
+    }
     .carousel-indicators{
         @media (max-width: 767px){
         bottom: 0;
@@ -545,23 +617,6 @@ width: 284px;
         }
     }
 
-    .order-cloud-carousel h4, .home-alt-carousel .carousel-caption h4{
-        @media (max-width: 767px){
-        font-size: 20px;
-        }
-    }
-
-    .order-cloud-carousel h4 sup{
-        @media (max-width: 767px){
-        top: -1.5em;
-        }
-    }
-
-    .order-cloud-carousel p, .home-alt-carousel .carousel-caption p{
-        @media (max-width: 767px){
-        font-size: 12px;
-        }
-    }
 
     .home-common .primary-head{
         @media (max-width: 767px){
@@ -587,29 +642,6 @@ width: 284px;
     }
 
 
-    .home-alt-carousel .carousel-caption{
-     @media (max-width: 768px){
-     top: 4%;
-        left: 40%;
-     }
-        @media (max-width: 767px){
-        top:65%;
-        left: 31% !important; 
-        }
-    }
-    .home-alt-carousel .carousel-caption p{
-    @media  (max-width: 768px){
-    font-size: 14px;
-    display:none;
-    }
-    }
-
-        .home-alt-carousel .carousel-caption h4{
-    @media  (max-width: 768px){
-    font-size: 14px;
-    display:none;
-    }
-    }
 
 
 
@@ -672,30 +704,28 @@ width: 284px;
         @media (max-width: 767px){
         width: 75%;
         }
+        @media (max-width: 767px){
+        h3{
+        font-size: 18px;
+        }
+        @media (max-width: 767px){
+        span,p{
+         font-size: 11px;
+        }
+        }
+    }
     }
 
     .about-end-to-end{
         @media (max-width: 767px){
         padding: 0 17%;
         }
-    }
-
-    .about-two-column-content h3{
         @media (max-width: 767px){
-        font-size: 18px;
-        }
-    }
-
-    .about-two-column-content span, .about-two-column-content p{
-        @media (max-width: 767px){
-        font-size: 11px;
-        }
-    }
-
-    .about-end-to-end .col-md-6{
-        @media (max-width: 767px){
+        .col-md-6{
+        
         width: auto;
         }
+    }
     }
 
     .about-banner img{
@@ -740,20 +770,6 @@ width: 284px;
         width:auto;
     }}
 
-    .home-alt-carousel .carousel-inner, .home-alt-carousel .carousel-inner img{
-       @media (max-width:767px){
-         min-height:300px;
-       }   
-    }
-
-    .home-alt-carousel .carousel-caption{
-      @media (max-width:767px){
-         width:200px;
-         left:15%;
-       }
-    }
-
-
 
     .owl-carousel .owl-next{
     @media  (max-width: 768px){
@@ -772,9 +788,3 @@ width: 284px;
         right: 5%;
         display:none;
     }}
-
-
-
-
-
-
