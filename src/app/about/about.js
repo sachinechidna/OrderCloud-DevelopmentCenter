@@ -20,6 +20,7 @@ function AboutController($sce ) {
 
 	$('#owl-carousel').owlCarousel({
     margin:10,
+	dots:false,
     responsiveClass:true,
     responsive:{
         0:{
